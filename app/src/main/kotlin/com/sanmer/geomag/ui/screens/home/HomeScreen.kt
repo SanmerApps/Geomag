@@ -119,12 +119,10 @@ fun HomeScreen(
                 openBottomSheet = { openBottomSheet = true }
             )
 
-            if (openBottomSheet) {
-                RecordBottomSheet(
-                    record = viewModel.currentValue,
-                    onClose = { openBottomSheet = false }
-                )
-            }
+            if (openBottomSheet) RecordBottomSheet(
+                record = viewModel.currentValue,
+                onClose = { openBottomSheet = false }
+            )
         }
     }
 }

@@ -46,8 +46,4 @@ class UserDataRepository @Inject constructor(
     fun setEnableRecords(value: Boolean) = applicationScope.launch {
         userPreferencesDataSource.setEnableRecords(value)
     }
-
-    fun setEnableNavigationAnimation(value: Boolean) = applicationScope.launch {
-        userPreferencesDataSource.setEnableNavigationAnimation(value)
-    }
 }

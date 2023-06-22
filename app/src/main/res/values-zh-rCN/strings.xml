@@ -48,8 +48,6 @@
     <string name="settings_log_viewer_desc">查看应用运行时日志</string>
     <string name="settings_app_theme">主题</string>
     <string name="settings_app_theme_desc">更改深色模式和主题调色板</string>
-    <string name="settings_navigation_animation">导航动画</string>
-    <string name="settings_navigation_animation_desc">由 Accompanist 提供的导航动画支持 (实验性)，请注意这存在稳定性问题，谨慎开启</string>
     <!-- App Theme -->
     <string name="app_theme_palette">主题调色板</string>
     <string name="app_theme_dark_theme">深色主题</string>
@@ -64,6 +62,7 @@
 
     <!-- Dialog-->
     <string name="dialog_cancel">取消</string>
+    <string name="dialog_ok">确定</string>
     <string name="dialog_close">关闭</string>
     <string name="dialog_delete">删除</string>
 

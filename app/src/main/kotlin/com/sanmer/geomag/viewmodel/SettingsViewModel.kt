@@ -19,5 +19,4 @@ class SettingsViewModel @Inject constructor(
 
     fun setDarkTheme(value: DarkMode) = userDataRepository.setDarkTheme(value)
     fun setThemeColor(value: Int) = userDataRepository.setThemeColor(value)
-    fun setEnableNavigationAnimation(value: Boolean) = userDataRepository.setEnableNavigationAnimation(value)
 }

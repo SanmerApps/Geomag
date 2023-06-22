@@ -32,7 +32,7 @@ import com.sanmer.geomag.R
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.ui.component.FastScrollbar
 import com.sanmer.geomag.ui.component.Logo
-import com.sanmer.geomag.ui.navigation.animated.createViewRoute
+import com.sanmer.geomag.ui.navigation.graphs.createViewRoute
 import com.sanmer.geomag.ui.utils.navigatePopUpTo
 import com.sanmer.geomag.ui.utils.rememberFastScroller
 import com.sanmer.geomag.ui.utils.scrollbarState

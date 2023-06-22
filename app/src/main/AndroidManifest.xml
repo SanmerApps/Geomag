@@ -8,15 +8,17 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
 
     <application
         android:name=".App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:enableOnBackInvokedCallback="true"
         android:localeConfig="@xml/locales_config"
-        tools:targetApi="tiramisu" >
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="34">
 
         <activity
             android:name=".ui.activity.main.MainActivity"
@@ -31,8 +33,7 @@
 
         <activity android:name=".ui.activity.log.LogActivity"
             android:label="@string/settings_log_viewer"
-            android:exported="true"
-            android:launchMode="singleTask"/>
+            android:exported="true"/>
 
         <service android:name=".service.LocationService"
             android:foregroundServiceType="location"
@@ -42,7 +43,7 @@
         <service android:name=".service.CalculateService"
             android:foregroundServiceType="dataSync"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"/>
 
         <service android:name=".service.LogcatService"
             android:exported="false"/>
@@ -52,7 +53,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 

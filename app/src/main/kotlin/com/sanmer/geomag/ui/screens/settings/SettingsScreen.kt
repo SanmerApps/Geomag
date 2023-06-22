@@ -29,8 +29,7 @@ import com.sanmer.geomag.datastore.UserData
 import com.sanmer.geomag.datastore.isDarkMode
 import com.sanmer.geomag.ui.activity.log.LogActivity
 import com.sanmer.geomag.ui.component.SettingNormalItem
-import com.sanmer.geomag.ui.component.SettingSwitchItem
-import com.sanmer.geomag.ui.navigation.animated.SettingsScreen
+import com.sanmer.geomag.ui.navigation.graphs.SettingsScreen
 import com.sanmer.geomag.ui.navigation.navigateToHome
 import com.sanmer.geomag.ui.screens.settings.items.AppThemeItem
 import com.sanmer.geomag.ui.utils.navigatePopUpTo
@@ -78,14 +77,6 @@ fun SettingsScreen(
                 isDarkMode = userData.isDarkMode(),
                 onThemeColorChange = viewModel::setThemeColor,
                 onDarkModeChange =viewModel::setDarkTheme
-            )
-
-            SettingSwitchItem(
-                iconRes = R.drawable.convertshape_outline,
-                text = stringResource(id = R.string.settings_navigation_animation),
-                subText = stringResource(id = R.string.settings_navigation_animation_desc),
-                checked = userData.enableNavigationAnimation,
-                onChange = viewModel::setEnableNavigationAnimation
             )
         }
     }

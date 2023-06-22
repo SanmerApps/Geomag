@@ -83,19 +83,15 @@ android {
         buildConfig = true
     }
 
-    packaging {
-        resources {
-            excludes += setOf(
-                "META-INF/**",
-                "okhttp3/**",
-                "kotlin/**",
-                "org/**",
-                "**.properties",
-                "**.bin",
-                "**/*.proto"
-            )
-        }
-    }
+    packaging.resources.excludes += setOf(
+        "META-INF/**",
+        "okhttp3/**",
+        "kotlin/**",
+        "org/**",
+        "**.properties",
+        "**.bin",
+        "**/*.proto"
+    )
 
     applicationVariants.configureEach {
         outputs.configureEach {
@@ -133,7 +129,6 @@ protobuf {
 
 dependencies {
     implementation(libs.accompanist.drawablepainter)
-    implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.permissions)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)

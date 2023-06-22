@@ -18,11 +18,7 @@ class MainActivity : BaseActivity() {
 
             LocationManagerUtils.PermissionsState()
 
-            if (it.enableNavigationAnimation) {
-                AnimatedMainScreen()
-            } else {
-                NormalMainScreen()
-            }
+            MainScreen()
         }
     }
 }

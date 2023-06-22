@@ -1,32 +1,32 @@
-package com.sanmer.geomag.ui.navigation.animated
+package com.sanmer.geomag.ui.navigation.graphs
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.navigation
+import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.sanmer.geomag.ui.animate.slideInRightToLeft
 import com.sanmer.geomag.ui.animate.slideOutLeftToRight
 import com.sanmer.geomag.ui.navigation.MainScreen
-import com.sanmer.geomag.ui.screens.calculate.CalculateScreen
+import com.sanmer.geomag.ui.screens.customize.CustomizeScreen
 
-enum class CalculateScreen(val route: String) {
-    Home("Calculate")
+enum class CustomizeScreen(val route: String) {
+    Home("Customize")
 }
 
-fun NavGraphBuilder.calculateScreen(
+fun NavGraphBuilder.customizeScreen(
     navController: NavController
 ) = navigation(
-    startDestination = CalculateScreen.Home.route,
+    startDestination = CustomizeScreen.Home.route,
     route = MainScreen.Calculate.route
 ) {
     composable(
-        route = CalculateScreen.Home.route,
+        route = CustomizeScreen.Home.route,
         enterTransition = { slideInRightToLeft() + fadeIn() },
         exitTransition = { slideOutLeftToRight() + fadeOut() }
     ) {
-        CalculateScreen(
+        CustomizeScreen(
             navController = navController
         )
     }

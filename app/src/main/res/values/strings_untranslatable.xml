@@ -2,6 +2,9 @@
 <resources>
     <string name="app_name" translatable="false">Geomag</string>
 
+    <!-- Page -->
+    <string name="page_customize">@string/overview_customized</string>
+
     <!-- Settings -->
     <!-- About -->
     <string name="about_github" translatable="false">GitHub</string>

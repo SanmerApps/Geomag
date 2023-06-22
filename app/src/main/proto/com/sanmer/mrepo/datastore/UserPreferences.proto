@@ -14,5 +14,4 @@ message UserPreferences {
   int32 themeColor = 2;
   string fieldModel = 3;
   bool enableRecords = 4;
-  bool enableNavigationAnimation = 5; // TODO: Waiting for https://github.com/google/accompanist/issues/1487 to be fixed
 }

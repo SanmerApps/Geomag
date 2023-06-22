@@ -10,16 +10,14 @@ data class UserData(
     val darkMode: DarkMode,
     val themeColor: Int,
     val fieldModel: Geomag.Models,
-    val enableRecords: Boolean,
-    val enableNavigationAnimation: Boolean
+    val enableRecords: Boolean
 ) {
     companion object {
         fun default() = UserData(
             darkMode = DarkMode.FOLLOW_SYSTEM,
             themeColor = if (OsUtils.atLeastS) Colors.Dynamic.id else Colors.Sakura.id,
             fieldModel = Geomag.Models.IGRF,
-            enableRecords = true,
-            enableNavigationAnimation = false
+            enableRecords = true
         )
     }
 }
@@ -36,13 +34,11 @@ fun UserData.toPreferences(): UserPreferences = UserPreferences.newBuilder()
     .setThemeColor(themeColor)
     .setFieldModel(fieldModel.name)
     .setEnableRecords(enableRecords)
-    .setEnableNavigationAnimation(enableNavigationAnimation)
     .build()
 
 fun UserPreferences.toUserData() = UserData(
     darkMode = darkMode,
     themeColor = themeColor,
     fieldModel = Geomag.Models.valueOf(fieldModel),
-    enableRecords = enableRecords,
-    enableNavigationAnimation = enableNavigationAnimation
+    enableRecords = enableRecords
 )
