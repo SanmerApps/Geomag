@@ -5,7 +5,6 @@ package com.sanmer.geomag.ui.component
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.SpringSpec
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -46,7 +45,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
@@ -54,16 +52,6 @@ import kotlinx.coroutines.delay
 import kotlin.math.max
 import kotlin.math.min
 
-/**
- * A [Scrollbar] that allows for fast scrolling of content.
- * Its thumb disappears when the scrolling container is dormant.
- * @param modifier a [Modifier] for the [Scrollbar]
- * @param state the driving state for the [Scrollbar]
- * @param scrollInProgress a flag indicating if the scrolling container for the scrollbar is
- * currently scrolling
- * @param orientation the orientation of the scrollbar
- * @param onThumbDisplaced the fast scroll implementation
- */
 @Composable
 fun FastScrollbar(
     state: ScrollbarState,
@@ -162,6 +150,7 @@ class ScrollbarColors internal constructor(
         interactionSource = interactionSource
     )
 
+    @Suppress("RedundantIf")
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || other !is ScrollbarColors) return false
@@ -232,15 +221,11 @@ private fun Scrollbar(
     thumb: @Composable () -> Unit,
     container: Color,
     modifier: Modifier = Modifier,
-    minThumbSize: Dp = 30.dp,
-    maxThumbSize: Dp = 40.dp,
+    thumbSize: Dp = 50.dp,
     interactionSource: MutableInteractionSource? = null,
     onThumbDisplaced: ((Float) -> Unit)? = null
 ) {
-    if (state.thumbSizePercent > 0.70) return
-
-    val minThumbSizePx = with(LocalDensity.current) { minThumbSize.toPx() }
-    val maxThumbSizePx = with(LocalDensity.current) { maxThumbSize.toPx() }
+    if (state.thumbSizePercent > 0.50) return
 
     // Using Offset.Unspecified and Float.NaN instead of null
     // to prevent unnecessary boxing of primitives
@@ -253,34 +238,31 @@ private fun Scrollbar(
 
     var track by remember { mutableStateOf(ScrollbarTrack(packedValue = 0)) }
 
+    val thumbSizePx = with(LocalDensity.current) { thumbSize.toPx() }
     val originalThumbSizePx = state.thumbSizePercent * track.size
 
-    val targetThumbSizePx = max(
-        a = min(
-            a = originalThumbSizePx,
-            b = maxThumbSizePx
-        ),
-        b = minThumbSizePx
-    )
-
-    val reducedPercent = when {
-        originalThumbSizePx > maxThumbSizePx -> originalThumbSizePx / targetThumbSizePx
-        else -> 1f
-    }
-
     val thumbTravelPercent = when {
-        interactionThumbTravelPercent.isNaN() -> state.thumbDisplacementPercent * reducedPercent
+        interactionThumbTravelPercent.isNaN() -> state.thumbDisplacementPercent
         else -> interactionThumbTravelPercent
     }
 
-    val thumbSizeDp by animateDpAsState(
-        targetValue = with(LocalDensity.current) { targetThumbSizePx.toDp() },
-        label = "scrollbar thumb size",
-    )
+    val targetThumbDisplacementPx = when {
+        interactionThumbTravelPercent.isNaN() -> {
+            val trackSize = track.size + originalThumbSizePx.plus(
+                when {
+                    originalThumbSizePx > thumbSizePx -> thumbSizePx
+                    else -> - thumbSizePx
+                }
+            )
+
+            trackSize * thumbTravelPercent
+        }
+        else -> track.size * thumbTravelPercent
+    }
 
     val thumbDisplacementPx = min(
-        a = track.size * thumbTravelPercent,
-        b = track.size - targetThumbSizePx
+        a = targetThumbDisplacementPx,
+        b = track.size - thumbSizePx
     )
 
     val draggableState = rememberDraggableState { delta ->
@@ -358,8 +340,8 @@ private fun Scrollbar(
                 .align(Alignment.TopStart)
                 .run {
                     when (orientation) {
-                        Orientation.Horizontal -> width(thumbSizeDp)
-                        Orientation.Vertical -> height(thumbSizeDp)
+                        Orientation.Horizontal -> width(thumbSize)
+                        Orientation.Vertical -> height(thumbSize)
                     }
                 }
                 .offset(
@@ -391,7 +373,7 @@ private fun Scrollbar(
             return@LaunchedEffect
         }
 
-        var currentThumbDisplacement = updatedState.thumbDisplacementPercent * reducedPercent
+        var currentThumbDisplacement = updatedState.thumbDisplacementPercent
         val destinationThumbDisplacement = track.thumbPosition(
             dimension = orientation.valueOf(pressedOffset),
         )
@@ -411,7 +393,12 @@ private fun Scrollbar(
                 )
             }
 
-            onThumbDisplaced(currentThumbDisplacement)
+            onThumbDisplaced(
+                when {
+                    state.reverseLayout -> 1f - currentThumbDisplacement
+                    else -> currentThumbDisplacement
+                }
+            )
             interactionThumbTravelPercent = currentThumbDisplacement
             delay(SCROLLBAR_PRESS_DELAY)
         }
@@ -427,34 +414,33 @@ private fun Scrollbar(
             dimension = orientation.valueOf(draggedOffset),
         )
 
-        onThumbDisplaced(currentTravel)
+        onThumbDisplaced(
+            when {
+                state.reverseLayout -> 1f - currentTravel
+                else -> currentTravel
+            }
+        )
         interactionThumbTravelPercent = currentTravel
     }
 }
 
-/**
- * Class definition for the core properties of a scroll bar
- */
 @Immutable
-@JvmInline
-value class ScrollbarState internal constructor(
+class ScrollbarState internal constructor(
     internal val packedValue: Long,
+    internal val reverseLayout: Boolean,
 ) {
     companion object {
         val FULL = ScrollbarState(
             thumbSizePercent = 1f,
             thumbDisplacementPercent = 0f,
+            reverseLayout = false
         )
     }
 }
 
-/**
- * Class definition for the core properties of a scroll bar track
- */
 @Immutable
-@JvmInline
-private value class ScrollbarTrack(
-    val packedValue: Long,
+private class ScrollbarTrack(
+    val packedValue: Long
 ) {
     constructor(
         max: Float,
@@ -462,40 +448,27 @@ private value class ScrollbarTrack(
     ) : this(packFloats(max, min))
 }
 
-/**
- * Creates a scrollbar state with the listed properties
- * @param thumbSizePercent the thumb size of the scrollbar as a percentage of the total track size
- * @param thumbDisplacementPercent the distance the thumb has traveled as a percentage of total
- * track size
- */
 fun ScrollbarState(
     thumbSizePercent: Float,
     thumbDisplacementPercent: Float,
+    reverseLayout: Boolean
 ) = ScrollbarState(
     packFloats(
         val1 = thumbSizePercent,
-        val2 = thumbDisplacementPercent,
+        val2 = when {
+            reverseLayout -> 1f - thumbDisplacementPercent
+            else -> thumbDisplacementPercent
+        },
     ),
+    reverseLayout = reverseLayout
 )
 
-/**
- * Returns the thumb size of the scrollbar as a percentage of the total track size
- */
 val ScrollbarState.thumbSizePercent get() = unpackFloat1(packedValue)
 
-/**
- * Returns the distance the thumb has traveled as a percentage of total track size
- */
 val ScrollbarState.thumbDisplacementPercent get() = unpackFloat2(packedValue)
 
-/**
- * Returns the size of the scrollbar track in pixels
- */
 private val ScrollbarTrack.size get() = unpackFloat2(packedValue) - unpackFloat1(packedValue)
 
-/**
- * Returns the position of the scrollbar thumb on the track as a percentage
- */
 private fun ScrollbarTrack.thumbPosition(
     dimension: Float,
 ): Float = max(
@@ -506,49 +479,26 @@ private fun ScrollbarTrack.thumbPosition(
     b = 0f,
 )
 
-/**
- * Returns the value of [offset] along the axis specified by [this]
- */
 internal fun Orientation.valueOf(offset: Offset) = when (this) {
     Orientation.Horizontal -> offset.x
     Orientation.Vertical -> offset.y
 }
 
-/**
- * Returns the value of [intSize] along the axis specified by [this]
- */
 internal fun Orientation.valueOf(intSize: IntSize) = when (this) {
     Orientation.Horizontal -> intSize.width
     Orientation.Vertical -> intSize.height
 }
 
-/**
- * Returns the value of [intOffset] along the axis specified by [this]
- */
-internal fun Orientation.valueOf(intOffset: IntOffset) = when (this) {
-    Orientation.Horizontal -> intOffset.x
-    Orientation.Vertical -> intOffset.y
-}
-
-/**
- * Packs two Float values into one Long value for use in inline classes.
- */
 private inline fun packFloats(val1: Float, val2: Float): Long {
     val v1 = val1.toBits().toLong()
     val v2 = val2.toBits().toLong()
     return v1.shl(32) or (v2 and 0xFFFFFFFF)
 }
 
-/**
- * Unpacks the first Float value in [packFloats] from its returned Long.
- */
 private inline fun unpackFloat1(value: Long): Float {
     return Float.fromBits(value.shr(32).toInt())
 }
 
-/**
- * Unpacks the second Float value in [packFloats] from its returned Long.
- */
 private inline fun unpackFloat2(value: Long): Float {
     return Float.fromBits(value.and(0xFFFFFFFF).toInt())
 }
