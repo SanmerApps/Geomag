@@ -59,6 +59,7 @@ jobs:
     - name: Build Golang library
       run: |
         go install golang.org/x/mobile/cmd/gomobile@latest
+        gomobile init
         go generate app/src/main/golang/Geomag.go
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
