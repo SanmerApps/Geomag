@@ -1,5 +1,7 @@
 package com.sanmer.geomag.model
 
+import go.geomag.MagneticField as GoMagneticField
+
 data class MagneticField(
     val declination: Double,
     val declinationSV: Double,
@@ -28,3 +30,20 @@ data class MagneticField(
         )
     }
 }
+
+fun GoMagneticField.toField() = MagneticField(
+    declination = declination,
+    declinationSV = declinationSV,
+    inclination = inclination,
+    inclinationSV = inclinationSV,
+    horizontalIntensity = horizontalIntensity,
+    horizontalSV = horizontalSV,
+    northComponent = northComponent,
+    northSV = northSV,
+    eastComponent = eastComponent,
+    eastSV = eastSV,
+    verticalComponent = verticalComponent,
+    verticalSV = verticalSV,
+    totalIntensity = totalIntensity,
+    totalSV = totalSV
+)
