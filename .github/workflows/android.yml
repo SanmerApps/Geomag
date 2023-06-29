@@ -57,7 +57,7 @@ jobs:
         local-cache: true
         
     - name: Build Golang library
-      run: ｜
+      run: |
         go install golang.org/x/mobile/cmd/gomobile@latest
         go generate app/src/main/golang/Geomag.go
       env:
