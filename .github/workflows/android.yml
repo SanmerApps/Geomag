@@ -48,7 +48,6 @@ jobs:
       with:
         go-version-file: ${{ github.workspace }}/app/src/main/golang/go.mod
         cache-dependency-path: ${{ github.workspace }}/app/src/main/golang/go.sum
-        
     
     - name: Set up NDK
       uses: nttld/setup-ndk@v1.2.0
@@ -58,7 +57,9 @@ jobs:
         local-cache: true
         
     - name: Build Golang library
-      run: go generate app/src/main/golang/Geomag.go
+      run: ｜
+        go install golang.org/x/mobile/cmd/gomobile@latest
+        go generate app/src/main/golang/Geomag.go
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
     

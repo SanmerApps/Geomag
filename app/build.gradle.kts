@@ -31,19 +31,6 @@ android {
         }
     }
 
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
-        }
-    }
-
-    sourceSets {
-        getByName("main") {
-            jniLibs.srcDir("src/main/golang/libs")
-        }
-    }
-
     val releaseSigning = if (project.hasReleaseKeyStore) {
         signingConfigs.create("release") {
             storeFile = project.releaseKeyStore
@@ -128,6 +115,10 @@ protobuf {
 }
 
 dependencies {
+    implementation(fileTree("src/main/golang/libs") {
+        include("*.jar", "*.aar")
+    })
+
     implementation(libs.accompanist.drawablepainter)
     implementation(libs.accompanist.permissions)
     implementation(libs.accompanist.systemuicontroller)
