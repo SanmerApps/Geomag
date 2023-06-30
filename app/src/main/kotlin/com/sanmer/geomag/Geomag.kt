@@ -12,7 +12,8 @@ import go.geomag.Geomag as GoGeomag
 object Geomag {
     private fun toDecimalYears(
         year: Int, month: Int, day: Int,
-        hour: Int, min: Int, sec: Int
+        hour: Int, min: Int,
+        sec: Int, nsec: Int,
     )  = GoGeomag.toDecimalYears(
         year.toLong(),
         month.toLong(),
@@ -20,7 +21,7 @@ object Geomag {
         hour.toLong(),
         min.toLong(),
         sec.toLong(),
-        0L
+        nsec.toLong()
     )
 
     private fun igrf(
@@ -49,7 +50,8 @@ object Geomag {
 
     fun toDecimalYears(dateTime: LocalDateTime) = toDecimalYears(
         dateTime.year, dateTime.monthNumber, dateTime.dayOfMonth,
-        dateTime.hour, dateTime.minute, dateTime.second
+        dateTime.hour, dateTime.minute,
+        dateTime.second, dateTime.nanosecond
     )
 
     fun igrf(
