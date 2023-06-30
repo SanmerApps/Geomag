@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="NightAdjusted.Theme.Geomag" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
-    </style>
-
-    <style name="PlatformAdjusted.Theme.Geomag" parent="NightAdjusted.Theme.Geomag">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="Theme.Geomag" parent="PlatformAdjusted.Theme.Geomag" />
+    <style name="Theme.Geomag" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
         <item name="android:windowLightStatusBar">true</item>

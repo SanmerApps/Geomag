@@ -121,7 +121,6 @@ dependencies {
 
     implementation(libs.accompanist.drawablepainter)
     implementation(libs.accompanist.permissions)
-    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
