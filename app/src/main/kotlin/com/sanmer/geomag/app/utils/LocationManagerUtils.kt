@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sanmer.geomag.app.utils
 
 import android.Manifest.permission
@@ -37,17 +39,19 @@ object LocationManagerUtils {
     var isEnable by mutableStateOf(false)
         private set
 
-    private val criteria: Criteria
-        get() = Criteria().apply {
-            accuracy = Criteria.ACCURACY_FINE
-            isAltitudeRequired = true
-            isCostAllowed = true
-        }
-
     private val bestProvider: String
-        get() = locationManager.getBestProvider(
-            criteria, true
-        ) ?: LocationManager.GPS_PROVIDER
+        get() = if (OsUtils.atLeastS) {
+            LocationManager.FUSED_PROVIDER
+        } else {
+            locationManager.getBestProvider(
+                Criteria().apply {
+                    accuracy = Criteria.ACCURACY_FINE
+                    isAltitudeRequired = true
+                    isCostAllowed = true
+                },
+                true
+            ) ?: LocationManager.GPS_PROVIDER
+        }
 
     fun <T> update(callback: LocationManagerUtils.(Boolean) -> T): T {
         isEnable = LocationManagerCompat.isLocationEnabled(locationManager)
@@ -58,7 +62,7 @@ object LocationManagerUtils {
 
     init {
         update {
-            Timber.d("isLocationEnabled: $isEnable")
+            Timber.d("isLocationEnabled: $it")
         }
     }
 
@@ -66,7 +70,7 @@ object LocationManagerUtils {
     fun PermissionsState(
         onGranted: () -> Unit = {},
         onDenied: () -> Unit = {},
-        onInit: () -> Unit = {},
+        onInit: () -> Unit = {}
     ) {
         permissionsState = rememberMultiplePermissionsState(
             listOf(
@@ -110,7 +114,7 @@ object LocationManagerUtils {
             return@update null
         }
 
-        Timber.d("AppLocationManager: getLastKnownLocation")
+        Timber.d("LocationManagerUtils: getLastKnownLocation")
         return@update locationManager.getLastKnownLocation(bestProvider)
     }
 
@@ -118,8 +122,8 @@ object LocationManagerUtils {
     private fun requestLocationUpdates(listener: LocationListenerCompat) = update {
         if (!isEnable) return@update
 
-        Timber.i("AppLocationManager: requestLocationUpdates")
-        val localeRequestCompat = LocationRequestCompat.Builder(1)
+        Timber.i("LocationManagerUtils: requestLocationUpdates")
+        val locationRequest = LocationRequestCompat.Builder(1)
             .setQuality(LocationRequestCompat.QUALITY_HIGH_ACCURACY)
             .setMinUpdateDistanceMeters(0f)
             .build()
@@ -127,7 +131,7 @@ object LocationManagerUtils {
         LocationManagerCompat.requestLocationUpdates(
             locationManager,
             bestProvider,
-            localeRequestCompat,
+            locationRequest,
             listener,
             Looper.getMainLooper()
         )
@@ -156,7 +160,7 @@ object LocationManagerUtils {
         }
 
         awaitClose {
-            Timber.i("AppLocationManager: removeUpdates")
+            Timber.i("LocationManagerUtils: removeUpdates")
             LocationManagerCompat.removeUpdates(locationManager, listener)
         }
     }.flowOn(Dispatchers.Default)
