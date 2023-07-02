@@ -33,17 +33,19 @@ data class MagneticField(
 
 fun GoMagneticField.toField() = MagneticField(
     declination = declination,
-    declinationSV = declinationSV,
+    declinationSV = declinationSV.orZero(),
     inclination = inclination,
-    inclinationSV = inclinationSV,
+    inclinationSV = inclinationSV.orZero(),
     horizontalIntensity = horizontalIntensity,
-    horizontalSV = horizontalSV,
+    horizontalSV = horizontalSV.orZero(),
     northComponent = northComponent,
-    northSV = northSV,
+    northSV = northSV.orZero(),
     eastComponent = eastComponent,
-    eastSV = eastSV,
+    eastSV = eastSV.orZero(),
     verticalComponent = verticalComponent,
-    verticalSV = verticalSV,
+    verticalSV = verticalSV.orZero(),
     totalIntensity = totalIntensity,
-    totalSV = totalSV
+    totalSV = totalSV.orZero()
 )
+
+private fun Double.orZero() = if (isNaN()) 0.0 else this
