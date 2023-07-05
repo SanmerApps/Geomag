@@ -35,9 +35,9 @@ import com.sanmer.geomag.BuildConfig
 import com.sanmer.geomag.R
 import com.sanmer.geomag.app.Const
 import com.sanmer.geomag.ui.component.HtmlText
+import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
 import com.sanmer.geomag.ui.utils.navigateBack
-import com.sanmer.geomag.ui.utils.rememberDrawablePainter
 import com.sanmer.geomag.utils.expansion.openUrl
 
 @Composable
@@ -66,10 +66,11 @@ fun AboutScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(20.dp))
-            Image(
-                painter = rememberDrawablePainter(id = R.mipmap.ic_launcher),
-                contentDescription = null,
-                modifier = Modifier.size(65.dp)
+            Logo(
+                iconRes = R.drawable.ic_logo,
+                modifier = Modifier.size(65.dp),
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.height(20.dp))

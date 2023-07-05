@@ -34,13 +34,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
 import com.sanmer.geomag.datastore.UserData
+import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.navigation.navigateToSettings
 import com.sanmer.geomag.ui.screens.home.items.CalculationItem
 import com.sanmer.geomag.ui.screens.home.items.DateTimeItem
 import com.sanmer.geomag.ui.screens.home.items.LocationItem
 import com.sanmer.geomag.ui.screens.home.items.RecordBottomSheet
 import com.sanmer.geomag.ui.screens.home.items.RecordsItem
-import com.sanmer.geomag.ui.utils.rememberDrawablePainter
 import com.sanmer.geomag.utils.expansion.navigateToLauncher
 import com.sanmer.geomag.viewmodel.HomeViewModel
 
@@ -142,10 +142,11 @@ private fun TopBar(
         Box(
             modifier = Modifier.padding(horizontal = 18.dp)
         ) {
-            Image(
-                painter = rememberDrawablePainter(id = R.mipmap.ic_launcher),
-                contentDescription = null,
-                modifier = Modifier.size(32.dp)
+            Logo(
+                iconRes = R.drawable.ic_logo,
+                modifier = Modifier.size(32.dp),
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary
             )
         }
     },

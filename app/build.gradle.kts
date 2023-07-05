@@ -119,7 +119,6 @@ dependencies {
         include("*.jar", "*.aar")
     })
 
-    implementation(libs.accompanist.drawablepainter)
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
