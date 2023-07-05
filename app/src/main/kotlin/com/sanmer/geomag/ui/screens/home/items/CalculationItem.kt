@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.sanmer.geomag.BuildConfig
 import com.sanmer.geomag.Geomag
 import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.DropdownMenu
@@ -81,7 +82,8 @@ fun CalculationItem(
         OverviewButton(
             onClick = { navController.navigateToCalculate() },
             icon = R.drawable.edit_bold,
-            text = stringResource(id = R.string.overview_customized)
+            text = stringResource(id = R.string.overview_customized),
+            enabled = BuildConfig.DEBUG
         )
     }
 }
