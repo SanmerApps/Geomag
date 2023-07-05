@@ -140,12 +140,12 @@ private fun TopBar(
     },
     navigationIcon = {
         Box(
-            modifier = Modifier.padding(horizontal = 20.dp)
+            modifier = Modifier.padding(horizontal = 18.dp)
         ) {
             Image(
                 painter = rememberDrawablePainter(id = R.mipmap.ic_launcher),
                 contentDescription = null,
-                modifier = Modifier.size(35.dp)
+                modifier = Modifier.size(32.dp)
             )
         }
     },
