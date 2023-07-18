@@ -30,7 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sanmer.geomag.BuildConfig
-import com.sanmer.geomag.Geomag
+import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.DropdownMenu
 import com.sanmer.geomag.ui.navigation.navigateToCalculate
@@ -38,10 +38,10 @@ import com.sanmer.geomag.ui.navigation.navigateToCalculate
 @Composable
 fun CalculationItem(
     isRunning: Boolean,
-    fieldModel: Geomag.Models,
+    fieldModel: GeomagExt.Models,
     navController: NavController,
     modifier: Modifier = Modifier,
-    setFieldModel: (Geomag.Models) -> Unit,
+    setFieldModel: (GeomagExt.Models) -> Unit,
     singleCalculate: () -> Unit,
     toggleCalculate: (Context) -> Unit
 ) = OverviewCard(
@@ -90,8 +90,8 @@ fun CalculationItem(
 
 @Composable
 private fun ModelSelect(
-    selected: Geomag.Models,
-    onChange: (Geomag.Models) -> Unit,
+    selected: GeomagExt.Models,
+    onChange: (GeomagExt.Models) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val animateZ by animateFloatAsState(
@@ -127,7 +127,7 @@ private fun ModelSelect(
             )
         }
     ) {
-        Geomag.Models.values().forEach {
+        GeomagExt.Models.values().forEach {
             MenuItem(
                 value = it.name,
                 selected = selected.name,

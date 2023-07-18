@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.app.ServiceCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import com.sanmer.geomag.Geomag
+import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.R
 import com.sanmer.geomag.app.utils.NotificationUtils
 import com.sanmer.geomag.model.Position
@@ -57,7 +57,7 @@ class CalculateService : LifecycleService() {
         parameters.sample(1000)
             .distinctUntilChanged()
             .onEach { (dataTime, position) ->
-                currentValue = Geomag.run(
+                currentValue = GeomagExt.run(
                     model = userData.fieldModel,
                     dataTime = dataTime,
                     position = position,

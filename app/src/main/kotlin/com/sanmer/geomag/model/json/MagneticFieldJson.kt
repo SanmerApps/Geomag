@@ -1,6 +1,6 @@
 package com.sanmer.geomag.model.json
 
-import com.sanmer.geomag.model.MagneticField
+import com.sanmer.geomag.model.MagneticFieldExt
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -22,7 +22,7 @@ data class MagneticFieldJson(
     @Json(name = "total_sv") val totalSV: Double,
 )
 
-fun MagneticField.toJson() = MagneticFieldJson(
+fun MagneticFieldExt.toJson() = MagneticFieldJson(
     declination, declinationSV,
     inclination, inclinationSV,
     horizontalIntensity, horizontalSV,

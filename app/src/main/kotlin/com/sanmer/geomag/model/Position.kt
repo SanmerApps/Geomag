@@ -7,6 +7,12 @@ class Position(
     val longitude: Double,
     val altitude: Double
 ) {
+    constructor(location: Location) : this(
+        latitude = location.latitude,
+        longitude = location.longitude,
+        altitude = location.altitude / 1000.0
+    )
+
     val latitudeWithUnit get() = "${latitude}º N"
     val longitudeWithUnit get() = "${longitude}º W"
     val altitudeWithUnit get() = "$altitude km"
@@ -42,9 +48,3 @@ class Position(
         fun empty() = Position(0.0, 0.0, 0.0)
     }
 }
-
-fun Location.toPosition() = Position(
-    latitude = latitude,
-    longitude = longitude,
-    altitude = altitude / 1000.0
-)

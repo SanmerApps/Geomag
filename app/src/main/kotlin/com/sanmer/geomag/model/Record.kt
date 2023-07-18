@@ -1,16 +1,16 @@
 package com.sanmer.geomag.model
 
-import com.sanmer.geomag.Geomag
+import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.utils.expansion.now
 import com.squareup.moshi.JsonClass
 import kotlinx.datetime.LocalDateTime
 
 @JsonClass(generateAdapter = true)
 data class Record(
-    val model: Geomag.Models,
+    val model: GeomagExt.Models,
     val time: LocalDateTime,
     val position: Position,
-    val values: MagneticField
+    val values: MagneticFieldExt
 ) {
     override fun equals(other: Any?): Boolean {
         return when (other) {
@@ -33,10 +33,10 @@ data class Record(
 
     companion object {
         fun empty() = Record(
-            model = Geomag.Models.IGRF,
+            model = GeomagExt.Models.IGRF,
             time = LocalDateTime.now(),
             position = Position.empty(),
-            values = MagneticField.empty()
+            values = MagneticFieldExt.empty()
         )
     }
 }

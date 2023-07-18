@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sanmer.geomag.Geomag
-import com.sanmer.geomag.model.MagneticField
+import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.model.MagneticFieldExt
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
 import kotlinx.datetime.toLocalDateTime
@@ -22,7 +22,7 @@ data class RecordEntity(
 )
 
 val Record.primaryKey: Double get() {
-    val decimal = Geomag.toDecimalYears(time)
+    val decimal = GeomagExt.toDecimalYears(time)
     val position = position.altitude - position.latitude - position.longitude
     return decimal + position + model.ordinal
 }
@@ -38,7 +38,7 @@ fun Record.toEntity() = RecordEntity(
 )
 
 fun RecordEntity.toRecord() = Record(
-    model = Geomag.Models.valueOf(model),
+    model = GeomagExt.Models.valueOf(model),
     time = time.toLocalDateTime(),
     position = Position(
         latitude = latitude,
@@ -66,7 +66,7 @@ data class MagneticFieldEntity(
     @ColumnInfo(name = "total_sv") val totalSV: Double
 )
 
-fun MagneticField.toEntity() = MagneticFieldEntity(
+fun MagneticFieldExt.toEntity() = MagneticFieldEntity(
     declination, declinationSV,
     inclination, inclinationSV,
     horizontalIntensity, horizontalSV,
@@ -76,7 +76,7 @@ fun MagneticField.toEntity() = MagneticFieldEntity(
     totalIntensity, totalSV
 )
 
-fun MagneticFieldEntity.toMF() = MagneticField(
+fun MagneticFieldEntity.toMF() = MagneticFieldExt(
     declination, declinationSV,
     inclination, inclinationSV,
     horizontalIntensity, horizontalSV,

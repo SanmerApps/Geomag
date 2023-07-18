@@ -11,10 +11,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import com.sanmer.geomag.Geomag
+import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
-import com.sanmer.geomag.model.toPosition
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.repository.UserDataRepository
 import com.sanmer.geomag.service.CalculateService
@@ -51,7 +50,7 @@ class HomeViewModel @Inject constructor(
 
     val isLocationRunning get() = LocationService.isRunning
     val position by derivedStateOf {
-        LocationService.location.toPosition()
+        Position(LocationService.location)
     }
 
     val isCalculateRunning get() = CalculateService.isRunning
@@ -63,7 +62,7 @@ class HomeViewModel @Inject constructor(
     }
 
     val userData get() = userDataRepository.userData
-    fun setFieldModel(value: Geomag.Models) = userDataRepository.setFieldModel(value)
+    fun setFieldModel(value: GeomagExt.Models) = userDataRepository.setFieldModel(value)
     fun setEnableRecords(value: Boolean) = userDataRepository.setEnableRecords(value)
 
     init {
@@ -98,7 +97,7 @@ class HomeViewModel @Inject constructor(
         val model = userDataRepository.value.fieldModel
         val enableRecords = userDataRepository.value.enableRecords
 
-        _currentValue = Geomag.run(
+        _currentValue = GeomagExt.run(
             model = model,
             dataTime = dateTime,
             position = position
@@ -119,7 +118,7 @@ class HomeViewModel @Inject constructor(
         companion object {
             fun now(): DateTime {
                 val value = LocalDateTime.now()
-                val decimal = Geomag.toDecimalYears(value)
+                val decimal = GeomagExt.toDecimalYears(value)
 
                 return DateTime(value, decimal)
             }

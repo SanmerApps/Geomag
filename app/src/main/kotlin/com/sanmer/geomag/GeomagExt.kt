@@ -1,20 +1,18 @@
 package com.sanmer.geomag
 
-import com.sanmer.geomag.model.MagneticField
+import com.sanmer.geomag.model.MagneticFieldExt
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
-import com.sanmer.geomag.model.toField
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
-import go.geomag.Geomag as GoGeomag
 
-object Geomag {
+object GeomagExt {
     private fun toDecimalYears(
         year: Int, month: Int, day: Int,
         hour: Int, min: Int,
         sec: Int, nsec: Int,
-    )  = GoGeomag.toDecimalYears(
+    )  = Geomag.toDecimalYears(
         year.toLong(),
         month.toLong(),
         day.toLong(),
@@ -29,7 +27,7 @@ object Geomag {
         longitude: Double,
         altKm: Double,
         decimalYears: Double
-    ) = GoGeomag.igrf(
+    ) = Geomag.igrf(
         latitude,
         longitude,
         altKm,
@@ -41,7 +39,7 @@ object Geomag {
         longitude: Double,
         altKm: Double,
         decimalYears: Double
-    ) = GoGeomag.wmm(
+    ) = Geomag.wmm(
         latitude,
         longitude,
         altKm,
@@ -62,7 +60,7 @@ object Geomag {
         longitude = position.longitude,
         altKm = position.altitude,
         decimalYears = toDecimalYears(dataTime)
-    ).toField()
+    ).let { MagneticFieldExt(it) }
 
     fun wmm(
         dataTime: LocalDateTime,
@@ -72,14 +70,14 @@ object Geomag {
         longitude = position.longitude,
         altKm = position.altitude,
         decimalYears = toDecimalYears(dataTime)
-    ).toField()
+    ).let { MagneticFieldExt(it) }
 
     suspend fun run(
         model: Models,
         dataTime: LocalDateTime,
         position: Position
     ): Record = withContext(Dispatchers.Default) {
-        val cal: (LocalDateTime, Position) -> MagneticField = when (model) {
+        val cal: (LocalDateTime, Position) -> MagneticFieldExt = when (model) {
             Models.IGRF -> ::igrf
             Models.WMM -> ::wmm
         }

@@ -1,7 +1,7 @@
 package geomag
 
 //go:generate bash -c "if [ ! -d libs ]; then mkdir libs; fi"
-//go:generate gomobile bind -target android -androidapi 26 -javapkg go -trimpath -v -o libs/geomag.aar
+//go:generate gomobile bind -target android -androidapi 26 -javapkg com.sanmer -trimpath -v -o libs/geomag.aar
 
 import (
 	"github.com/proway2/go-igrf/igrf"
