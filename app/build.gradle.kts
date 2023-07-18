@@ -77,7 +77,8 @@ android {
         "org/**",
         "**.properties",
         "**.bin",
-        "**/*.proto"
+        "**/*.proto",
+        "**/*.java"
     )
 
     applicationVariants.configureEach {
