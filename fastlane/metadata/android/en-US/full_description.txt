@@ -1,0 +1,7 @@
+Geomag is an Android app that calculates geomagnetic field models.
+
+Supported Models:
+- IGRF (International Geomagnetic Reference Field)
+- WMM (World Magnetic Model)
+
+https://github.com/ya0211/Geomag
