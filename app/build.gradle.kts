@@ -84,7 +84,7 @@ android {
     applicationVariants.configureEach {
         outputs.configureEach {
             this as ApkVariantOutputImpl
-            outputFileName = "geomag-${versionName}-${versionCode}-${name}.apk"
+            outputFileName = "Geomag-${versionName}-${versionCode}-${name}.apk"
         }
     }
 
