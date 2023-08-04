@@ -76,7 +76,7 @@ jobs:
       if: success() && github.ref == 'refs/heads/main'
       id: release-name
       run: |
-        name=`ls app/build/outputs/apk/release/*-arm64-v8a-release.apk | awk -F '(/|-arm64-v8a-release.apk)' '{print $6}'` && echo "name=${name}-release"
+        name=`ls app/build/outputs/apk/release/*-arm64-v8a-release.apk | awk -F '(/|-arm64-v8a-release.apk)' '{print $6}'` && echo "name=${name}-release" >> $GITHUB_OUTPUT
     
     - name: Upload built apk
       if: success() && github.ref == 'refs/heads/main'
