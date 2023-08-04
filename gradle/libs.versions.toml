@@ -21,7 +21,7 @@ kotlinxDatetime = "0.4.0"
 ksp = "1.9.0-1.0.13"
 protobuf = "3.23.4"
 protobufPlugin = "0.9.4"
-squareMoshi = "1.14.0"
+squareMoshi = "1.15.0"
 
 [libraries]
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
