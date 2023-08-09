@@ -52,7 +52,7 @@ jobs:
     - name: Set up NDK
       uses: nttld/setup-ndk@v1.2.0
       with:
-        ndk-version: r25c
+        ndk-version: r26
         add-to-path: false
         local-cache: true
         

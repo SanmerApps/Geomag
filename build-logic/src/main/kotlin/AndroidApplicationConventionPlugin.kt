@@ -19,7 +19,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 compileSdk = 34
                 buildToolsVersion = "34.0.0"
-                ndkVersion = "25.2.9519653"
+                ndkVersion = "26.0.10404224"
 
                 defaultConfig {
                     minSdk = 26
