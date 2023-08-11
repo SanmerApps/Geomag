@@ -23,10 +23,10 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: |
         if [ ! -z "${{ secrets.KEY_STORE }}" ]; then
-          echo keyStorePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> local.properties
-          echo keyAlias='${{ secrets.KEY_ALIAS }}' >> local.properties
-          echo keyPassword='${{ secrets.KEY_PASSWORD }}' >> local.properties
-          echo keyStore='${{ github.workspace }}/key.jks' >> local.properties
+          echo keyStorePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> signing.properties
+          echo keyAlias='${{ secrets.KEY_ALIAS }}' >> signing.properties
+          echo keyPassword='${{ secrets.KEY_PASSWORD }}' >> signing.properties
+          echo keyStore='${{ github.workspace }}/key.jks' >> signing.properties
           echo ${{ secrets.KEY_STORE }} | base64 --decode > ${{ github.workspace }}/key.jks
         fi
 
