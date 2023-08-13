@@ -1,11 +1,8 @@
-@file:Suppress("DEPRECATION")
-
 package com.sanmer.geomag.app.utils
 
 import android.Manifest.permission
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Criteria
 import android.location.Location
 import android.location.LocationManager
 import android.os.Looper
@@ -43,14 +40,7 @@ object LocationManagerUtils {
         get() = if (OsUtils.atLeastS) {
             LocationManager.FUSED_PROVIDER
         } else {
-            locationManager.getBestProvider(
-                Criteria().apply {
-                    accuracy = Criteria.ACCURACY_FINE
-                    isAltitudeRequired = true
-                    isCostAllowed = true
-                },
-                true
-            ) ?: LocationManager.GPS_PROVIDER
+            LocationManager.GPS_PROVIDER
         }
 
     fun <T> update(callback: LocationManagerUtils.(Boolean) -> T): T {
@@ -122,7 +112,7 @@ object LocationManagerUtils {
     private fun requestLocationUpdates(listener: LocationListenerCompat) = update {
         if (!isEnable) return@update
 
-        Timber.i("LocationManagerUtils: requestLocationUpdates")
+        Timber.d("LocationManagerUtils: requestLocationUpdates")
         val locationRequest = LocationRequestCompat.Builder(1)
             .setQuality(LocationRequestCompat.QUALITY_HIGH_ACCURACY)
             .setMinUpdateDistanceMeters(0f)
@@ -160,7 +150,7 @@ object LocationManagerUtils {
         }
 
         awaitClose {
-            Timber.i("LocationManagerUtils: removeUpdates")
+            Timber.d("LocationManagerUtils: removeUpdates")
             LocationManagerCompat.removeUpdates(locationManager, listener)
         }
     }.flowOn(Dispatchers.Default)
