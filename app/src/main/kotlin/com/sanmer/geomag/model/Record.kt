@@ -2,10 +2,8 @@ package com.sanmer.geomag.model
 
 import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.utils.extensions.now
-import com.squareup.moshi.JsonClass
 import kotlinx.datetime.LocalDateTime
 
-@JsonClass(generateAdapter = true)
 data class Record(
     val model: GeomagExt.Models,
     val time: LocalDateTime,

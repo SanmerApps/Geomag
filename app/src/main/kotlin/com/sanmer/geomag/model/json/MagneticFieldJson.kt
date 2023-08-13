@@ -1,25 +1,24 @@
 package com.sanmer.geomag.model.json
 
 import com.sanmer.geomag.model.MagneticFieldExt
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class MagneticFieldJson(
-    @Json(name = "declination") val declination: Double,
-    @Json(name = "declination_sv") val declinationSV: Double,
-    @Json(name = "inclination") val inclination: Double,
-    @Json(name = "inclination_sv") val inclinationSV: Double,
-    @Json(name = "horizontal_intensity") val horizontalIntensity: Double,
-    @Json(name = "horizontal_sv") val horizontalSV: Double,
-    @Json(name = "north_component") val northComponent: Double,
-    @Json(name = "north_sv") val northSV: Double,
-    @Json(name = "east_component") val eastComponent: Double,
-    @Json(name = "east_sv") val eastSV: Double,
-    @Json(name = "vertical_component") val verticalComponent: Double,
-    @Json(name = "vertical_sv") val verticalSV: Double,
-    @Json(name = "total_intensity") val totalIntensity: Double,
-    @Json(name = "total_sv") val totalSV: Double,
+    val declination: Double,
+    val declinationSV: Double,
+    val inclination: Double,
+    val inclinationSV: Double,
+    val horizontalIntensity: Double,
+    val horizontalSV: Double,
+    val northComponent: Double,
+    val northSV: Double,
+    val eastComponent: Double,
+    val eastSV: Double,
+    val verticalComponent: Double,
+    val verticalSV: Double,
+    val totalIntensity: Double,
+    val totalSV: Double,
 )
 
 fun MagneticFieldExt.toJson() = MagneticFieldJson(
