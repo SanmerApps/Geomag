@@ -11,12 +11,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RecordDao {
     @Query("SELECT * FROM records")
-    fun getAll(): List<RecordEntity>
-
-    @Query("SELECT * FROM records")
     fun getAllAsFlow(): Flow<List<RecordEntity>>
 
-    @Query("SELECT * FROM records WHERE id LIKE :id LIMIT 1")
+    @Query("SELECT * FROM records WHERE id = :id LIMIT 1")
     fun getById(id: Double): RecordEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -23,13 +23,14 @@ class RecordViewModel @Inject constructor(
 
     init {
         Timber.d("RecordViewModel init: $primaryKey")
-        runCatching {
-            getRecord(primaryKey.toDouble())
-        }
-    }
 
-    private fun getRecord(id: Double) = viewModelScope.launch {
-        record = localRepository.getById(id)
+        viewModelScope.launch {
+            runCatching {
+                localRepository.getById(primaryKey.toDouble())
+            }.onSuccess {
+                record = it
+            }
+        }
     }
 
     fun share(context: Context) {

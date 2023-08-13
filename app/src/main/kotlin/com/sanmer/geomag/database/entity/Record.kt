@@ -1,6 +1,5 @@
 package com.sanmer.geomag.database.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,13 +11,13 @@ import kotlinx.datetime.toLocalDateTime
 
 @Entity(tableName = "records")
 data class RecordEntity(
+    @PrimaryKey val id: Double,
     val model: String,
     val time: String,
     val altitude: Double,
     val latitude: Double,
     val longitude: Double,
-    @Embedded val values: MagneticFieldEntity,
-    @PrimaryKey val id: Double
+    @Embedded val values: MagneticFieldEntity
 )
 
 val Record.primaryKey: Double get() {
@@ -28,13 +27,13 @@ val Record.primaryKey: Double get() {
 }
 
 fun Record.toEntity() = RecordEntity(
+    id = primaryKey,
     model = model.name,
     time = time.toString(),
     altitude = position.altitude,
     latitude = position.latitude,
     longitude = position.longitude,
     values = values.toEntity(),
-    id = primaryKey
 )
 
 fun RecordEntity.toRecord() = Record(
@@ -48,22 +47,22 @@ fun RecordEntity.toRecord() = Record(
     values = values.toMF()
 )
 
-@Entity(tableName = "magnetic_field")
+@Entity(tableName = "values")
 data class MagneticFieldEntity(
-    @ColumnInfo(name = "declination") val declination: Double,
-    @ColumnInfo(name = "declination_sv") val declinationSV: Double,
-    @ColumnInfo(name = "inclination") val inclination: Double,
-    @ColumnInfo(name = "inclination_sv") val inclinationSV: Double,
-    @ColumnInfo(name = "horizontal_intensity") val horizontalIntensity: Double,
-    @ColumnInfo(name = "horizontal_sv") val horizontalSV: Double,
-    @ColumnInfo(name = "north_component") val northComponent: Double,
-    @ColumnInfo(name = "north_sv") val northSV: Double,
-    @ColumnInfo(name = "east_component") val eastComponent: Double,
-    @ColumnInfo(name = "east_sv") val eastSV: Double,
-    @ColumnInfo(name = "vertical_component") val verticalComponent: Double,
-    @ColumnInfo(name = "vertical_sv") val verticalSV: Double,
-    @ColumnInfo(name = "total_intensity") val totalIntensity: Double,
-    @ColumnInfo(name = "total_sv") val totalSV: Double
+    val declination: Double,
+    val declinationSV: Double,
+    val inclination: Double,
+    val inclinationSV: Double,
+    val horizontalIntensity: Double,
+    val horizontalSV: Double,
+    val northComponent: Double,
+    val northSV: Double,
+    val eastComponent: Double,
+    val eastSV: Double,
+    val verticalComponent: Double,
+    val verticalSV: Double,
+    val totalIntensity: Double,
+    val totalSV: Double
 )
 
 fun MagneticFieldExt.toEntity() = MagneticFieldEntity(

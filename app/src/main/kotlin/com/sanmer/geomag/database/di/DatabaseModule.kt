@@ -1,7 +1,6 @@
 package com.sanmer.geomag.database.di
 
 import android.content.Context
-import androidx.room.Room
 import com.sanmer.geomag.database.AppDatabase
 import com.sanmer.geomag.database.dao.RecordDao
 import dagger.Module
@@ -20,11 +19,7 @@ object DatabaseModule {
     @Singleton
     fun providesAppDatabase(
         @ApplicationContext context: Context
-    ): AppDatabase {
-        return Room.databaseBuilder(context,
-            AppDatabase::class.java, "geomag")
-            .build()
-    }
+    ): AppDatabase = AppDatabase.build(context)
 
     @Provides
     @Singleton

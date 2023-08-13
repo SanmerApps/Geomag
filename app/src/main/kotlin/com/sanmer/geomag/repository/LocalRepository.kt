@@ -18,10 +18,6 @@ class LocalRepository @Inject constructor(
         list.map { it.toRecord() }
     }
 
-    suspend fun getAll() = withContext(Dispatchers.IO) {
-        recordDao.getAll().map { it.toRecord() }
-    }
-
     suspend fun getById(id: Double) = withContext(Dispatchers.IO) {
         recordDao.getById(id).toRecord()
     }
