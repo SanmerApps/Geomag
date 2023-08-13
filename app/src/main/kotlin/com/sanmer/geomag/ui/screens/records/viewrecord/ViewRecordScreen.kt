@@ -1,7 +1,6 @@
 package com.sanmer.geomag.ui.screens.records.viewrecord
 
 import android.content.Context
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -35,7 +34,6 @@ import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
 import com.sanmer.geomag.ui.screens.records.viewrecord.items.MagneticFieldItem
 import com.sanmer.geomag.ui.screens.records.viewrecord.items.RecordInfoItem
-import com.sanmer.geomag.ui.utils.navigateBack
 import com.sanmer.geomag.viewmodel.RecordViewModel
 
 @Composable
@@ -44,8 +42,6 @@ fun ViewRecordScreen(
     viewModel: RecordViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-
-    BackHandler { navController.navigateBack() }
 
     Scaffold(
         modifier = Modifier
@@ -57,7 +53,7 @@ fun ViewRecordScreen(
                 shareRecord = viewModel::share,
                 deleteRecord = {
                     viewModel.delete()
-                    navController.navigateBack()
+                    navController.popBackStack()
                 }
             )
         }
@@ -85,7 +81,7 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
 ) = NavigateUpTopBar(
-    title = R.string.page_view_record,
+    title = stringResource(id = R.string.page_view_record),
     actions = {
         val context = LocalContext.current
         IconButton(

@@ -1,7 +1,5 @@
 package com.sanmer.geomag.ui.screens.settings.about
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +35,6 @@ import com.sanmer.geomag.app.Const
 import com.sanmer.geomag.ui.component.HtmlText
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
-import com.sanmer.geomag.ui.utils.navigateBack
 import com.sanmer.geomag.utils.expansion.openUrl
 
 @Composable
@@ -46,8 +43,6 @@ fun AboutScreen(
 ) {
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-
-    BackHandler { navController.navigateBack() }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -155,7 +150,7 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
 ) = NavigateUpTopBar(
-    title = R.string.page_about,
+    title = stringResource(id = R.string.page_about),
     scrollBehavior = scrollBehavior,
     navController = navController
 )

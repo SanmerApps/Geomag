@@ -10,7 +10,6 @@ enum class MainScreen(val route: String) {
     Settings("SettingsScreen")
 }
 
-fun NavController.navigateToHome() = navigatePopUpTo(MainScreen.Home.route)
 fun NavController.navigateToCalculate() = navigatePopUpTo(MainScreen.Calculate.route)
 fun NavController.navigateToRecords() = navigatePopUpTo(MainScreen.Records.route)
 fun NavController.navigateToSettings() = navigatePopUpTo(MainScreen.Settings.route)

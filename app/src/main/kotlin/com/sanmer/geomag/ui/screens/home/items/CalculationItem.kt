@@ -127,7 +127,7 @@ private fun ModelSelect(
             )
         }
     ) {
-        GeomagExt.Models.values().forEach {
+        GeomagExt.Models.entries.forEach {
             MenuItem(
                 value = it.name,
                 selected = selected.name,

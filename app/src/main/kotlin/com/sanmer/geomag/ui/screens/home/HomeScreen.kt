@@ -1,7 +1,5 @@
 package com.sanmer.geomag.ui.screens.home
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +39,6 @@ import com.sanmer.geomag.ui.screens.home.items.DateTimeItem
 import com.sanmer.geomag.ui.screens.home.items.LocationItem
 import com.sanmer.geomag.ui.screens.home.items.RecordBottomSheet
 import com.sanmer.geomag.ui.screens.home.items.RecordsItem
-import com.sanmer.geomag.utils.expansion.navigateToLauncher
 import com.sanmer.geomag.viewmodel.HomeViewModel
 
 @Composable
@@ -60,8 +57,6 @@ fun HomeScreen(
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-
-    BackHandler { context.navigateToLauncher() }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

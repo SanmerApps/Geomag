@@ -1,10 +1,8 @@
 package com.sanmer.geomag.viewmodel
 
 import android.content.Context
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,8 +34,8 @@ class RecordsViewModel @Inject constructor(
     private val selectedList = mutableStateListOf<Record>()
     val selectedSize get() = selectedList.size
 
-    var isChooser by mutableStateOf(false)
-        private set
+    private val _isChooser = mutableStateOf(false)
+    val isChooser get() = _isChooser.value
 
     init {
         Timber.d("RecordsViewModel init")
@@ -45,8 +43,8 @@ class RecordsViewModel @Inject constructor(
 
     fun isSelected(value: Record) = value in selectedList
 
-    fun enableChooser(value: Boolean) {
-        isChooser = value
+    fun setChooser(value: Boolean) {
+        _isChooser.value = value
         selectedList.clear()
     }
 
@@ -60,11 +58,11 @@ class RecordsViewModel @Inject constructor(
 
     fun shareJsonFile(context: Context) {
         JsonUtils.shareJsonFile(context, selectedList)
-        enableChooser(false)
+        setChooser(false)
     }
 
     fun deleteSelected() = viewModelScope.launch {
         localRepository.delete(selectedList)
-        enableChooser(false)
+        setChooser(false)
     }
 }

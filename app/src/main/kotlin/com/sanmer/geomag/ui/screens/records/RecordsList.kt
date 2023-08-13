@@ -33,7 +33,7 @@ import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.ui.component.FastScrollbar
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.navigation.graphs.createViewRoute
-import com.sanmer.geomag.ui.utils.navigatePopUpTo
+import com.sanmer.geomag.ui.utils.navigateSingleTopTo
 import com.sanmer.geomag.ui.utils.rememberFastScroller
 import com.sanmer.geomag.ui.utils.scrollbarState
 
@@ -43,7 +43,7 @@ fun RecordsList(
     state: LazyListState,
     isSelected: (Record) -> Boolean,
     isChooser: Boolean,
-    enableChooser: (Boolean) -> Unit,
+    setChooser: (Boolean) -> Unit,
     onToggle: (Record) -> Unit,
     navController: NavController,
 ) = Box(
@@ -58,9 +58,9 @@ fun RecordsList(
                 record = it,
                 isSelected = isSelected(it),
                 isChooser = isChooser,
-                enableChooser = enableChooser,
+                setChooser = setChooser,
                 onToggle = onToggle,
-                onClick = { navController.navigatePopUpTo(createViewRoute(it)) }
+                onClick = { navController.navigateSingleTopTo(createViewRoute(it)) }
             )
         }
     }
@@ -81,7 +81,7 @@ private fun RecordItem(
     record: Record,
     isSelected: Boolean,
     isChooser: Boolean,
-    enableChooser: (Boolean) -> Unit,
+    setChooser: (Boolean) -> Unit,
     onToggle: (Record) -> Unit,
     onClick: () -> Unit = {}
 ) = Row(
@@ -99,7 +99,7 @@ private fun RecordItem(
             },
             onLongClick = {
                 if (!isChooser) {
-                    enableChooser(true)
+                    setChooser(true)
                     onToggle(record)
                 }
             },

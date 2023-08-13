@@ -1,6 +1,5 @@
 package com.sanmer.geomag.ui.screens.settings
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -8,10 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -28,11 +24,11 @@ import com.sanmer.geomag.R
 import com.sanmer.geomag.datastore.UserData
 import com.sanmer.geomag.datastore.isDarkMode
 import com.sanmer.geomag.ui.activity.log.LogActivity
+import com.sanmer.geomag.ui.component.NavigateUpTopBar
 import com.sanmer.geomag.ui.component.SettingNormalItem
 import com.sanmer.geomag.ui.navigation.graphs.SettingsScreen
-import com.sanmer.geomag.ui.navigation.navigateToHome
 import com.sanmer.geomag.ui.screens.settings.items.AppThemeItem
-import com.sanmer.geomag.ui.utils.navigatePopUpTo
+import com.sanmer.geomag.ui.utils.navigateSingleTopTo
 import com.sanmer.geomag.viewmodel.SettingsViewModel
 
 @Composable
@@ -44,8 +40,6 @@ fun SettingsScreen(
     val userData by viewModel.userData.collectAsStateWithLifecycle(UserData.default())
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-
-    BackHandler { navController.navigateToHome() }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -86,32 +80,18 @@ fun SettingsScreen(
 private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
-) = TopAppBar(
-    title = {
-        Text(
-            text = stringResource(id = R.string.page_settings),
-            style = MaterialTheme.typography.titleLarge
-        )
-    },
-    navigationIcon = {
-        IconButton(
-            onClick = { navController.navigateToHome() }
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.arrow_left_outline),
-                contentDescription = null
-            )
-        }
-    },
+) = NavigateUpTopBar(
+    title = stringResource(id = R.string.page_settings),
+    scrollBehavior = scrollBehavior,
+    navController = navController,
     actions = {
         IconButton(
-            onClick = { navController.navigatePopUpTo(SettingsScreen.About.route) }
+            onClick = { navController.navigateSingleTopTo(SettingsScreen.About.route) }
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.star_outline),
                 contentDescription = null
             )
         }
-    },
-    scrollBehavior = scrollBehavior
+    }
 )

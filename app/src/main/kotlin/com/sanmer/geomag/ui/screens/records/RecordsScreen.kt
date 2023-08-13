@@ -33,7 +33,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.PageIndicator
-import com.sanmer.geomag.ui.navigation.navigateToHome
 import com.sanmer.geomag.viewmodel.RecordsViewModel
 
 @Composable
@@ -48,16 +47,12 @@ fun RecordsScreen(
     
     LaunchedEffect(viewModel.selectedSize) {
         if (viewModel.selectedSize == 0) {
-            viewModel.enableChooser(false)
+            viewModel.setChooser(false)
         }
     }
 
-    BackHandler {
-        if (viewModel.isChooser) {
-            viewModel.enableChooser(false)
-        } else {
-            navController.navigateToHome()
-        }
+    BackHandler(enabled = viewModel.isChooser) {
+        viewModel.setChooser(false)
     }
 
     Scaffold(
@@ -66,7 +61,7 @@ fun RecordsScreen(
             TopBar(
                 isChooser = viewModel.isChooser,
                 selectedSize = viewModel.selectedSize,
-                enableChooser = viewModel::enableChooser,
+                setChooser = viewModel::setChooser,
                 shareRecords = viewModel::shareJsonFile,
                 deleteRecords = viewModel::deleteSelected,
                 scrollBehavior = scrollBehavior,
@@ -91,7 +86,7 @@ fun RecordsScreen(
                     state = listSate,
                     isSelected = viewModel::isSelected,
                     isChooser = viewModel.isChooser,
-                    enableChooser = viewModel::enableChooser,
+                    setChooser = viewModel::setChooser,
                     onToggle = viewModel::toggleRecord,
                     navController = navController
                 )
@@ -104,7 +99,7 @@ fun RecordsScreen(
 private fun TopBar(
     isChooser: Boolean,
     selectedSize: Int,
-    enableChooser: (Boolean) -> Unit,
+    setChooser: (Boolean) -> Unit,
     shareRecords: (Context) -> Unit,
     deleteRecords: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
@@ -124,9 +119,9 @@ private fun TopBar(
         IconButton(
             onClick = {
                 if (isChooser) {
-                    enableChooser(false)
+                    setChooser(false)
                 } else {
-                    navController.navigateToHome()
+                    navController.popBackStack()
                 }
             }
         ) {
