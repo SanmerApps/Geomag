@@ -2,8 +2,8 @@ package com.sanmer.geomag.utils.log
 
 import android.content.Context
 import com.sanmer.geomag.App
-import com.sanmer.geomag.utils.expansion.getLogPath
-import com.sanmer.geomag.utils.expansion.shareFile
+import com.sanmer.geomag.utils.extensions.getLogPath
+import com.sanmer.geomag.utils.extensions.shareFile
 import com.sanmer.geomag.utils.log.LogText.Companion.toLogPriority
 
 object Logcat {

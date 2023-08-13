@@ -17,7 +17,7 @@ import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.repository.UserDataRepository
 import com.sanmer.geomag.ui.activity.main.MainActivity
-import com.sanmer.geomag.utils.expansion.now
+import com.sanmer.geomag.utils.extensions.now
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

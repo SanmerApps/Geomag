@@ -1,7 +1,7 @@
 package com.sanmer.geomag.model
 
 import com.sanmer.geomag.GeomagExt
-import com.sanmer.geomag.utils.expansion.now
+import com.sanmer.geomag.utils.extensions.now
 import com.squareup.moshi.JsonClass
 import kotlinx.datetime.LocalDateTime
 

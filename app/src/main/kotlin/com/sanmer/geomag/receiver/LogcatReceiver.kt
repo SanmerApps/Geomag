@@ -3,7 +3,7 @@ package com.sanmer.geomag.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.sanmer.geomag.utils.expansion.deleteLog
+import com.sanmer.geomag.utils.extensions.deleteLog
 import com.sanmer.geomag.utils.log.Logcat
 import timber.log.Timber
 

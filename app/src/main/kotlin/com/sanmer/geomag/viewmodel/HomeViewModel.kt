@@ -18,7 +18,7 @@ import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.repository.UserDataRepository
 import com.sanmer.geomag.service.CalculateService
 import com.sanmer.geomag.service.LocationService
-import com.sanmer.geomag.utils.expansion.now
+import com.sanmer.geomag.utils.extensions.now
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext

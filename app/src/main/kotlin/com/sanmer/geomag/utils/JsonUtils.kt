@@ -5,10 +5,10 @@ import com.sanmer.geomag.App
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.model.json.RecordJson
 import com.sanmer.geomag.model.json.toJson
-import com.sanmer.geomag.utils.expansion.createJson
-import com.sanmer.geomag.utils.expansion.deleteJson
-import com.sanmer.geomag.utils.expansion.now
-import com.sanmer.geomag.utils.expansion.shareFile
+import com.sanmer.geomag.utils.extensions.createJson
+import com.sanmer.geomag.utils.extensions.deleteJson
+import com.sanmer.geomag.utils.extensions.now
+import com.sanmer.geomag.utils.extensions.shareFile
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import kotlinx.datetime.LocalDateTime

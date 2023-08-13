@@ -35,7 +35,7 @@ import com.sanmer.geomag.app.Const
 import com.sanmer.geomag.ui.component.HtmlText
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
-import com.sanmer.geomag.utils.expansion.openUrl
+import com.sanmer.geomag.utils.extensions.openUrl
 
 @Composable
 fun AboutScreen(

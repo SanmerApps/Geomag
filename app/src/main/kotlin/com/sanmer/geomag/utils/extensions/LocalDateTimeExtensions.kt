@@ -1,4 +1,4 @@
-package com.sanmer.geomag.utils.expansion
+package com.sanmer.geomag.utils.extensions
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
