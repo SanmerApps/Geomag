@@ -102,7 +102,7 @@ fun OverviewCard(
     leadingIcon = {
         Logo(
             modifier = Modifier.size(40.dp),
-            iconRes = icon,
+            icon = icon,
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
         )

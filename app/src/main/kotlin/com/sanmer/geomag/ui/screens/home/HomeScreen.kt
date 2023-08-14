@@ -138,7 +138,7 @@ private fun TopBar(
             modifier = Modifier.padding(horizontal = 18.dp)
         ) {
             Logo(
-                iconRes = R.drawable.ic_logo,
+                icon = R.drawable.ic_logo,
                 modifier = Modifier.size(32.dp),
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 containerColor = MaterialTheme.colorScheme.primary

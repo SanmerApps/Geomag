@@ -57,7 +57,7 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             SettingNormalItem(
-                iconRes = R.drawable.health_outline,
+                icon = R.drawable.health_outline,
                 text = stringResource(id = R.string.settings_log_viewer),
                 subText = stringResource(id = R.string.settings_log_viewer_desc),
                 onClick = {
