@@ -1,13 +1,9 @@
 syntax = "proto3";
 
+import "com/sanmer/geomag/datastore/DarkMode.proto";
+
 option java_package = "com.sanmer.geomag.datastore";
 option java_multiple_files = true;
-
-enum DarkMode {
-    FOLLOW_SYSTEM = 0;
-    ALWAYS_OFF = 1;
-    ALWAYS_ON = 2;
-}
 
 message UserPreferences {
   DarkMode darkMode = 1;

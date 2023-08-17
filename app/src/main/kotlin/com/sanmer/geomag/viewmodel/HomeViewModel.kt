@@ -15,7 +15,7 @@ import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.repository.LocalRepository
-import com.sanmer.geomag.repository.UserDataRepository
+import com.sanmer.geomag.repository.UserPreferencesRepository
 import com.sanmer.geomag.service.CalculateService
 import com.sanmer.geomag.service.LocationService
 import com.sanmer.geomag.utils.extensions.now
@@ -35,10 +35,11 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val localRepository: LocalRepository,
-    private val userDataRepository: UserDataRepository
+    private val userPreferencesRepository: UserPreferencesRepository
 ): ViewModel() {
     var isTimeRunning by mutableStateOf(true)
         private set
+
     private val dateTimeFlow: Flow<DateTime> = flow {
         while (currentCoroutineContext().isActive) {
             if (isTimeRunning) {
@@ -60,10 +61,6 @@ class HomeViewModel @Inject constructor(
     } else {
         _currentValue
     }
-
-    val userData get() = userDataRepository.userData
-    fun setFieldModel(value: GeomagExt.Models) = userDataRepository.setFieldModel(value)
-    fun setEnableRecords(value: Boolean) = userDataRepository.setEnableRecords(value)
 
     init {
         Timber.d("HomeViewModel init")
@@ -90,13 +87,12 @@ class HomeViewModel @Inject constructor(
     }
 
     fun singleCalculate(
+        model: GeomagExt.Models,
         dateTime: LocalDateTime,
         position: Position,
+        enableRecords: Boolean,
         onFinished: () -> Unit
     ) = viewModelScope.launch {
-        val model = userDataRepository.value.fieldModel
-        val enableRecords = userDataRepository.value.enableRecords
-
         _currentValue = GeomagExt.run(
             model = model,
             dataTime = dateTime,
@@ -146,4 +142,9 @@ class HomeViewModel @Inject constructor(
             )
         }
     }
+
+    fun setFieldModel(value: GeomagExt.Models) =
+        userPreferencesRepository.setFieldModel(value)
+    fun setEnableRecords(value: Boolean) =
+        userPreferencesRepository.setEnableRecords(value)
 }

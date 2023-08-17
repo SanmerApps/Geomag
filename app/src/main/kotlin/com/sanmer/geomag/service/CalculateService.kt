@@ -12,10 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.R
 import com.sanmer.geomag.app.utils.NotificationUtils
+import com.sanmer.geomag.datastore.UserPreferencesExt
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.repository.LocalRepository
-import com.sanmer.geomag.repository.UserDataRepository
+import com.sanmer.geomag.repository.UserPreferencesRepository
 import com.sanmer.geomag.ui.activity.main.MainActivity
 import com.sanmer.geomag.utils.extensions.now
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,18 +35,24 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CalculateService : LifecycleService() {
     @Inject
-    lateinit var userDataRepository: UserDataRepository
+    lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Inject
     lateinit var localRepository: LocalRepository
 
-    private val userData get() = userDataRepository.value
+    private var userPreferences = UserPreferencesExt.default()
 
     override fun onCreate() {
         super.onCreate()
         Timber.d("onCreate")
         isRunning = true
         setForeground()
+
+        userPreferencesRepository.data
+            .distinctUntilChanged()
+            .onEach {
+                userPreferences = it
+            }.launchIn(lifecycleScope)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -58,12 +65,12 @@ class CalculateService : LifecycleService() {
             .distinctUntilChanged()
             .onEach { (dataTime, position) ->
                 currentValue = GeomagExt.run(
-                    model = userData.fieldModel,
+                    model = userPreferences.fieldModel,
                     dataTime = dataTime,
                     position = position,
                 )
 
-                if (userData.enableRecords) {
+                if (userPreferences.enableRecords) {
                     localRepository.insert(currentValue)
                 }
             }

@@ -23,17 +23,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
-import com.sanmer.geomag.datastore.UserData
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.navigation.navigateToSettings
+import com.sanmer.geomag.ui.providable.LocalUserPreferences
 import com.sanmer.geomag.ui.screens.home.items.CalculationItem
 import com.sanmer.geomag.ui.screens.home.items.DateTimeItem
 import com.sanmer.geomag.ui.screens.home.items.LocationItem
@@ -46,8 +44,7 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val userData by viewModel.userData.collectAsStateWithLifecycle(UserData.default())
+    val userPreferences = LocalUserPreferences.current
 
     val dataTime = viewModel.rememberDateTime()
     viewModel.UpdateCalculateParameters(
@@ -56,7 +53,7 @@ fun HomeScreen(
     )
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var showCurrentValue by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -89,35 +86,39 @@ fun HomeScreen(
 
             CalculationItem(
                 isRunning = viewModel.isCalculateRunning,
-                fieldModel = userData.fieldModel,
+                fieldModel = userPreferences.fieldModel,
                 navController = navController,
                 setFieldModel = viewModel::setFieldModel,
                 toggleCalculate = {
                     if (!viewModel.isCalculateRunning) {
-                        openBottomSheet = true
+                        showCurrentValue = true
                     }
                     viewModel.toggleCalculate(it)
                 },
                 singleCalculate = {
                     viewModel.singleCalculate(
+                        model = userPreferences.fieldModel,
                         dateTime = dataTime.value,
                         position = viewModel.position,
-                        onFinished = { openBottomSheet = true }
+                        enableRecords = userPreferences.enableRecords,
+                        onFinished = { showCurrentValue = true }
                     )
                 }
             )
 
             RecordsItem(
-                enableRecords = userData.enableRecords,
+                enableRecords = userPreferences.enableRecords,
                 navController = navController,
                 setEnableRecords = viewModel::setEnableRecords,
-                openBottomSheet = { openBottomSheet = true }
+                openBottomSheet = { showCurrentValue = true }
             )
 
-            if (openBottomSheet) RecordBottomSheet(
-                record = viewModel.currentValue,
-                onClose = { openBottomSheet = false }
-            )
+            if (showCurrentValue) {
+                RecordBottomSheet(
+                    record = viewModel.currentValue,
+                    onClose = { showCurrentValue = false }
+                )
+            }
         }
     }
 }

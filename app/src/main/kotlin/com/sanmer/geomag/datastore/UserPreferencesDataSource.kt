@@ -9,11 +9,11 @@ import javax.inject.Inject
 class UserPreferencesDataSource @Inject constructor(
     private val userPreferences: DataStore<UserPreferences>
 ) {
-    val userData get() = userPreferences.data.map { it.toUserData() }
+    val data get() = userPreferences.data.map { it.toExt() }
 
     suspend fun setDarkTheme(value: DarkMode) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
-            it.copy {
+            it.new {
                 darkMode = value
             }
         }
@@ -21,7 +21,7 @@ class UserPreferencesDataSource @Inject constructor(
 
     suspend fun setThemeColor(value: Int) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
-            it.copy {
+            it.new {
                 themeColor = value
             }
         }
@@ -29,7 +29,7 @@ class UserPreferencesDataSource @Inject constructor(
 
     suspend fun setFieldModel(value: String) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
-            it.copy {
+            it.new {
                 fieldModel = value
             }
         }
@@ -37,7 +37,7 @@ class UserPreferencesDataSource @Inject constructor(
 
     suspend fun setEnableRecords(value: Boolean) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
-            it.copy {
+            it.new {
                 enableRecords = value
             }
         }
