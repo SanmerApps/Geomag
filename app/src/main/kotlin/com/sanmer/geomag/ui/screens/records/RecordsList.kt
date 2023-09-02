@@ -1,13 +1,11 @@
 package com.sanmer.geomag.ui.screens.records
 
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,12 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
 import com.sanmer.geomag.model.Record
-import com.sanmer.geomag.ui.component.FastScrollbar
 import com.sanmer.geomag.ui.component.Logo
+import com.sanmer.geomag.ui.component.scrollbar.VerticalFastScrollbar
 import com.sanmer.geomag.ui.navigation.graphs.createViewRoute
 import com.sanmer.geomag.ui.utils.navigateSingleTopTo
-import com.sanmer.geomag.ui.utils.rememberFastScroller
-import com.sanmer.geomag.ui.utils.scrollbarState
 
 @Composable
 fun RecordsList(
@@ -65,14 +61,9 @@ fun RecordsList(
         }
     }
 
-    FastScrollbar(
-        modifier = Modifier
-            .fillMaxHeight()
-            .align(Alignment.CenterEnd),
-        state = state.scrollbarState(),
-        orientation = Orientation.Vertical,
-        scrollInProgress = state.isScrollInProgress,
-        onThumbDisplaced = state.rememberFastScroller(),
+    VerticalFastScrollbar(
+        state = state,
+        modifier = Modifier.align(Alignment.CenterEnd)
     )
 }
 

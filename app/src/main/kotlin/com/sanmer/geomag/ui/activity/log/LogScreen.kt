@@ -2,7 +2,6 @@ package com.sanmer.geomag.ui.activity.log
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,10 +47,8 @@ import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
 import com.sanmer.geomag.service.LogcatService
 import com.sanmer.geomag.ui.component.DropdownMenu
-import com.sanmer.geomag.ui.component.FastScrollbar
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
-import com.sanmer.geomag.ui.utils.rememberFastScroller
-import com.sanmer.geomag.ui.utils.scrollbarState
+import com.sanmer.geomag.ui.component.scrollbar.VerticalFastScrollbar
 import com.sanmer.geomag.utils.log.LogText
 import com.sanmer.geomag.utils.log.LogText.Companion.toTextPriority
 import com.sanmer.geomag.utils.log.Logcat
@@ -102,7 +99,7 @@ fun LogScreen() {
         derivedStateOf {
             LogcatService.console.filter {
                 it.priority >= priorities.indexOf(priority) + 2
-            }
+            }.asReversed()
         }
     }
 
@@ -122,7 +119,8 @@ fun LogScreen() {
                 .fillMaxSize()
         ) {
             LazyColumn(
-                state = state
+                state = state,
+                reverseLayout = true
             ) {
                 items(console) { value ->
                     Column(
@@ -134,14 +132,9 @@ fun LogScreen() {
                 }
             }
 
-            FastScrollbar(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .align(Alignment.CenterEnd),
-                state = state.scrollbarState(),
-                orientation = Orientation.Vertical,
-                scrollInProgress = state.isScrollInProgress,
-                onThumbDisplaced = state.rememberFastScroller(),
+            VerticalFastScrollbar(
+                state = state,
+                modifier = Modifier.align(Alignment.CenterEnd)
             )
         }
     }

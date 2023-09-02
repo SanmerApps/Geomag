@@ -1,4 +1,21 @@
-package com.sanmer.geomag.ui.utils
+/*
+ * Copyright 2023 Sanmer
+ * Copyright 2023 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.sanmer.geomag.ui.component.scrollbar
 
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.runtime.Composable
@@ -8,19 +25,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import com.sanmer.geomag.ui.component.ScrollbarState
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlin.math.abs
 import kotlin.math.min
 
+/**
+ * Calculates the [ScrollbarState] for lazy layouts.
+ * @param itemsAvailable the total amount of items available to scroll in the layout.
+ * @param visibleItems a list of items currently visible in the layout.
+ * @param firstVisibleItemIndex a function for interpolating the first visible index in the lazy layout
+ * as scrolling progresses for smooth and linear scrollbar thumb progression.
+ * */
 @Composable
 internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.scrollbarState(
     itemsAvailable: Int,
     crossinline visibleItems: LazyState.() -> List<LazyStateItem>,
     crossinline firstVisibleItemIndex: LazyState.(List<LazyStateItem>) -> Float,
-    crossinline itemPercentVisible: LazyState.(LazyStateItem) -> Float,
-    crossinline reverseLayout: LazyState.() -> Boolean,
+    crossinline itemPercentVisible: LazyState.(LazyStateItem) -> Float
 ): ScrollbarState {
     var state by remember { mutableStateOf(ScrollbarState.FULL) }
 
@@ -54,8 +76,7 @@ internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.scrol
             )
             ScrollbarState(
                 thumbSizePercent = thumbSizePercent,
-                thumbDisplacementPercent = thumbTravelPercent,
-                reverseLayout = reverseLayout()
+                thumbMovedPercent = thumbTravelPercent
             )
         }
             .filterNotNull()
@@ -65,6 +86,20 @@ internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.scrol
     return state
 }
 
+/**
+ * Linearly interpolates the index for the first item in [visibleItems] for smooth scrollbar
+ * progression.
+ * @param visibleItems a list of items currently visible in the layout.
+ * @param itemSize a lookup function for the size of an item in the layout.
+ * @param offset a lookup function for the offset of an item relative to the start of the view port.
+ * @param nextItemOnMainAxis a lookup function for the next item on the main axis in the direction
+ * of the scroll.
+ * @param itemIndex a lookup function for index of an item in the layout relative to
+ * the total amount of items available.
+ *
+ * @return a [Float] in the range [firstItemPosition..nextItemPosition) where nextItemPosition
+ * is the index of the consecutive item along the major axis.
+ * */
 internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.interpolateFirstItemIndex(
     visibleItems: List<LazyStateItem>,
     crossinline itemSize: LazyState.(LazyStateItem) -> Int,
@@ -79,8 +114,11 @@ internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.inter
 
     if (firstItemIndex < 0) return Float.NaN
 
+    val firstItemSize = itemSize(firstItem)
+    if (firstItemSize == 0) return Float.NaN
+
     val itemOffset = offset(firstItem).toFloat()
-    val offsetPercentage = abs(itemOffset) / itemSize(firstItem)
+    val offsetPercentage = abs(itemOffset) / firstItemSize
 
     val nextItem = nextItemOnMainAxis(firstItem) ?: return firstItemIndex + offsetPercentage
 
@@ -89,6 +127,13 @@ internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.inter
     return firstItemIndex + ((nextItemIndex - firstItemIndex) * offsetPercentage)
 }
 
+/**
+ * Returns the percentage of an item that is currently visible in the view port.
+ * @param itemSize the size of the item
+ * @param itemStartOffset the start offset of the item relative to the view port start
+ * @param viewportStartOffset the start offset of the view port
+ * @param viewportEndOffset the end offset of the view port
+ */
 internal fun itemVisibilityPercentage(
     itemSize: Int,
     itemStartOffset: Int,
