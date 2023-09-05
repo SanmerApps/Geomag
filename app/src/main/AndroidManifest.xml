@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".App"
@@ -32,10 +31,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.log.LogActivity"
-            android:label="@string/settings_log_viewer"
-            android:exported="true"/>
-
         <service android:name=".service.LocationService"
             android:foregroundServiceType="location"
             android:enabled="true"
@@ -45,18 +40,6 @@
             android:foregroundServiceType="dataSync"
             android:enabled="true"
             android:exported="false"/>
-
-        <service android:name=".service.LogcatService"
-            android:exported="false"/>
-
-        <receiver
-            android:name=".receiver.LogcatReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"

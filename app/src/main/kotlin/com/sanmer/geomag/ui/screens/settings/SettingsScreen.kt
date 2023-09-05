@@ -13,16 +13,13 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
 import com.sanmer.geomag.datastore.isDarkMode
-import com.sanmer.geomag.ui.activity.log.LogActivity
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
-import com.sanmer.geomag.ui.component.SettingNormalItem
 import com.sanmer.geomag.ui.navigation.graphs.SettingsScreen
 import com.sanmer.geomag.ui.providable.LocalUserPreferences
 import com.sanmer.geomag.ui.screens.settings.items.AppThemeItem
@@ -35,7 +32,6 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val userPreferences = LocalUserPreferences.current
-    val context = LocalContext.current
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -54,15 +50,6 @@ fun SettingsScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            SettingNormalItem(
-                icon = R.drawable.health_outline,
-                text = stringResource(id = R.string.settings_log_viewer),
-                subText = stringResource(id = R.string.settings_log_viewer_desc),
-                onClick = {
-                    LogActivity.start(context)
-                }
-            )
-
             AppThemeItem(
                 themeColor = userPreferences.themeColor,
                 darkMode = userPreferences.darkMode,

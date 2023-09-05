@@ -44,10 +44,8 @@
 
     <!-- Settings-->
     <!-- App -->
-    <string name="settings_log_viewer">日志查看器</string>
-    <string name="settings_log_viewer_desc">查看应用运行时日志</string>
     <string name="settings_app_theme">主题</string>
-    <string name="settings_app_theme_desc">更改深色模式和主题调色板</string>
+    <string name="settings_app_theme_desc">更改主题配色和深色模式</string>
     <!-- App Theme -->
     <string name="app_theme_palette">主题调色板</string>
     <string name="app_theme_dark_theme">深色主题</string>
@@ -76,9 +74,6 @@
     <!-- Notification -->
     <string name="notification_name_location">定位服务</string>
     <string name="notification_name_calculate">计算服务</string>
-
-    <!-- Shortcut -->
-    <string name="shortcut_log_label">日志</string>
 
     <!-- Other -->
     <string name="unknown_error">未知错误</string>
