@@ -14,18 +14,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun OutlineColumn(
     modifier: Modifier = Modifier,
+    shape: Shape = RoundedCornerShape(15.dp),
     contentPadding: PaddingValues = PaddingValues(),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit
 ) = Surface(
     modifier = modifier.fillMaxWidth(),
-    shape = RoundedCornerShape(15.dp),
+    shape = shape,
     border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.outline),
     color = Color.Transparent
 ) {

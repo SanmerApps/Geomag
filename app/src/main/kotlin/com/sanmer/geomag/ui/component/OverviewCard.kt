@@ -1,4 +1,4 @@
-package com.sanmer.geomag.ui.screens.home.items
+package com.sanmer.geomag.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.sanmer.geomag.ui.component.Logo
 
 @Composable
 fun OverviewCard(

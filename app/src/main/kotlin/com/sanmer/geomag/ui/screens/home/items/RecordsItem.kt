@@ -10,6 +10,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
+import com.sanmer.geomag.ui.component.OverviewButton
+import com.sanmer.geomag.ui.component.OverviewCard
 import com.sanmer.geomag.ui.navigation.navigateToRecords
 
 @Composable

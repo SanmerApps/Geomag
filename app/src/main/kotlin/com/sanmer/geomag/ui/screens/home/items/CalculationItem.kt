@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -33,6 +32,8 @@ import com.sanmer.geomag.BuildConfig
 import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.DropdownMenu
+import com.sanmer.geomag.ui.component.OverviewButton
+import com.sanmer.geomag.ui.component.OverviewCard
 import com.sanmer.geomag.ui.navigation.navigateToCalculate
 
 @Composable
@@ -106,7 +107,6 @@ private fun ModelSelect(
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { expanded = false },
-        shape = RoundedCornerShape(12.dp),
         contentAlignment = Alignment.BottomEnd,
         surface = {
             FilterChip(

@@ -18,8 +18,8 @@ fun DropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    shape: CornerBasedShape = RoundedCornerShape(15.dp),
-    offset: DpOffset = DpOffset(0.dp, 0.dp),
+    shape: CornerBasedShape = RoundedCornerShape(8.dp),
+    offset: DpOffset = DpOffset.Zero,
     properties: PopupProperties = PopupProperties(focusable = true),
     content: @Composable ColumnScope.() -> Unit
 ) = CustomMenuShape(shape) {
@@ -38,9 +38,9 @@ fun DropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    shape: CornerBasedShape = RoundedCornerShape(15.dp),
+    shape: CornerBasedShape = RoundedCornerShape(8.dp),
     contentAlignment: Alignment = Alignment.TopStart,
-    offset: DpOffset = DpOffset(0.dp, 0.dp),
+    offset: DpOffset = DpOffset.Zero,
     properties: PopupProperties = PopupProperties(focusable = true),
     surface: @Composable () -> Unit,
     content: @Composable ColumnScope.() -> Unit
@@ -48,8 +48,7 @@ fun DropdownMenu(
     surface()
     CustomMenuShape(shape) {
         Box(
-            modifier = Modifier
-                .align(contentAlignment),
+            modifier = Modifier.align(contentAlignment),
             contentAlignment = contentAlignment
         ) {
             DropdownMenu(
