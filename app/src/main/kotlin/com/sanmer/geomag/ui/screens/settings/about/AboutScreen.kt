@@ -84,10 +84,6 @@ fun AboutScreen(
             Spacer(modifier = Modifier.height(20.dp))
             FilledTonalButton(
                 onClick = { context.openUrl(Const.GITHUB_URL) },
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                )
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_github),
@@ -103,11 +99,7 @@ fun AboutScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 FilledTonalButton(
-                    onClick = { context.openUrl(Const.TRANSLATE_URL) },
-                    colors = ButtonDefaults.filledTonalButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    onClick = { context.openUrl(Const.TRANSLATE_URL) }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_weblate),

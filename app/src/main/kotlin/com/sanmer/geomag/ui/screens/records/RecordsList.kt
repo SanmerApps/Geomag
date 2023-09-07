@@ -115,8 +115,8 @@ private fun RecordItem(
         Logo(
             text = record.model.name.uppercase(),
             modifier = Modifier.size(36.dp),
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }
 

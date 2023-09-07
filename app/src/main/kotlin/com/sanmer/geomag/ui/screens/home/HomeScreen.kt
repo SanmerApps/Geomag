@@ -35,7 +35,6 @@ import com.sanmer.geomag.ui.providable.LocalUserPreferences
 import com.sanmer.geomag.ui.screens.home.items.CalculationItem
 import com.sanmer.geomag.ui.screens.home.items.DateTimeItem
 import com.sanmer.geomag.ui.screens.home.items.LocationItem
-import com.sanmer.geomag.ui.screens.home.items.RecordBottomSheet
 import com.sanmer.geomag.ui.screens.home.items.RecordsItem
 import com.sanmer.geomag.viewmodel.HomeViewModel
 

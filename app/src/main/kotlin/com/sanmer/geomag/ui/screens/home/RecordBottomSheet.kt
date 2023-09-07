@@ -1,4 +1,4 @@
-package com.sanmer.geomag.ui.screens.home.items
+package com.sanmer.geomag.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +30,7 @@ fun RecordBottomSheet(
     record: Record,
     onClose: () -> Unit
 ) {
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    val bottomSheetState = rememberModalBottomSheetState()
 
     ModalBottomSheet(
         onDismissRequest = onClose,
