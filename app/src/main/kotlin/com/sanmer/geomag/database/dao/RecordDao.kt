@@ -13,8 +13,16 @@ interface RecordDao {
     @Query("SELECT * FROM records")
     fun getAllAsFlow(): Flow<List<RecordEntity>>
 
-    @Query("SELECT * FROM records WHERE id = :id LIMIT 1")
-    fun getById(id: Double): RecordEntity
+    @Query(
+        "SELECT * FROM records " +
+        "WHERE model = :model " +
+        "AND time = :time " +
+        "AND altitude = :altitude " +
+        "AND latitude = :latitude " +
+        "AND longitude = :longitude " +
+        "LIMIT 1"
+    )
+    fun getByKey(model: String, time: String, altitude: Double, latitude: Double, longitude: Double): RecordEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(value: RecordEntity)

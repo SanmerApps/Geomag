@@ -8,7 +8,7 @@ import androidx.room.migration.Migration
 import com.sanmer.geomag.database.dao.RecordDao
 import com.sanmer.geomag.database.entity.RecordEntity
 
-@Database(entities = [RecordEntity::class], version = 2)
+@Database(entities = [RecordEntity::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recordDao(): RecordDao
 
@@ -17,7 +17,8 @@ abstract class AppDatabase : RoomDatabase() {
             return Room.databaseBuilder(context,
                 AppDatabase::class.java, "geomag")
                 .addMigrations(
-                    MIGRATION_1_2
+                    MIGRATION_1_2,
+                    MIGRATION_2_3
                 )
                 .build()
         }
@@ -58,6 +59,47 @@ abstract class AppDatabase : RoomDatabase() {
                     "horizontal_intensity, horizontal_sv, north_component, north_sv, " +
                     "east_component, east_sv, vertical_component, vertical_sv, " +
                     "total_intensity, total_sv " +
+                    "FROM records")
+
+            it.execSQL("DROP TABLE records")
+            it.execSQL("ALTER TABLE records_new RENAME TO records")
+        }
+
+        private val MIGRATION_2_3 = Migration(2, 3) {
+            it.execSQL("CREATE TABLE IF NOT EXISTS records_new (" +
+                    "model TEXT NOT NULL, " +
+                    "time TEXT NOT NULL, " +
+                    "altitude REAL NOT NULL, " +
+                    "latitude REAL NOT NULL, " +
+                    "longitude REAL NOT NULL, " +
+                    "declination REAL NOT NULL, " +
+                    "declinationSV REAL NOT NULL, " +
+                    "inclination REAL NOT NULL, " +
+                    "inclinationSV REAL NOT NULL, " +
+                    "horizontalIntensity REAL NOT NULL, " +
+                    "horizontalSV REAL NOT NULL, " +
+                    "northComponent REAL NOT NULL, " +
+                    "northSV REAL NOT NULL, " +
+                    "eastComponent REAL NOT NULL, " +
+                    "eastSV REAL NOT NULL, " +
+                    "verticalComponent REAL NOT NULL, " +
+                    "verticalSV REAL NOT NULL, " +
+                    "totalIntensity REAL NOT NULL, " +
+                    "totalSV REAL NOT NULL, " +
+                    "PRIMARY KEY(model, time, altitude, latitude, longitude))")
+
+            it.execSQL("INSERT INTO records_new (" +
+                    "model, time, altitude, latitude, longitude, " +
+                    "declination, declinationSV, inclination, inclinationSV, " +
+                    "horizontalIntensity, horizontalSV, northComponent, northSV, " +
+                    "eastComponent, eastSV, verticalComponent, verticalSV, " +
+                    "totalIntensity, totalSV) " +
+                    "SELECT " +
+                    "model, time, altitude, latitude, longitude, " +
+                    "declination, declinationSV, inclination, inclinationSV, " +
+                    "horizontalIntensity, horizontalSV, northComponent, northSV, " +
+                    "eastComponent, eastSV, verticalComponent, verticalSV, " +
+                    "totalIntensity, totalSV " +
                     "FROM records")
 
             it.execSQL("DROP TABLE records")

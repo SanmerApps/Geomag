@@ -1,6 +1,7 @@
 package com.sanmer.geomag.repository
 
 import com.sanmer.geomag.database.dao.RecordDao
+import com.sanmer.geomag.database.entity.RecordKey
 import com.sanmer.geomag.database.entity.toEntity
 import com.sanmer.geomag.database.entity.toRecord
 import com.sanmer.geomag.model.Record
@@ -18,8 +19,14 @@ class LocalRepository @Inject constructor(
         list.map { it.toRecord() }
     }
 
-    suspend fun getById(id: Double) = withContext(Dispatchers.IO) {
-        recordDao.getById(id).toRecord()
+    suspend fun getByKey(key: RecordKey) = withContext(Dispatchers.IO) {
+        recordDao.getByKey(
+            model = key.model,
+            time = key.time,
+            altitude = key.altitude,
+            latitude = key.latitude,
+            longitude = key.longitude
+        ).toRecord()
     }
 
     suspend fun insert(value: Record) = withContext(Dispatchers.IO) {
