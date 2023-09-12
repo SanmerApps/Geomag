@@ -33,7 +33,7 @@ jobs:
       - name: Download JBR 17
         run: |
           download_url="https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-17.0.8.1-linux-x64-b1059.3.tar.gz"
-          wget -O $RUNNER_TEMP/jbr.tar.gz $download_url
+          curl -o $RUNNER_TEMP/jbr.tar.gz -L $download_url
 
       - name: Set up JBR 17
         uses: actions/setup-java@v3
@@ -50,7 +50,7 @@ jobs:
           cache-dependency-path: ${{ github.workspace }}/app/src/main/golang/go.sum
 
       - name: Set up NDK
-        uses: nttld/setup-ndk@v1.3.1
+        uses: nttld/setup-ndk@v1
         with:
           ndk-version: r26-beta1
           add-to-path: false
