@@ -50,7 +50,7 @@ jobs:
           cache-dependency-path: ${{ github.workspace }}/app/src/main/golang/go.sum
 
       - name: Set up NDK
-        uses: nttld/setup-ndk@v1.3.1
+        uses: nttld/setup-ndk@v1
         with:
           ndk-version: r26-beta1
           add-to-path: false
