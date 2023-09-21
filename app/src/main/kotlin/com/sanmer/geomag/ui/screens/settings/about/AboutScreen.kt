@@ -62,7 +62,7 @@ fun AboutScreen(
         ) {
             Spacer(modifier = Modifier.height(20.dp))
             Logo(
-                icon = R.drawable.ic_logo,
+                icon = R.drawable.launcher_outline,
                 modifier = Modifier.size(65.dp),
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 containerColor = MaterialTheme.colorScheme.primary
@@ -86,7 +86,7 @@ fun AboutScreen(
                 onClick = { context.openUrl(Const.GITHUB_URL) },
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_github),
+                    painter = painterResource(id = R.drawable.github),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
@@ -102,7 +102,7 @@ fun AboutScreen(
                     onClick = { context.openUrl(Const.TRANSLATE_URL) }
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_weblate),
+                        painter = painterResource(id = R.drawable.weblate),
                         contentDescription = null,
                         modifier = Modifier.size(ButtonDefaults.IconSize)
                     )
