@@ -23,12 +23,13 @@ android {
         versionName = "${baseVersionName}${verNameSuffix}.${commitId}"
         versionCode = commitCount
 
-        resourceConfigurations += arrayOf("en", "zh-rCN")
-        multiDexEnabled = true
-
         ndk {
             abiFilters += arrayOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
         }
+    }
+
+    androidResources {
+        generateLocaleConfig = true
     }
 
     val releaseSigning = if (project.hasReleaseKeyStore) {
