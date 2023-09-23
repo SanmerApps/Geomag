@@ -1,4 +1,4 @@
-package com.sanmer.geomag.ui.activity.main
+package com.sanmer.geomag.ui.activity
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

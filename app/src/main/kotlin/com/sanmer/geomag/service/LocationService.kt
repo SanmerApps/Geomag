@@ -16,7 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.sanmer.geomag.R
 import com.sanmer.geomag.app.utils.LocationManagerUtils
 import com.sanmer.geomag.app.utils.NotificationUtils
-import com.sanmer.geomag.ui.activity.main.MainActivity
+import com.sanmer.geomag.ui.activity.MainActivity
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
