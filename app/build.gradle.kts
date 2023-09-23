@@ -1,5 +1,4 @@
 import com.android.build.gradle.internal.api.ApkVariantOutputImpl
-import java.time.Instant
 
 plugins {
     id("geomag.android.application")
@@ -62,7 +61,6 @@ android {
         all {
             signingConfig = releaseSigning
             buildConfigField("Boolean", "IS_DEV_VERSION", isDevVersion.toString())
-            buildConfigField("String", "BUILD_TIME", "\"${Instant.now()}\"")
         }
     }
 
@@ -84,8 +82,8 @@ android {
 
     applicationVariants.configureEach {
         outputs.configureEach {
-            this as ApkVariantOutputImpl
-            outputFileName = "Geomag-${versionName}-${versionCode}-${name}.apk"
+            (this as? ApkVariantOutputImpl)?.outputFileName =
+                "Geomag-${versionName}-${versionCode}-${name}.apk"
         }
     }
 
