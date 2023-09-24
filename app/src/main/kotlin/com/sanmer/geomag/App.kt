@@ -1,7 +1,7 @@
 package com.sanmer.geomag
 
 import android.app.Application
-import androidx.core.content.pm.ShortcutManagerCompat
+import com.sanmer.geomag.app.utils.NotificationUtils
 import com.sanmer.geomag.utils.timber.DebugTree
 import com.sanmer.geomag.utils.timber.ReleaseTree
 import dagger.hilt.android.HiltAndroidApp
@@ -21,7 +21,7 @@ class App : Application() {
         super.onCreate()
         app = this
 
-        ShortcutManagerCompat.removeAllDynamicShortcuts(this)
+        NotificationUtils.init(this)
     }
 
     companion object {

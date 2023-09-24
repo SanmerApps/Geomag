@@ -8,6 +8,7 @@ import android.location.LocationManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleService
@@ -19,12 +20,10 @@ import com.sanmer.geomag.app.utils.NotificationUtils
 import com.sanmer.geomag.ui.activity.MainActivity
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import timber.log.Timber
 
 class LocationService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
-        Timber.d("onCreate")
         isRunning = true
         setForeground()
     }
@@ -47,25 +46,26 @@ class LocationService : LifecycleService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Timber.d("onDestroy")
         isRunning = false
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
     }
 
     private fun setForeground() {
-        val intent = Intent(this, LocationService::class.java).apply {
+        val self = Intent(this, LocationService::class.java).apply {
             action = STOP_SERVICE
         }
-
-        val stopSelf = PendingIntent.getService(this, 0, intent,
+        val stopSelf = PendingIntent.getService(this, 0, self,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
-        val notification = NotificationUtils
-            .buildNotification(this, NotificationUtils.CHANNEL_ID_LOCATION)
+        val mainActivity = Intent(this, MainActivity::class.java)
+        val startMainActivity = PendingIntent.getActivity(this, 0, mainActivity,
+            PendingIntent.FLAG_IMMUTABLE)
+
+        val notification = NotificationCompat.Builder(this, NotificationUtils.CHANNEL_ID_LOCATION)
             .setSmallIcon(R.drawable.location_outline)
             .setContentTitle(getString(R.string.notification_name_location))
             .setContentText(getString(R.string.message_location_click))
-            .setContentIntent(NotificationUtils.getActivity(MainActivity::class))
+            .setContentIntent(startMainActivity)
             .addAction(0, getString(R.string.action_stop), stopSelf)
             .setOngoing(true)
             .build()
