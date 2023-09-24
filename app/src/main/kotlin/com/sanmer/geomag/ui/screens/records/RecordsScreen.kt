@@ -67,9 +67,6 @@ fun RecordsScreen(
                 scrollBehavior = scrollBehavior,
                 navController = navController
             )
-        },
-        bottomBar = {
-
         }
     ) { innerPadding ->
         Box(

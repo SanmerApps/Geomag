@@ -30,8 +30,8 @@ import com.sanmer.geomag.R
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.component.scrollbar.VerticalFastScrollbar
-import com.sanmer.geomag.ui.navigation.graphs.createViewRoute
 import com.sanmer.geomag.ui.utils.navigateSingleTopTo
+import com.sanmer.geomag.viewmodel.RecordViewModel
 
 @Composable
 fun RecordsList(
@@ -56,7 +56,11 @@ fun RecordsList(
                 isChooser = isChooser,
                 setChooser = setChooser,
                 onToggle = onToggle,
-                onClick = { navController.navigateSingleTopTo(createViewRoute(it)) }
+                onClick = {
+                    navController.navigateSingleTopTo(
+                        RecordViewModel.putRecordKey(it)
+                    )
+                }
             )
         }
     }

@@ -1,12 +1,14 @@
 package com.sanmer.geomag.viewmodel
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.database.entity.RecordKey
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.repository.LocalRepository
+import com.sanmer.geomag.ui.navigation.graphs.RecordsScreen
 import com.sanmer.geomag.utils.JsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +20,7 @@ class RecordViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val recordKey: RecordKey = checkNotNull(savedStateHandle["recordKey"])
+    private val recordKey = getRecordKey(savedStateHandle)
     var record: Record = Record.empty()
         private set
 
@@ -40,5 +42,17 @@ class RecordViewModel @Inject constructor(
 
     fun delete() = viewModelScope.launch {
         localRepository.delete(record)
+    }
+
+    companion object {
+        fun putRecordKey(record: Record) =
+            RecordsScreen.View.route.replace(
+                "{recordKey}", Uri.encode(RecordKey(record).toString())
+            )
+
+        fun getRecordKey(savedStateHandle: SavedStateHandle) =
+            RecordKey.parse(
+                Uri.decode(savedStateHandle["recordKey"])
+            )
     }
 }

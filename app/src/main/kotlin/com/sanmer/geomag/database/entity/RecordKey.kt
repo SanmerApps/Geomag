@@ -1,11 +1,8 @@
 package com.sanmer.geomag.database.entity
 
-import android.os.Parcelable
 import androidx.room.Entity
 import com.sanmer.geomag.model.Record
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Entity(tableName = "key")
 data class RecordKey(
     val model: String,
@@ -13,7 +10,7 @@ data class RecordKey(
     val altitude: Double,
     val latitude: Double,
     val longitude: Double
-) : Parcelable {
+) {
     constructor(record: Record) : this(
         model = record.model.name,
         time = record.time.toString(),

@@ -8,14 +8,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.sanmer.geomag.database.entity.RecordKey
-import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.ui.animate.slideInLeftToRight
 import com.sanmer.geomag.ui.animate.slideInRightToLeft
 import com.sanmer.geomag.ui.animate.slideOutLeftToRight
 import com.sanmer.geomag.ui.animate.slideOutRightToLeft
 import com.sanmer.geomag.ui.navigation.MainScreen
-import com.sanmer.geomag.ui.navigation.navtype.RecordKeyTyp
 import com.sanmer.geomag.ui.screens.records.RecordsScreen
 import com.sanmer.geomag.ui.screens.records.viewrecord.ViewRecordScreen
 
@@ -23,7 +20,6 @@ enum class RecordsScreen(val route: String) {
     Home("Records"),
     View("View/{recordKey}")
 }
-fun createViewRoute(record: Record) = "View/${RecordKey(record)}"
 
 private val subScreens = listOf(
     RecordsScreen.View.route
@@ -59,7 +55,7 @@ fun NavGraphBuilder.recordsScreen(
 
     composable(
         route = RecordsScreen.View.route,
-        arguments = listOf(navArgument("recordKey") { type = NavType.RecordKeyTyp }),
+        arguments = listOf(navArgument("recordKey") { type = NavType.StringType }),
         enterTransition = { slideInRightToLeft() + fadeIn() },
         exitTransition = { slideOutLeftToRight() + fadeOut() }
     ) {
