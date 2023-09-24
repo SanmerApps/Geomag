@@ -19,6 +19,7 @@ Android 8.0 ~ 13
 ## Credits
  - [proway2/go-igrf](https://github.com/proway2/go-igrf.git)
  - [westphae/geomag](https://github.com/westphae/geomag.git)
+ - [tabler/tabler-icons](https://github.com/tabler/tabler-icons.git)
 
 ## License
 [MIT license](LICENSE)
