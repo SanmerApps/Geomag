@@ -13,12 +13,12 @@ import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.OutlineColumn
 import com.sanmer.geomag.ui.component.OverviewCard
 import com.sanmer.geomag.ui.component.ValueItem
-import com.sanmer.geomag.viewmodel.HomeViewModel
+import kotlinx.datetime.LocalDateTime
 
 @Composable
 fun DateTimeItem(
     isRunning: Boolean,
-    dateTime: HomeViewModel.DateTime,
+    dateTime: Pair<LocalDateTime, Double>,
     modifier: Modifier = Modifier,
     toggleDateTime: () -> Unit
 ) = OverviewCard(
@@ -47,12 +47,12 @@ fun DateTimeItem(
     ) {
         ValueItem(
             key = stringResource(id = R.string.overview_datetime),
-            value = dateTime.value.toString()
+            value = dateTime.first.toString()
         )
 
         ValueItem(
             key = stringResource(id = R.string.overview_decimal),
-            value = dateTime.decimal.toString()
+            value = dateTime.second.toString()
         )
     }
 }

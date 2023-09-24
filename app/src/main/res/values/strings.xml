@@ -73,7 +73,6 @@
 
     <!-- Notification -->
     <string name="notification_name_location">Location Service</string>
-    <string name="notification_name_calculate">Calculate Service</string>
 
     <!-- Other -->
     <string name="unknown_error">Unknown error</string>

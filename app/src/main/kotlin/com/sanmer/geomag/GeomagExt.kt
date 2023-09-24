@@ -7,6 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
 
+@Suppress(
+    "MemberVisibilityCanBePrivate",
+    "SpellCheckingInspection"
+)
 object GeomagExt {
     private fun toDecimalYears(
         year: Int, month: Int, day: Int,

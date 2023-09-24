@@ -2,32 +2,28 @@ package com.sanmer.geomag.viewmodel
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.repository.UserPreferencesRepository
-import com.sanmer.geomag.service.CalculateService
 import com.sanmer.geomag.service.LocationService
 import com.sanmer.geomag.utils.extensions.now
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
 import timber.log.Timber
 import javax.inject.Inject
@@ -37,13 +33,27 @@ class HomeViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ): ViewModel() {
+    private val userPreferences get() = userPreferencesRepository.data
+
     var isTimeRunning by mutableStateOf(true)
         private set
 
-    private val dateTimeFlow: Flow<DateTime> = flow {
+    private val dateTimeFlow = flow {
         while (currentCoroutineContext().isActive) {
             if (isTimeRunning) {
-                emit(DateTime.now())
+                emit(LocalDateTime.now().withDecimalYears())
+                delay(1000)
+            }
+        }
+    }.flowOn(Dispatchers.Default)
+
+    var isCalculateRunning by mutableStateOf(false)
+        private set
+
+    private val currentValueFlow = flow {
+        while (currentCoroutineContext().isActive) {
+            if (isCalculateRunning) {
+                singleCalculate().onSuccess { emit(it) }
                 delay(1000)
             }
         }
@@ -54,20 +64,19 @@ class HomeViewModel @Inject constructor(
         Position(LocationService.location)
     }
 
-    val isCalculateRunning get() = CalculateService.isRunning
-    private var _currentValue by mutableStateOf(Record.empty())
-    val currentValue get() = if (isCalculateRunning) {
-        CalculateService.currentValue
-    } else {
-        _currentValue
-    }
-
     init {
         Timber.d("HomeViewModel init")
     }
 
+    private fun LocalDateTime.withDecimalYears(): Pair<LocalDateTime, Double> =
+        this to GeomagExt.toDecimalYears(this)
+
     fun toggleDateTime() {
         isTimeRunning = !isTimeRunning
+    }
+
+    fun toggleCalculate() {
+        isCalculateRunning = !isCalculateRunning
     }
 
     fun toggleLocation(context: Context) {
@@ -78,69 +87,45 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun toggleCalculate(context: Context) {
-        if (isCalculateRunning) {
-            CalculateService.stop(context)
-        } else {
-            CalculateService.start(context)
-        }
-    }
+    suspend fun singleCalculate(): Result<Record> = withContext(Dispatchers.IO) {
+        runCatching {
+            val preference = userPreferences.first()
+            val model = preference.fieldModel
+            val enableRecords = preference.enableRecords
+            val dateTime = dateTimeFlow.first().first
 
-    fun singleCalculate(
-        model: GeomagExt.Models,
-        dateTime: LocalDateTime,
-        position: Position,
-        enableRecords: Boolean,
-        onFinished: () -> Unit
-    ) = viewModelScope.launch {
-        _currentValue = GeomagExt.run(
-            model = model,
-            dataTime = dateTime,
-            position = position
-        )
+            val value = GeomagExt.run(
+                model = model,
+                dataTime = dateTime,
+                position = position
+            )
 
-        if (enableRecords) {
-            localRepository.insert(_currentValue)
-        }
-
-        onFinished()
-    }
-
-    @Stable
-    data class DateTime(
-        val value: LocalDateTime,
-        val decimal: Double
-    ) {
-        companion object {
-            fun now(): DateTime {
-                val value = LocalDateTime.now()
-                val decimal = GeomagExt.toDecimalYears(value)
-
-                return DateTime(value, decimal)
+            if (enableRecords) {
+                localRepository.insert(value)
             }
+
+            return@runCatching value
+        }.onFailure {
+            Timber.e(it)
         }
     }
 
     @Composable
-    fun rememberDateTime(): DateTime {
+    fun rememberDateTime(): Pair<LocalDateTime, Double> {
         val dataTime = dateTimeFlow.collectAsStateWithLifecycle(
-            initialValue = DateTime.now()
+            initialValue = LocalDateTime.now().withDecimalYears()
         )
 
         return dataTime.value
     }
 
     @Composable
-    fun UpdateCalculateParameters(
-        dateTime: LocalDateTime,
-        position: Position
-    ) = LaunchedEffect(key1 = dateTime, key2 = position) {
-        if (isCalculateRunning) {
-            CalculateService.updateParameters(
-                dateTime = dateTime,
-                position = position
-            )
-        }
+    fun rememberCurrentValue(): Record {
+        val currentValue = currentValueFlow.collectAsStateWithLifecycle(
+            initialValue = Record.empty()
+        )
+
+        return currentValue.value
     }
 
     fun setFieldModel(value: GeomagExt.Models) =

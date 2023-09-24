@@ -1,6 +1,5 @@
 package com.sanmer.geomag.ui.screens.home.items
 
-import android.content.Context
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -23,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -44,7 +42,7 @@ fun CalculationItem(
     modifier: Modifier = Modifier,
     setFieldModel: (GeomagExt.Models) -> Unit,
     singleCalculate: () -> Unit,
-    toggleCalculate: (Context) -> Unit
+    toggleCalculate: () -> Unit
 ) = OverviewCard(
     expanded = true,
     modifier = modifier,
@@ -57,8 +55,6 @@ fun CalculationItem(
         )
     }
 ) {
-    val context = LocalContext.current
-
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -71,7 +67,7 @@ fun CalculationItem(
         )
 
         OverviewButton(
-            onClick = { toggleCalculate(context) },
+            onClick = toggleCalculate,
             icon = if (isRunning) {
                 R.drawable.stop_bold
             } else {

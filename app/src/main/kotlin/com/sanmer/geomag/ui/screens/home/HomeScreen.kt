@@ -19,6 +19,8 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
+import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.navigation.navigateToSettings
 import com.sanmer.geomag.ui.providable.LocalUserPreferences
@@ -37,22 +40,22 @@ import com.sanmer.geomag.ui.screens.home.items.DateTimeItem
 import com.sanmer.geomag.ui.screens.home.items.LocationItem
 import com.sanmer.geomag.ui.screens.home.items.RecordsItem
 import com.sanmer.geomag.viewmodel.HomeViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val scope = rememberCoroutineScope()
     val userPreferences = LocalUserPreferences.current
 
+    var record by remember { mutableStateOf(Record.empty()) }
+    val currentValue = viewModel.rememberCurrentValue()
     val dataTime = viewModel.rememberDateTime()
-    viewModel.UpdateCalculateParameters(
-        dateTime = dataTime.value,
-        position = viewModel.position
-    )
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    var showCurrentValue by rememberSaveable { mutableStateOf(false) }
+    var showValue by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -89,19 +92,18 @@ fun HomeScreen(
                 navController = navController,
                 setFieldModel = viewModel::setFieldModel,
                 toggleCalculate = {
-                    if (!viewModel.isCalculateRunning) {
-                        showCurrentValue = true
+                    viewModel.toggleCalculate()
+                    if (viewModel.isCalculateRunning) {
+                        showValue = true
                     }
-                    viewModel.toggleCalculate(it)
                 },
                 singleCalculate = {
-                    viewModel.singleCalculate(
-                        model = userPreferences.fieldModel,
-                        dateTime = dataTime.value,
-                        position = viewModel.position,
-                        enableRecords = userPreferences.enableRecords,
-                        onFinished = { showCurrentValue = true }
-                    )
+                    scope.launch {
+                        viewModel.singleCalculate().onSuccess {
+                            record = it
+                            showValue = true
+                        }
+                    }
                 }
             )
 
@@ -109,13 +111,13 @@ fun HomeScreen(
                 enableRecords = userPreferences.enableRecords,
                 navController = navController,
                 setEnableRecords = viewModel::setEnableRecords,
-                openBottomSheet = { showCurrentValue = true }
+                openBottomSheet = { showValue = true }
             )
 
-            if (showCurrentValue) {
+            if (showValue) {
                 RecordBottomSheet(
-                    record = viewModel.currentValue,
-                    onClose = { showCurrentValue = false }
+                    record = if (viewModel.isCalculateRunning) currentValue else record,
+                    onClose = { showValue = false }
                 )
             }
         }

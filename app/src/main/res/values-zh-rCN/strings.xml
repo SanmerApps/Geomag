@@ -73,7 +73,6 @@
 
     <!-- Notification -->
     <string name="notification_name_location">定位服务</string>
-    <string name="notification_name_calculate">计算服务</string>
 
     <!-- Other -->
     <string name="unknown_error">未知错误</string>

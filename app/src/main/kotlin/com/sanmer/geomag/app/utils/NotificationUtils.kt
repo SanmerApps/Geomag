@@ -24,9 +24,7 @@ import kotlin.reflect.KClass
 
 object NotificationUtils {
     const val CHANNEL_ID_LOCATION = "location_service"
-    const val CHANNEL_ID_CALCULATE = "calculate_service"
     const val NOTIFICATION_ID_LOCATION = 1024
-    const val NOTIFICATION_ID_CALCULATE = 1025
 
     val context by lazy { App.context }
     private val notificationManager by lazy { NotificationManagerCompat.from(context) }
@@ -35,11 +33,6 @@ object NotificationUtils {
         val channels = listOf(
             NotificationChannel(CHANNEL_ID_LOCATION,
                 context.getString(R.string.notification_name_location),
-                NotificationManager.IMPORTANCE_HIGH
-            ),
-
-            NotificationChannel(CHANNEL_ID_CALCULATE,
-                context.getString(R.string.notification_name_calculate),
                 NotificationManager.IMPORTANCE_HIGH
             )
         )
