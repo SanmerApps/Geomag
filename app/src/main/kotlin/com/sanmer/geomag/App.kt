@@ -1,6 +1,7 @@
 package com.sanmer.geomag
 
 import android.app.Application
+import com.sanmer.geomag.app.utils.LocationManagerUtils
 import com.sanmer.geomag.app.utils.NotificationUtils
 import com.sanmer.geomag.utils.timber.DebugTree
 import com.sanmer.geomag.utils.timber.ReleaseTree
@@ -22,6 +23,7 @@ class App : Application() {
         app = this
 
         NotificationUtils.init(this)
+        LocationManagerUtils.init(this)
     }
 
     companion object {

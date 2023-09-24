@@ -34,7 +34,7 @@ class LocationService : LifecycleService() {
             return START_NOT_STICKY
         }
 
-        LocationManagerUtils.locationUpdates()
+        LocationManagerUtils.locationUpdates(this)
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach {
                 location = it
@@ -79,9 +79,7 @@ class LocationService : LifecycleService() {
         var isRunning by mutableStateOf(false)
             private set
 
-        var location by mutableStateOf(LocationManagerUtils.getLastKnownLocation()
-            ?: Location(LocationManager.GPS_PROVIDER)
-        )
+        var location by mutableStateOf(Location(LocationManager.GPS_PROVIDER))
             private set
 
         fun start(context: Context) {

@@ -47,13 +47,17 @@ fun LocationItem(
 
         IconButton(
             onClick = {
-                LocationManagerUtils.update {
+                LocationManagerUtils.isLocationEnabled(context) {
                     if (!isEnable) {
                         show = true
-                        return@update
+                        return@isLocationEnabled
                     }
 
-                    if (!isReady) launchPermissionRequest()
+                    if (!isReady) {
+                        launchPermissionRequest()
+                        return@isLocationEnabled
+                    }
+
                     toggleLocation(context)
                 }
             }
