@@ -46,7 +46,7 @@ fun CalculationItem(
 ) = OverviewCard(
     expanded = true,
     modifier = modifier,
-    icon = R.drawable.maze_oultine,
+    icon = R.drawable.sum,
     label = stringResource(id = R.string.overview_calculation),
     trailingIcon = {
         ModelSelect(
@@ -61,7 +61,7 @@ fun CalculationItem(
     ) {
         OverviewButton(
             onClick = singleCalculate,
-            icon = R.drawable.play_bold,
+            icon = R.drawable.player_play_filled,
             text = stringResource(id = R.string.overview_single),
             enabled = !isRunning
         )
@@ -69,16 +69,16 @@ fun CalculationItem(
         OverviewButton(
             onClick = toggleCalculate,
             icon = if (isRunning) {
-                R.drawable.stop_bold
+                R.drawable.player_stop_filled
             } else {
-                R.drawable.play_bold
+                R.drawable.player_play_filled
             },
             text = stringResource(id = R.string.overview_continuous)
         )
 
         OverviewButton(
             onClick = { navController.navigateToCalculate() },
-            icon = R.drawable.edit_bold,
+            icon = R.drawable.variable_plus,
             text = stringResource(id = R.string.overview_customized),
             enabled = BuildConfig.DEBUG
         )
@@ -116,7 +116,7 @@ private fun ModelSelect(
                             .graphicsLayer {
                                 rotationZ = animateZ
                             },
-                        painter = painterResource(id = R.drawable.arrow_down_bold),
+                        painter = painterResource(id = R.drawable.caret_down_filled),
                         contentDescription = null
                     )
                 }

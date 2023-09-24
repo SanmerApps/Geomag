@@ -88,7 +88,7 @@ private fun TopBar(
             onClick = { shareRecord(context) }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.send_outline),
+                painter = painterResource(id = R.drawable.share_2),
                 contentDescription = null
             )
         }
@@ -103,7 +103,7 @@ private fun TopBar(
             onClick = { delete = true }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.trash_outline),
+                painter = painterResource(id = R.drawable.trash),
                 contentDescription = null
             )
         }

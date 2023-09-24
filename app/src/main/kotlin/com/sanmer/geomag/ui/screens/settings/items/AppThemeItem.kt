@@ -35,7 +35,7 @@ fun AppThemeItem(
     val bottomSheetState = rememberModalBottomSheetState()
 
     SettingNormalItem(
-        icon = R.drawable.color_swatch_outline,
+        icon = R.drawable.color_swatch,
         text = stringResource(id = R.string.settings_app_theme),
         subText = stringResource(id = R.string.settings_app_theme_desc),
         onClick = { openBottomSheet = true }

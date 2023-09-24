@@ -29,7 +29,7 @@ fun CustomizeScreen(
         }
     ) { innerPadding ->
         PageIndicator(
-            icon = R.drawable.edit_bold,
+            icon = R.drawable.variable_plus,
             text = "CustomizeScreen",
             modifier = Modifier.padding(innerPadding)
         )

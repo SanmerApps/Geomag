@@ -36,7 +36,7 @@ fun LocationItem(
 ) = OverviewCard(
     expanded = isRunning,
     modifier = modifier,
-    icon = R.drawable.location_outline,
+    icon = R.drawable.map_pin,
     label = stringResource(id = R.string.overview_location),
     trailingIcon = {
         val context = LocalContext.current
@@ -64,9 +64,9 @@ fun LocationItem(
         ) {
             Icon(
                 painter = painterResource(id = if (isRunning) {
-                    R.drawable.stop_outline
+                    R.drawable.player_pause
                 } else {
-                    R.drawable.play_outline
+                    R.drawable.player_play
                 }),
                 contentDescription = null
             )

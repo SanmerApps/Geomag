@@ -62,7 +62,7 @@ class LocationService : LifecycleService() {
             PendingIntent.FLAG_IMMUTABLE)
 
         val notification = NotificationCompat.Builder(this, NotificationUtils.CHANNEL_ID_LOCATION)
-            .setSmallIcon(R.drawable.location_outline)
+            .setSmallIcon(R.drawable.map_pin)
             .setContentTitle(getString(R.string.notification_name_location))
             .setContentText(getString(R.string.message_location_click))
             .setContentIntent(startMainActivity)

@@ -74,7 +74,7 @@ fun RecordsScreen(
         ) {
             if (list.isEmpty()) {
                 PageIndicator(
-                    icon = R.drawable.note_outline,
+                    icon = R.drawable.database_search,
                     text = R.string.records_empty
                 )
             } else {
@@ -123,7 +123,7 @@ private fun TopBar(
             }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.arrow_left_outline),
+                painter = painterResource(id = R.drawable.arrow_left),
                 contentDescription = null
             )
         }
@@ -135,7 +135,7 @@ private fun TopBar(
                  onClick = { shareRecords(context) }
              ) {
                  Icon(
-                     painter = painterResource(id = R.drawable.send_outline),
+                     painter = painterResource(id = R.drawable.share_2),
                      contentDescription = null
                  )
              }
@@ -150,7 +150,7 @@ private fun TopBar(
                  onClick = { delete = true }
              ) {
                  Icon(
-                     painter = painterResource(id = R.drawable.trash_outline),
+                     painter = painterResource(id = R.drawable.trash),
                      contentDescription = null
                  )
              }

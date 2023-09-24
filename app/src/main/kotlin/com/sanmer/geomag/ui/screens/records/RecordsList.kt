@@ -111,7 +111,7 @@ private fun RecordItem(
     if (isSelected) {
         Icon(
             modifier = Modifier.size(36.dp),
-            painter = painterResource(id = R.drawable.tick_circle_bold),
+            painter = painterResource(id = R.drawable.circle_check_filled),
             tint = MaterialTheme.colorScheme.primary,
             contentDescription = null
         )

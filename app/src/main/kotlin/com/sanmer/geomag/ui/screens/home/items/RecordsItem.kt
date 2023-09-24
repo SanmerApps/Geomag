@@ -24,7 +24,7 @@ fun RecordsItem(
 ) = OverviewCard(
     expanded = true,
     modifier = modifier,
-    icon = R.drawable.note_outline,
+    icon = R.drawable.database,
     label = stringResource(id = R.string.page_records),
     trailingIcon = {
         Switch(
@@ -39,13 +39,13 @@ fun RecordsItem(
     ) {
         OverviewButton(
             onClick = openBottomSheet,
-            icon = R.drawable.presention_chart_bold,
+            icon = R.drawable.presentation_analytics,
             text = stringResource(id = R.string.overview_current_mf)
         )
 
         OverviewButton(
             onClick = { navController.navigateToRecords() },
-            icon = R.drawable.note_bold,
+            icon = R.drawable.database_search,
             text = stringResource(id = R.string.overview_view_records)
         )
     }

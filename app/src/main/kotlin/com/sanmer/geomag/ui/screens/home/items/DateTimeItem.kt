@@ -24,7 +24,7 @@ fun DateTimeItem(
 ) = OverviewCard(
     expanded = true,
     modifier = modifier,
-    icon = R.drawable.clock_outline,
+    icon = R.drawable.clock,
     label = stringResource(id = R.string.overview_datetime),
     trailingIcon = {
         IconButton(
@@ -32,9 +32,9 @@ fun DateTimeItem(
         ) {
             Icon(
                 painter = painterResource(id = if (isRunning) {
-                    R.drawable.pause_outline
+                    R.drawable.player_pause
                 } else {
-                    R.drawable.play_outline
+                    R.drawable.player_play
                 }),
                 contentDescription = null
             )

@@ -74,7 +74,7 @@ private fun TopBar(
             onClick = { navController.navigateSingleTopTo(SettingsScreen.About.route) }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.star_outline),
+                painter = painterResource(id = R.drawable.candy),
                 contentDescription = null
             )
         }

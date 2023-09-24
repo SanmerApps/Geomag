@@ -152,7 +152,7 @@ private fun TopBar(
             onClick = { navController.navigateToSettings() }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.setting_outline),
+                painter = painterResource(id = R.drawable.settings),
                 contentDescription = null
             )
         }
