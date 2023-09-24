@@ -64,7 +64,7 @@ fun LocationItem(
         ) {
             Icon(
                 painter = painterResource(id = if (isRunning) {
-                    R.drawable.player_pause
+                    R.drawable.player_stop
                 } else {
                     R.drawable.player_play
                 }),
