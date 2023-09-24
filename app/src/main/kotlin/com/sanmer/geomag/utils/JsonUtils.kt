@@ -1,12 +1,10 @@
 package com.sanmer.geomag.utils
 
 import android.content.Context
-import com.sanmer.geomag.App
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.model.json.RecordJson
 import com.sanmer.geomag.model.json.toJson
 import com.sanmer.geomag.utils.extensions.createJson
-import com.sanmer.geomag.utils.extensions.deleteJson
 import com.sanmer.geomag.utils.extensions.now
 import com.sanmer.geomag.utils.extensions.shareFile
 import com.squareup.moshi.Moshi
@@ -14,14 +12,9 @@ import com.squareup.moshi.adapter
 import kotlinx.datetime.LocalDateTime
 
 object JsonUtils {
-    private val context by lazy { App.context }
     private val moshi = Moshi.Builder().build()
     private val record = moshi.adapter<RecordJson>()
     private val records = moshi.adapter<List<RecordJson>>()
-
-    init {
-        context.deleteJson()
-    }
 
     private fun Record.toJsonText(): String? {
         return record.indent("    ").toJson(toJson())
