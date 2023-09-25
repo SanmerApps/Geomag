@@ -1,2 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="page_view_record">Ver registro</string>
+    <string name="page_settings">Configuración</string>
+    <string name="page_about">Acerca de</string>
+    <string name="overview_datetime">Fecha/Hora</string>
+    <string name="overview_decimal">Decimal</string>
+    <string name="overview_location">Ubicación</string>
+    <string name="overview_altitude">Altitud</string>
+    <string name="overview_no_location_access">No hay acceso a la ubicación</string>
+    <string name="overview_calculation">Cálculo</string>
+    <string name="overview_single">Individual</string>
+    <string name="overview_continuous">Continuo</string>
+    <string name="overview_customized">Parámetros personalizados</string>
+    <string name="overview_current_mf">Campo magnético actual</string>
+    <string name="overview_view_records">Ver registros</string>
+    <string name="records_dialog_delete_desc">¿Está seguro de que desea eliminar los registros seleccionados\? La operación no se puede deshacer.</string>
+    <string name="records_empty">Sin registros</string>
+    <string name="record_dialog_delete_title">Eliminar registro</string>
+    <string name="record_info_model">Modelo</string>
+    <string name="record_value_f">Intensidad total</string>
+    <string name="record_value_h">Intensidad horizontal</string>
+    <string name="record_value_x">Componente X</string>
+    <string name="record_value_y">Componente Y</string>
+    <string name="record_value_z">Componente Z</string>
+    <string name="record_value_d">Declinación</string>
+    <string name="record_value_i">Inclinación</string>
+    <string name="settings_app_theme">Tema de la App</string>
+    <string name="app_theme_palette">Paleta Temática</string>
+    <string name="app_theme_dark_theme">Tema Oscuro</string>
+    <string name="app_theme_dark_theme_auto">Automático</string>
+    <string name="app_theme_dark_theme_light">Claro</string>
+    <string name="app_theme_dark_theme_dark">Oscuro</string>
+    <string name="about_app_version">Versión %1$s (%2$s)</string>
+    <string name="about_desc2">Hecho con ❤️ por %1$s</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_close">Cerrar</string>
+    <string name="dialog_delete">Eliminar</string>
+    <string name="message_location_click">Haga clic para ver los detalles</string>
+    <string name="message_loading">Cargando…</string>
+    <string name="action_stop">Detener</string>
+    <string name="notification_name_location">Servicio de Ubicación</string>
+    <string name="unknown_error">Error desconocido</string>
+    <string name="page_records">Registros</string>
+    <string name="overview_latitude">Latitud</string>
+    <string name="overview_longitude">Longitud</string>
+    <string name="overview_no_location_access_desc">La ubicación del dispositivo para todas las aplicaciones está desactivada, por lo que el servicio de ubicación no está disponible!</string>
+    <string name="overview_turn_on_location">Activar ubicación</string>
+    <string name="records_dialog_delete_title">Eliminar los registros seleccionados</string>
+    <string name="record_dialog_delete_desc">¿Está seguro de eliminar este registro\? La operación no se puede deshacer.</string>
+    <string name="settings_app_theme_desc">Cambia la combinación de colores y el modo noche</string>
+    <string name="about_desc1">Proporcionar el cálculo de modelos de campo geomagnético y el registro de datos.</string>
+</resources>
