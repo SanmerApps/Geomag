@@ -1,6 +1,8 @@
 package com.sanmer.geomag.ui.activity
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -15,22 +17,26 @@ import com.sanmer.geomag.ui.navigation.graphs.settingsScreen
 fun MainScreen() {
     val navController = rememberNavController()
 
-    NavHost(
+    Surface(
         modifier = Modifier.fillMaxSize(),
-        navController = navController,
-        startDestination = MainScreen.Home.route
+        color = MaterialTheme.colorScheme.background
     ) {
-        homeScreen(
-            navController = navController
-        )
-        customizeScreen(
-            navController = navController
-        )
-        recordsScreen(
-            navController = navController
-        )
-        settingsScreen(
-            navController = navController
-        )
+        NavHost(
+            navController = navController,
+            startDestination = MainScreen.Home.route
+        ) {
+            homeScreen(
+                navController = navController
+            )
+            customizeScreen(
+                navController = navController
+            )
+            recordsScreen(
+                navController = navController
+            )
+            settingsScreen(
+                navController = navController
+            )
+        }
     }
 }
