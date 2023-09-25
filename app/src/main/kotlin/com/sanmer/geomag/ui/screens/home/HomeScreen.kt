@@ -143,7 +143,8 @@ private fun TopBar(
                 icon = R.drawable.launcher_outline,
                 modifier = Modifier.size(32.dp),
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
+                fraction = 0.65f
             )
         }
     },

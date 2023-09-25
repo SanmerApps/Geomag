@@ -28,7 +28,8 @@ fun Logo(
     modifier: Modifier = Modifier,
     shape: Shape = CircleShape,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    containerColor: Color = MaterialTheme.colorScheme.primary
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    fraction: Float = 0.6f
 ) = Surface(
     modifier = modifier,
     shape = shape,
@@ -39,7 +40,7 @@ fun Logo(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            modifier = Modifier.fillMaxSize(0.6f),
+            modifier = Modifier.fillMaxSize(fraction),
             painter = painterResource(id = icon),
             contentDescription = null,
             tint = LocalContentColor.current

@@ -65,7 +65,8 @@ fun AboutScreen(
                 icon = R.drawable.launcher_outline,
                 modifier = Modifier.size(65.dp),
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
+                fraction = 0.65f
             )
 
             Spacer(modifier = Modifier.height(20.dp))
