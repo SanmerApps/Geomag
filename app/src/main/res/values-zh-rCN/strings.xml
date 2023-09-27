@@ -56,7 +56,7 @@
     <!-- About -->
     <string name="about_app_version">版本 %1$s (%2$s)</string>
     <string name="about_desc1">提供地磁场模型计算以及数据记录。</string>
-    <string name="about_desc2">由 %1$s 用 ❤️ 制作</string>
+    <string name="about_desc2">由 %s 用 ❤️ 制作</string>
 
     <!-- Dialog-->
     <string name="dialog_cancel">取消</string>

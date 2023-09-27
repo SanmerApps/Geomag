@@ -32,7 +32,7 @@
     <string name="app_theme_dark_theme_light">Claro</string>
     <string name="app_theme_dark_theme_dark">Oscuro</string>
     <string name="about_app_version">Versión %1$s (%2$s)</string>
-    <string name="about_desc2">Hecho con ❤️ por %1$s</string>
+    <string name="about_desc2">Hecho con ❤️ por %s</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_close">Cerrar</string>

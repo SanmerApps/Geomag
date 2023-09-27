@@ -56,7 +56,7 @@
     <!-- About -->
     <string name="about_app_version">Version %1$s (%2$s)</string>
     <string name="about_desc1">Provide geomagnetic field models calculation and data recording.</string>
-    <string name="about_desc2">Made with ❤️ by %1$s</string>
+    <string name="about_desc2">Made with ❤️ by %s</string>
 
     <!-- Dialog -->
     <string name="dialog_cancel">Cancel</string>
