@@ -10,7 +10,7 @@ Geomag is written with [Jetpack Compose](https://developer.android.com/jetpack/c
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="32%" /></p>
 
 ## Supported Versions
-Android 8.0 ~ 13
+Android 8.0 ~ 14
 
 ## Supported Models
  - IGRF (International Geomagnetic Reference Field)
