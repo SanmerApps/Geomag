@@ -39,7 +39,7 @@ fun RecordsList(
     state: LazyListState,
     isSelected: (Record) -> Boolean,
     isChooser: Boolean,
-    setChooser: (Boolean) -> Unit,
+    onOpenChooser: () -> Unit,
     onToggle: (Record) -> Unit,
     navController: NavController,
 ) = Box(
@@ -54,7 +54,7 @@ fun RecordsList(
                 record = it,
                 isSelected = isSelected(it),
                 isChooser = isChooser,
-                setChooser = setChooser,
+                onOpenChooser = onOpenChooser,
                 onToggle = onToggle,
                 onClick = {
                     navController.navigateSingleTopTo(
@@ -76,7 +76,7 @@ private fun RecordItem(
     record: Record,
     isSelected: Boolean,
     isChooser: Boolean,
-    setChooser: (Boolean) -> Unit,
+    onOpenChooser: () -> Unit,
     onToggle: (Record) -> Unit,
     onClick: () -> Unit = {}
 ) = Row(
@@ -94,7 +94,7 @@ private fun RecordItem(
             },
             onLongClick = {
                 if (!isChooser) {
-                    setChooser(true)
+                    onOpenChooser()
                     onToggle(record)
                 }
             },

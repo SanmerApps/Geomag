@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
+import com.sanmer.geomag.ui.component.Loading
 import com.sanmer.geomag.ui.component.PageIndicator
 import com.sanmer.geomag.viewmodel.RecordsViewModel
 
@@ -40,20 +41,21 @@ fun RecordsScreen(
     navController: NavController,
     viewModel: RecordsViewModel = hiltViewModel()
 ) {
-    val list by viewModel.list.collectAsStateWithLifecycle()
+    val list by viewModel.records.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listSate = rememberLazyListState()
     
     LaunchedEffect(viewModel.selectedSize) {
         if (viewModel.selectedSize == 0) {
-            viewModel.setChooser(false)
+            viewModel.closeChooser()
         }
     }
 
-    BackHandler(enabled = viewModel.isChooser) {
-        viewModel.setChooser(false)
-    }
+    BackHandler(
+        enabled = viewModel.isChooser,
+        onBack = viewModel::closeChooser
+    )
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -61,7 +63,7 @@ fun RecordsScreen(
             TopBar(
                 isChooser = viewModel.isChooser,
                 selectedSize = viewModel.selectedSize,
-                setChooser = viewModel::setChooser,
+                onCloseChooser = viewModel::closeChooser,
                 shareRecords = viewModel::shareJsonFile,
                 deleteRecords = viewModel::deleteSelected,
                 scrollBehavior = scrollBehavior,
@@ -72,22 +74,26 @@ fun RecordsScreen(
         Box(
             modifier = Modifier.padding(innerPadding)
         ) {
-            if (list.isEmpty()) {
+            if (viewModel.isLoading) {
+                Loading()
+            }
+
+            if (list.isEmpty() && !viewModel.isLoading) {
                 PageIndicator(
                     icon = R.drawable.database_search,
                     text = R.string.records_empty
                 )
-            } else {
-                RecordsList(
-                    list = list,
-                    state = listSate,
-                    isSelected = viewModel::isSelected,
-                    isChooser = viewModel.isChooser,
-                    setChooser = viewModel::setChooser,
-                    onToggle = viewModel::toggleRecord,
-                    navController = navController
-                )
             }
+
+            RecordsList(
+                list = list,
+                state = listSate,
+                isSelected = viewModel::isSelected,
+                isChooser = viewModel.isChooser,
+                onOpenChooser = { viewModel.isChooser = true },
+                onToggle = viewModel::toggleRecord,
+                navController = navController
+            )
         }
     }
 }
@@ -96,7 +102,7 @@ fun RecordsScreen(
 private fun TopBar(
     isChooser: Boolean,
     selectedSize: Int,
-    setChooser: (Boolean) -> Unit,
+    onCloseChooser: () -> Unit,
     shareRecords: (Context) -> Unit,
     deleteRecords: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
@@ -116,7 +122,7 @@ private fun TopBar(
         IconButton(
             onClick = {
                 if (isChooser) {
-                    setChooser(false)
+                    onCloseChooser()
                 } else {
                     navController.popBackStack()
                 }

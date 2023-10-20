@@ -1,18 +1,21 @@
 package com.sanmer.geomag.viewmodel
 
 import android.content.Context
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.utils.JsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,48 +24,56 @@ import javax.inject.Inject
 class RecordsViewModel @Inject constructor(
     private val localRepository: LocalRepository
 ) : ViewModel() {
-    val list = localRepository.getAllAsFlow()
-        .map { list ->
-            list.sortedBy { it.time }
-                .toMutableStateList()
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
-        )
+    private val valuesFlow = MutableStateFlow(listOf<Record>())
+    val records get() = valuesFlow.asStateFlow()
 
-    private val selectedList = mutableStateListOf<Record>()
-    val selectedSize get() = selectedList.size
+    private val selected = mutableStateListOf<Record>()
+    val selectedSize get() = selected.size
 
-    private val _isChooser = mutableStateOf(false)
-    val isChooser get() = _isChooser.value
+    var isChooser by mutableStateOf(false)
+    var isLoading by mutableStateOf(false)
+        private set
 
     init {
         Timber.d("RecordsViewModel init")
+        dataObserver()
     }
 
-    fun isSelected(value: Record) = value in selectedList
+    private fun dataObserver() {
+        localRepository.getAllAsFlow()
+            .onStart { isLoading = true }
+            .onEach { list ->
+                Timber.d("record list, size = ${list.size}")
 
-    fun setChooser(value: Boolean) {
-        _isChooser.value = value
-        selectedList.clear()
+                valuesFlow.value = list.sortedBy { it.time }
+
+                if (isLoading) isLoading = false
+
+            }.launchIn(viewModelScope)
+    }
+
+    fun isSelected(value: Record) = value in selected
+
+    fun closeChooser() {
+        isChooser = false
+        selected.clear()
     }
 
     fun toggleRecord(value: Record) {
         if (isSelected(value)) {
-            selectedList.remove(value)
+            selected.remove(value)
         } else {
-            selectedList.add(value)
+            selected.add(value)
         }
     }
 
     fun shareJsonFile(context: Context) {
-        JsonUtils.shareJsonFile(context, selectedList)
-        setChooser(false)
+        JsonUtils.shareJsonFile(context, selected)
+        closeChooser()
     }
 
     fun deleteSelected() = viewModelScope.launch {
-        localRepository.delete(selectedList)
-        setChooser(false)
+        localRepository.delete(selected)
+        closeChooser()
     }
 }
