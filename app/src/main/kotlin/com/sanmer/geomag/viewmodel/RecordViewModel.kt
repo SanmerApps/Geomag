@@ -2,6 +2,9 @@ package com.sanmer.geomag.viewmodel
 
 import android.content.Context
 import android.net.Uri
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,19 +24,16 @@ class RecordViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val recordKey = getRecordKey(savedStateHandle)
-    var record: Record = Record.empty()
+    var record: Record by mutableStateOf(Record.empty())
         private set
 
     init {
         Timber.d("RecordViewModel init")
+        loadData()
+    }
 
-        viewModelScope.launch {
-            runCatching {
-                localRepository.getByKey(key = recordKey)
-            }.onSuccess {
-                record = it
-            }
-        }
+    private fun loadData() = viewModelScope.launch {
+        record = localRepository.getByKey(key = recordKey)
     }
 
     fun share(context: Context) {

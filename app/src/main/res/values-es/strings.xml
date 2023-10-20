@@ -10,7 +10,6 @@
     <string name="overview_no_location_access">No hay acceso a la ubicación</string>
     <string name="overview_calculation">Cálculo</string>
     <string name="overview_single">Individual</string>
-    <string name="overview_continuous">Continuo</string>
     <string name="overview_customized">Parámetros personalizados</string>
     <string name="overview_current_mf">Campo magnético actual</string>
     <string name="overview_view_records">Ver registros</string>

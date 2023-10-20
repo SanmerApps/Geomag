@@ -14,7 +14,7 @@ import com.sanmer.geomag.ui.animate.slideOutLeftToRight
 import com.sanmer.geomag.ui.animate.slideOutRightToLeft
 import com.sanmer.geomag.ui.navigation.MainScreen
 import com.sanmer.geomag.ui.screens.records.RecordsScreen
-import com.sanmer.geomag.ui.screens.records.viewrecord.ViewRecordScreen
+import com.sanmer.geomag.ui.screens.records.view.ViewScreen
 
 enum class RecordsScreen(val route: String) {
     Home("Records"),
@@ -59,7 +59,7 @@ fun NavGraphBuilder.recordsScreen(
         enterTransition = { slideInRightToLeft() + fadeIn() },
         exitTransition = { slideOutLeftToRight() + fadeOut() }
     ) {
-        ViewRecordScreen(
+        ViewScreen(
             navController = navController
         )
     }

@@ -16,14 +16,12 @@ import com.sanmer.geomag.ui.navigation.navigateToRecords
 
 @Composable
 fun RecordsItem(
-    enableRecords: Boolean,
     navController: NavController,
-    modifier: Modifier = Modifier,
+    enableRecords: Boolean,
     setEnableRecords: (Boolean) -> Unit,
     openBottomSheet: () -> Unit
 ) = OverviewCard(
     expanded = true,
-    modifier = modifier,
     icon = R.drawable.database,
     label = stringResource(id = R.string.page_records),
     trailingIcon = {

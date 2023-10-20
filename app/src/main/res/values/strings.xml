@@ -20,7 +20,6 @@
     <!-- Calculation -->
     <string name="overview_calculation">Calculation</string>
     <string name="overview_single">Single</string>
-    <string name="overview_continuous">Continuous</string>
     <string name="overview_customized">Customized Parameters</string>
     <!-- Records -->
     <string name="overview_current_mf">Current Magnetic Field</string>

@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
@@ -23,7 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,8 +34,6 @@ class HomeViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ): ViewModel() {
-    private val userPreferences get() = userPreferencesRepository.data
-
     var isTimeRunning by mutableStateOf(true)
         private set
 
@@ -47,22 +46,13 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.Default)
 
-    var isCalculateRunning by mutableStateOf(false)
-        private set
-
-    private val currentValueFlow = flow {
-        while (currentCoroutineContext().isActive) {
-            if (isCalculateRunning) {
-                singleCalculate().onSuccess { emit(it) }
-                delay(1000)
-            }
-        }
-    }.flowOn(Dispatchers.Default)
-
     val isLocationRunning get() = LocationService.isRunning
     val position by derivedStateOf {
         Position(LocationService.location)
     }
+
+    var record by mutableStateOf(Record.empty())
+        private set
 
     init {
         Timber.d("HomeViewModel init")
@@ -75,10 +65,6 @@ class HomeViewModel @Inject constructor(
         isTimeRunning = !isTimeRunning
     }
 
-    fun toggleCalculate() {
-        isCalculateRunning = !isCalculateRunning
-    }
-
     fun toggleLocation(context: Context) {
         if (isLocationRunning) {
             LocationService.stop(context)
@@ -87,24 +73,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    suspend fun singleCalculate(): Result<Record> = withContext(Dispatchers.IO) {
+    fun singleCalculate() = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
-            val preference = userPreferences.first()
-            val model = preference.fieldModel
-            val enableRecords = preference.enableRecords
+            val userPreferences = userPreferencesRepository.data.first()
+            val model = userPreferences.fieldModel
+            val enableRecords = userPreferences.enableRecords
             val dateTime = dateTimeFlow.first().first
 
-            val value = GeomagExt.run(
+            record = GeomagExt.run(
                 model = model,
                 dataTime = dateTime,
                 position = position
             )
 
             if (enableRecords) {
-                localRepository.insert(value)
+                localRepository.insert(record)
             }
-
-            return@runCatching value
         }.onFailure {
             Timber.e(it)
         }
@@ -119,17 +103,9 @@ class HomeViewModel @Inject constructor(
         return dataTime.value
     }
 
-    @Composable
-    fun rememberCurrentValue(): Record {
-        val currentValue = currentValueFlow.collectAsStateWithLifecycle(
-            initialValue = Record.empty()
-        )
-
-        return currentValue.value
-    }
-
     fun setFieldModel(value: GeomagExt.Models) =
         userPreferencesRepository.setFieldModel(value)
+
     fun setEnableRecords(value: Boolean) =
         userPreferencesRepository.setEnableRecords(value)
 }

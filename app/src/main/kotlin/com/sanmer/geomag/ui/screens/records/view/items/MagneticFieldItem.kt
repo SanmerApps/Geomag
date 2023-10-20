@@ -1,4 +1,4 @@
-package com.sanmer.geomag.ui.screens.records.viewrecord.items
+package com.sanmer.geomag.ui.screens.records.view.items
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

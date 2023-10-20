@@ -36,16 +36,12 @@ import com.sanmer.geomag.ui.navigation.navigateToCalculate
 
 @Composable
 fun CalculationItem(
-    isRunning: Boolean,
-    fieldModel: GeomagExt.Models,
     navController: NavController,
-    modifier: Modifier = Modifier,
+    fieldModel: GeomagExt.Models,
     setFieldModel: (GeomagExt.Models) -> Unit,
-    singleCalculate: () -> Unit,
-    toggleCalculate: () -> Unit
+    singleCalculate: () -> Unit
 ) = OverviewCard(
     expanded = true,
-    modifier = modifier,
     icon = R.drawable.sum,
     label = stringResource(id = R.string.overview_calculation),
     trailingIcon = {
@@ -63,17 +59,6 @@ fun CalculationItem(
             onClick = singleCalculate,
             icon = R.drawable.player_play_filled,
             text = stringResource(id = R.string.overview_single),
-            enabled = !isRunning
-        )
-
-        OverviewButton(
-            onClick = toggleCalculate,
-            icon = if (isRunning) {
-                R.drawable.player_stop_filled
-            } else {
-                R.drawable.player_play_filled
-            },
-            text = stringResource(id = R.string.overview_continuous)
         )
 
         OverviewButton(

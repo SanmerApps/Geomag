@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -19,11 +18,9 @@ import kotlinx.datetime.LocalDateTime
 fun DateTimeItem(
     isRunning: Boolean,
     dateTime: Pair<LocalDateTime, Double>,
-    modifier: Modifier = Modifier,
     toggleDateTime: () -> Unit
 ) = OverviewCard(
     expanded = true,
-    modifier = modifier,
     icon = R.drawable.clock,
     label = stringResource(id = R.string.overview_datetime),
     trailingIcon = {

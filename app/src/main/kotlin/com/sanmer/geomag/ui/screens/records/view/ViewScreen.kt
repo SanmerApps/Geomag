@@ -1,4 +1,4 @@
-package com.sanmer.geomag.ui.screens.records.viewrecord
+package com.sanmer.geomag.ui.screens.records.view
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -32,12 +32,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
-import com.sanmer.geomag.ui.screens.records.viewrecord.items.MagneticFieldItem
-import com.sanmer.geomag.ui.screens.records.viewrecord.items.RecordInfoItem
+import com.sanmer.geomag.ui.screens.records.view.items.MagneticFieldItem
+import com.sanmer.geomag.ui.screens.records.view.items.RecordInfoItem
 import com.sanmer.geomag.viewmodel.RecordViewModel
 
 @Composable
-fun ViewRecordScreen(
+fun ViewScreen(
     navController: NavController,
     viewModel: RecordViewModel = hiltViewModel()
 ) {
