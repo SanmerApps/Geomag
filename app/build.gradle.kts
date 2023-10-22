@@ -11,8 +11,8 @@ plugins {
 }
 
 val baseVersionName = "0.5.3"
-val isDevVersion: Boolean get() = exec("git tag -l v${baseVersionName}").isEmpty()
-val verNameSuffix: String get() = if (isDevVersion) ".dev" else ""
+val isDevVersion get() = exec("git tag --contains HEAD").isEmpty()
+val verNameSuffix get() = if (isDevVersion) ".dev" else ""
 
 android {
     namespace = "com.sanmer.geomag"
@@ -43,10 +43,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            versionNameSuffix = ".debug"
-        }
-
         release {
             isMinifyEnabled = true
             isShrinkResources = true
