@@ -4,4 +4,4 @@ Supported Models:
 - IGRF (International Geomagnetic Reference Field)
 - WMM (World Magnetic Model)
 
-https://github.com/ya0211/Geomag
+https://github.com/SanmerApps/Geomag
