@@ -1,6 +1,6 @@
 package com.sanmer.geomag.model
 
-import com.sanmer.geomag.MagneticField
+import dev.sanmer.geomag.MagneticField
 
 data class MagneticFieldExt(
     val declination: Double,
@@ -19,20 +19,20 @@ data class MagneticFieldExt(
     val totalSV: Double
 ) {
     constructor(field: MagneticField) : this(
-        declination = field.declination,
-        declinationSV = field.declinationSV.orZero(),
-        inclination = field.inclination,
-        inclinationSV = field.inclinationSV.orZero(),
-        horizontalIntensity = field.horizontalIntensity,
-        horizontalSV = field.horizontalSV.orZero(),
-        northComponent = field.northComponent,
-        northSV = field.northSV.orZero(),
-        eastComponent = field.eastComponent,
-        eastSV = field.eastSV.orZero(),
-        verticalComponent = field.verticalComponent,
-        verticalSV = field.verticalSV.orZero(),
-        totalIntensity = field.totalIntensity,
-        totalSV = field.totalSV.orZero()
+        declination = field.d,
+        declinationSV = field.dDot,
+        inclination = field.i,
+        inclinationSV = field.iDot,
+        horizontalIntensity = field.h,
+        horizontalSV = field.hDot,
+        northComponent = field.x,
+        northSV = field.xDot,
+        eastComponent = field.y,
+        eastSV = field.yDot,
+        verticalComponent = field.z,
+        verticalSV = field.zDot,
+        totalIntensity = field.f,
+        totalSV = field.fDot
     )
 
     companion object {
@@ -47,5 +47,3 @@ data class MagneticFieldExt(
         )
     }
 }
-
-private fun Double.orZero() = if (isNaN()) 0.0 else this

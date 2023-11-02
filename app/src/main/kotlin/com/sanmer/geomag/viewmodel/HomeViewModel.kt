@@ -17,6 +17,7 @@ import com.sanmer.geomag.repository.UserPreferencesRepository
 import com.sanmer.geomag.service.LocationService
 import com.sanmer.geomag.utils.extensions.now
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.sanmer.geomag.Geomag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
@@ -59,7 +60,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun LocalDateTime.withDecimalYears(): Pair<LocalDateTime, Double> =
-        this to GeomagExt.toDecimalYears(this)
+        this to Geomag.toDecimalYears(this)
 
     fun toggleDateTime() {
         isTimeRunning = !isTimeRunning
@@ -78,12 +79,18 @@ class HomeViewModel @Inject constructor(
             val userPreferences = userPreferencesRepository.data.first()
             val model = userPreferences.fieldModel
             val enableRecords = userPreferences.enableRecords
-            val dateTime = dateTimeFlow.first().first
+            val dateTime = dateTimeFlow.first()
 
-            record = GeomagExt.run(
+            val calc = when (model) {
+                GeomagExt.Models.IGRF -> GeomagExt::igrf
+                GeomagExt.Models.WMM -> GeomagExt::wmm
+            }
+
+            record = Record(
                 model = model,
-                dataTime = dateTime,
-                position = position
+                time = dateTime.first,
+                position = position,
+                values = calc(position, dateTime.second)
             )
 
             if (enableRecords) {

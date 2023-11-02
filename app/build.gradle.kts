@@ -81,6 +81,12 @@ android {
         }
     }
 
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDir("src/main/libs")
+        }
+    }
+
     splits {
         abi {
             reset()

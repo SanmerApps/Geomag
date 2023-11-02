@@ -11,4 +11,10 @@
    <fields>;
 }
 
+# Keep Native library
+-keep class dev.sanmer.geomag.MagneticField { *; }
+-keepclassmembers class dev.sanmer.geomag.Geomag {
+    native <methods>;
+}
+
 -repackageclasses com.sanmer.geomag

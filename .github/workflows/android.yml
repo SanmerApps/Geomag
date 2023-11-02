@@ -43,27 +43,6 @@ jobs:
           java-version: '17'
           architecture: x64
 
-      - name: Set up Golang
-        uses: actions/setup-go@v4
-        with:
-          go-version-file: ${{ github.workspace }}/app/src/main/golang/go.mod
-          cache-dependency-path: ${{ github.workspace }}/app/src/main/golang/go.sum
-
-      - name: Set up NDK
-        uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r26
-          add-to-path: false
-          local-cache: true
-
-      - name: Build Golang library
-        run: |
-          go install golang.org/x/mobile/cmd/gomobile@latest
-          gomobile init
-          go generate app/src/main/golang/Geomag.go
-        env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
         with:

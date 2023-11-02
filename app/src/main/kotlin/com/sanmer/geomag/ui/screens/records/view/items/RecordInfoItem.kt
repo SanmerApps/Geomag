@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.R
 import com.sanmer.geomag.model.Record
+import dev.sanmer.geomag.Geomag
 
 @Composable
 fun RecordInfoItem(
@@ -57,7 +57,7 @@ fun RecordInfoItem(
 
         ValueItem(
             key = stringResource(id = R.string.overview_decimal),
-            value = GeomagExt.toDecimalYears(record.time).toString()
+            value = Geomag.toDecimalYears(record.time).toString()
         )
     }
 }
