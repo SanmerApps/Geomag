@@ -25,7 +25,7 @@ android {
         resourceConfigurations += arrayOf("en", "es", "zh-rCN")
 
         ndk {
-            abiFilters += arrayOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
+            abiFilters += arrayOf("arm64-v8a", "x86_64")
         }
     }
 
@@ -83,6 +83,8 @@ android {
 
     splits {
         abi {
+            reset()
+            include("arm64-v8a", "x86_64")
             isEnable = true
             isUniversalApk = true
         }
