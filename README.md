@@ -12,7 +12,7 @@ Geomag (short for `Geomagnetic`) is an Android app that calculates geomagnetic f
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="32%" /></p>
 
 ## Supported Versions
-Android 8.0 ~ 14
+Android 10 ~ 14
  
 ## Credits
  - [tabler/tabler-icons](https://github.com/tabler/tabler-icons.git)
