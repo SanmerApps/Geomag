@@ -1,9 +1,7 @@
 # Geomag
-[![release](https://img.shields.io/github/v/release/SanmerApps/Geomag?label=release&color=red)](https://github.com/SanmerApps/Geomag/releases) [![download](https://shields.io/github/downloads/SanmerApps/Geomag/total?label=download)](https://github.com/SanmerApps/Geomag/releases/latest) [![license](https://img.shields.io/github/license/SanmerApps/Geomag?color=orange)](LICENSE) [![translated](https://weblate.sanmer.dev/widgets/geomag/-/app/svg-badge.svg)](https://weblate.sanmer.dev/engage/geomag/)
+[![release](https://img.shields.io/github/v/release/SanmerApps/Geomag?label=release&color=red)](https://github.com/SanmerApps/Geomag/releases) [![download](https://shields.io/github/downloads/SanmerApps/Geomag/total?label=download)](https://github.com/SanmerApps/Geomag/releases/latest) [![translated](https://weblate.sanmer.dev/widgets/geomag/-/app/svg-badge.svg)](https://weblate.sanmer.dev/engage/geomag/)
 
 Geomag (short for `Geomagnetic`) is an Android app that calculates geomagnetic field models.
-
-Geomag is written with [Jetpack Compose](https://developer.android.com/jetpack/compose).
 
 ## Core
 - [libgeomag-jni](https://github.com/SanmerDev/libgeomag-jni)
@@ -18,6 +16,3 @@ Android 8.0 ~ 14
  
 ## Credits
  - [tabler/tabler-icons](https://github.com/tabler/tabler-icons.git)
-
-## License
-[MIT license](LICENSE)
