@@ -61,14 +61,14 @@ fun MagneticFieldItem(
 
         ValueItem(
             key = stringResource(id = R.string.record_value_d),
-            value1 = "${value.declination}º ",
-            value2 = "${value.declinationSV}'/yr"
+            value1 = "${value.declination} rad",
+            value2 = "${value.declinationSV} rad/yr"
         )
 
         ValueItem(
             key = stringResource(id = R.string.record_value_i),
-            value1 = "${value.inclination}º ",
-            value2 = "${value.inclinationSV}'/yr"
+            value1 = "${value.inclination} rad",
+            value2 = "${value.inclinationSV} rad/yr"
         )
     }
 }
