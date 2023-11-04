@@ -50,7 +50,7 @@ fun RecordInfoItem(
         )
 
         ValueItem(
-            key = stringResource(id = R.string.overview_time),
+            key = stringResource(id = R.string.overview_datetime),
             value = record.time.local
         )
 

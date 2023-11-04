@@ -7,7 +7,7 @@
 
     <!-- Home -->
     <!-- Time -->
-    <string name="overview_time">时间</string>
+    <string name="overview_datetime">日期/时间</string>
     <string name="overview_decimal">十进制</string>
     <!-- Location -->
     <string name="overview_location">位置</string>

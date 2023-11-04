@@ -22,7 +22,7 @@ fun DateTimeItem(
 ) = OverviewCard(
     expanded = true,
     icon = R.drawable.clock,
-    label = stringResource(id = R.string.overview_time),
+    label = stringResource(id = R.string.overview_datetime),
     trailingIcon = {
         IconButton(
             onClick = toggleDateTime
@@ -43,7 +43,7 @@ fun DateTimeItem(
         contentPadding = PaddingValues(all = 12.dp)
     ) {
         ValueItem(
-            key = stringResource(id = R.string.overview_time),
+            key = stringResource(id = R.string.overview_datetime),
             value = dateTime.local
         )
 
