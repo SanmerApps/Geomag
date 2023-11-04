@@ -45,7 +45,7 @@ class RecordsViewModel @Inject constructor(
             .onEach { list ->
                 Timber.d("record list, size = ${list.size}")
 
-                valuesFlow.value = list.sortedBy { it.time.decimalOfUtc }
+                valuesFlow.value = list.sortedBy { it.time.local }
 
                 if (isLoading) isLoading = false
 

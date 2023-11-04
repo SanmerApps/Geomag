@@ -55,13 +55,8 @@ fun RecordInfoItem(
         )
 
         ValueItem(
-            key = stringResource(id = R.string.overview_utc),
-            value = record.time.utc
-        )
-
-        ValueItem(
             key = stringResource(id = R.string.overview_decimal),
-            value = record.time.decimalOfUtc
+            value = record.time.decimalOfLocal
         )
     }
 }

@@ -48,13 +48,8 @@ fun DateTimeItem(
         )
 
         ValueItem(
-            key = stringResource(id = R.string.overview_utc),
-            value = dateTime.utc
-        )
-
-        ValueItem(
             key = stringResource(id = R.string.overview_decimal),
-            value = dateTime.decimalOfUtc
+            value = dateTime.decimalOfLocal
         )
     }
 }

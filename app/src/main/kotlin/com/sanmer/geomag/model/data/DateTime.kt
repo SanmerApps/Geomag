@@ -15,8 +15,9 @@ class DateTime private constructor(
     second: Int
 ) {
     val local = LocalDateTime(year, monthNumber, dayOfMonth, hour, minute, second)
-    val utc = local.toTimeZone(TimeZone.UTC)
-    val decimalOfUtc = GeomagExt.toDecimalYears(utc)
+    val decimalOfLocal get() = GeomagExt.toDecimalYears(local)
+    private val utc get() = local.toTimeZone(TimeZone.UTC)
+    val decimalOfUtc get() = GeomagExt.toDecimalYears(utc)
 
     override fun toString(): String {
         return local.toString()
