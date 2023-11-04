@@ -20,9 +20,9 @@
     <!-- Calculation -->
     <string name="overview_calculation">计算</string>
     <string name="overview_single">单次</string>
-    <string name="overview_customized">自定义参数</string>
+    <string name="overview_customized">自定义</string>
     <!-- Records -->
-    <string name="overview_current_mf">当前磁场</string>
+    <string name="overview_mf">磁场</string>
     <string name="overview_view_records">查看记录</string>
 
     <!-- Records -->

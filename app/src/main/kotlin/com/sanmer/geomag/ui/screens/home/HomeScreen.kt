@@ -91,8 +91,7 @@ fun HomeScreen(
             RecordsItem(
                 navController = navController,
                 enableRecords = userPreferences.enableRecords,
-                setEnableRecords = viewModel::setEnableRecords,
-                openBottomSheet = { showValue = true }
+                setEnableRecords = viewModel::setEnableRecords
             )
 
             if (showValue) {

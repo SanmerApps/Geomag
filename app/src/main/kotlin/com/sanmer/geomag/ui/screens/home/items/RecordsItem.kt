@@ -18,8 +18,7 @@ import com.sanmer.geomag.ui.navigation.navigateToRecords
 fun RecordsItem(
     navController: NavController,
     enableRecords: Boolean,
-    setEnableRecords: (Boolean) -> Unit,
-    openBottomSheet: () -> Unit
+    setEnableRecords: (Boolean) -> Unit
 ) = OverviewCard(
     expanded = true,
     icon = R.drawable.database,
@@ -35,12 +34,6 @@ fun RecordsItem(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        OverviewButton(
-            onClick = openBottomSheet,
-            icon = R.drawable.presentation_analytics,
-            text = stringResource(id = R.string.overview_current_mf)
-        )
-
         OverviewButton(
             onClick = { navController.navigateToRecords() },
             icon = R.drawable.database_search,

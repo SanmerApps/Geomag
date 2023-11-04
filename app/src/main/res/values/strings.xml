@@ -20,9 +20,9 @@
     <!-- Calculation -->
     <string name="overview_calculation">Calculation</string>
     <string name="overview_single">Single</string>
-    <string name="overview_customized">Customized Parameters</string>
+    <string name="overview_customized">Customized</string>
     <!-- Records -->
-    <string name="overview_current_mf">Current Magnetic Field</string>
+    <string name="overview_mf">Magnetic Field</string>
     <string name="overview_view_records">View Records</string>
 
     <!-- Records -->

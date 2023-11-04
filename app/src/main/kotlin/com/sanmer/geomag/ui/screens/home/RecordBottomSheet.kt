@@ -39,7 +39,7 @@ fun RecordBottomSheet(
         windowInsets = WindowInsets.navigationBars
     ) {
         Text(
-            text = stringResource(id = R.string.overview_current_mf),
+            text = stringResource(id = R.string.overview_mf),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )

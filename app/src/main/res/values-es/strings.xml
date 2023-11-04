@@ -10,8 +10,8 @@
     <string name="overview_no_location_access">No hay acceso a la ubicación</string>
     <string name="overview_calculation">Cálculo</string>
     <string name="overview_single">Individual</string>
-    <string name="overview_customized">Parámetros personalizados</string>
-    <string name="overview_current_mf">Campo magnético actual</string>
+    <string name="overview_customized">Personalizados</string>
+    <string name="overview_mf">Campo magnético</string>
     <string name="overview_view_records">Ver registros</string>
     <string name="records_dialog_delete_desc">¿Está seguro de que desea eliminar los registros seleccionados\? La operación no se puede deshacer.</string>
     <string name="records_empty">Sin registros</string>
