@@ -1,7 +1,7 @@
 package com.sanmer.geomag.database.entity
 
 import androidx.room.Entity
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.Record
 
 @Entity(tableName = "key")
 data class RecordKey(

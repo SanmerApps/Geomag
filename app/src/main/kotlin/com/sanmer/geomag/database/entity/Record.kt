@@ -3,9 +3,9 @@ package com.sanmer.geomag.database.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import com.sanmer.geomag.GeomagExt
-import com.sanmer.geomag.model.DateTime
-import com.sanmer.geomag.model.Position
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.DateTime
+import com.sanmer.geomag.model.data.Position
+import com.sanmer.geomag.model.data.Record
 
 @Entity(
     tableName = "records",

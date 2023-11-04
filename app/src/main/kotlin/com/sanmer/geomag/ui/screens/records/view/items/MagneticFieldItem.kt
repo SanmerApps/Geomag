@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
-import com.sanmer.geomag.model.MagneticFieldExt
+import com.sanmer.geomag.model.data.MagneticFieldExt
 
 @Composable
 fun MagneticFieldItem(

@@ -1,7 +1,7 @@
 package com.sanmer.geomag.database.entity
 
 import androidx.room.Entity
-import com.sanmer.geomag.model.MagneticFieldExt
+import com.sanmer.geomag.model.data.MagneticFieldExt
 
 @Entity(tableName = "values")
 data class MagneticFieldEntity(

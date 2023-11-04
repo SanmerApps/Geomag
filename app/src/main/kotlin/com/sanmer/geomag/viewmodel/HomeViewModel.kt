@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.GeomagExt
-import com.sanmer.geomag.model.DateTime
-import com.sanmer.geomag.model.Position
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.DateTime
+import com.sanmer.geomag.model.data.Position
+import com.sanmer.geomag.model.data.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.repository.UserPreferencesRepository
 import com.sanmer.geomag.service.LocationService

@@ -1,6 +1,6 @@
 package com.sanmer.geomag.model.json
 
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.Record
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

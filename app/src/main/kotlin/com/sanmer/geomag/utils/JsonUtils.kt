@@ -1,7 +1,7 @@
 package com.sanmer.geomag.utils
 
 import android.content.Context
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.Record
 import com.sanmer.geomag.model.json.RecordJson
 import com.sanmer.geomag.model.json.toJson
 import com.sanmer.geomag.utils.extensions.createJson

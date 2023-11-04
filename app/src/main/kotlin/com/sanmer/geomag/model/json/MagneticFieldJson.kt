@@ -1,6 +1,6 @@
 package com.sanmer.geomag.model.json
 
-import com.sanmer.geomag.model.MagneticFieldExt
+import com.sanmer.geomag.model.data.MagneticFieldExt
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

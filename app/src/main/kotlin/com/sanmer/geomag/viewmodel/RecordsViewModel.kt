@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.utils.JsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel

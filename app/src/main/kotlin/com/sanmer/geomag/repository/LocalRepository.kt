@@ -4,7 +4,7 @@ import com.sanmer.geomag.database.dao.RecordDao
 import com.sanmer.geomag.database.entity.RecordKey
 import com.sanmer.geomag.database.entity.toEntity
 import com.sanmer.geomag.database.entity.toRecord
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.Record
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext

@@ -27,7 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.Record
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.component.scrollbar.VerticalFastScrollbar
 import com.sanmer.geomag.ui.utils.navigateSingleTopTo

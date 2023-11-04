@@ -9,7 +9,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
-import com.sanmer.geomag.model.DateTime
+import com.sanmer.geomag.model.data.DateTime
 import com.sanmer.geomag.ui.component.OutlineColumn
 import com.sanmer.geomag.ui.component.OverviewCard
 import com.sanmer.geomag.ui.component.ValueItem

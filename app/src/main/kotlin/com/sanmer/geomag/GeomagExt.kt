@@ -1,7 +1,7 @@
 package com.sanmer.geomag
 
-import com.sanmer.geomag.model.MagneticFieldExt
-import com.sanmer.geomag.model.Position
+import com.sanmer.geomag.model.data.MagneticFieldExt
+import com.sanmer.geomag.model.data.Position
 import dev.sanmer.geomag.Geomag
 import kotlinx.datetime.LocalDateTime
 

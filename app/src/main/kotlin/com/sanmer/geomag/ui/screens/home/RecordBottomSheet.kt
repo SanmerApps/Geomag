@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
-import com.sanmer.geomag.model.Record
+import com.sanmer.geomag.model.data.Record
 import com.sanmer.geomag.ui.screens.records.view.items.MagneticFieldItem
 import com.sanmer.geomag.ui.screens.records.view.items.RecordInfoItem
 import com.sanmer.geomag.ui.utils.expandedShape

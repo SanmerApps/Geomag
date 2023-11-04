@@ -1,4 +1,4 @@
-package com.sanmer.geomag.model
+package com.sanmer.geomag.model.data
 
 import com.sanmer.geomag.GeomagExt
 import com.sanmer.geomag.utils.extensions.now
