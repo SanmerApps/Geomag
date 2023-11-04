@@ -10,14 +10,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.model.DateTime
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.repository.UserPreferencesRepository
 import com.sanmer.geomag.service.LocationService
-import com.sanmer.geomag.utils.extensions.now
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.sanmer.geomag.Geomag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDateTime
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,7 +39,7 @@ class HomeViewModel @Inject constructor(
     private val dateTimeFlow = flow {
         while (currentCoroutineContext().isActive) {
             if (isTimeRunning) {
-                emit(LocalDateTime.now().withDecimalYears())
+                emit(DateTime.now())
                 delay(1000)
             }
         }
@@ -58,9 +56,6 @@ class HomeViewModel @Inject constructor(
     init {
         Timber.d("HomeViewModel init")
     }
-
-    private fun LocalDateTime.withDecimalYears(): Pair<LocalDateTime, Double> =
-        this to Geomag.toDecimalYears(this)
 
     fun toggleDateTime() {
         isTimeRunning = !isTimeRunning
@@ -88,9 +83,9 @@ class HomeViewModel @Inject constructor(
 
             record = Record(
                 model = model,
-                time = dateTime.first,
+                time = dateTime,
                 position = position,
-                values = calc(position, dateTime.second)
+                values = calc(position, dateTime.decimalOfUtc)
             )
 
             if (enableRecords) {
@@ -102,9 +97,9 @@ class HomeViewModel @Inject constructor(
     }
 
     @Composable
-    fun rememberDateTime(): Pair<LocalDateTime, Double> {
+    fun rememberDateTime(): DateTime {
         val dataTime = dateTimeFlow.collectAsStateWithLifecycle(
-            initialValue = LocalDateTime.now().withDecimalYears()
+            initialValue = DateTime.now()
         )
 
         return dataTime.value

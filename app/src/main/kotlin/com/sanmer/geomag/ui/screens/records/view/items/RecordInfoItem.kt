@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
 import com.sanmer.geomag.model.Record
-import dev.sanmer.geomag.Geomag
 
 @Composable
 fun RecordInfoItem(
@@ -51,13 +50,18 @@ fun RecordInfoItem(
         )
 
         ValueItem(
-            key = stringResource(id = R.string.overview_datetime),
-            value = record.time.toString()
+            key = stringResource(id = R.string.overview_time),
+            value = record.time.local
+        )
+
+        ValueItem(
+            key = stringResource(id = R.string.overview_utc),
+            value = record.time.utc
         )
 
         ValueItem(
             key = stringResource(id = R.string.overview_decimal),
-            value = Geomag.toDecimalYears(record.time).toString()
+            value = record.time.decimalOfUtc
         )
     }
 }
@@ -65,7 +69,7 @@ fun RecordInfoItem(
 @Composable
 private fun ValueItem(
     key: String,
-    value: String,
+    value: Any,
 ) = Column(
     modifier = Modifier.fillMaxWidth()
 ) {
@@ -76,7 +80,7 @@ private fun ValueItem(
     )
 
     Text(
-        text = value,
+        text = value.toString(),
         style = MaterialTheme.typography.bodyLarge
     )
 }

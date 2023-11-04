@@ -3,9 +3,9 @@ package com.sanmer.geomag.database.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.model.DateTime
 import com.sanmer.geomag.model.Position
 import com.sanmer.geomag.model.Record
-import kotlinx.datetime.toLocalDateTime
 
 @Entity(
     tableName = "records",
@@ -23,7 +23,7 @@ fun Record.toEntity() = RecordEntity(
 
 fun RecordEntity.toRecord() = Record(
     model = GeomagExt.Models.valueOf(key.model),
-    time = key.time.toLocalDateTime(),
+    time = DateTime.parse(key.time),
     position = Position(
         latitude = key.latitude,
         longitude = key.longitude,

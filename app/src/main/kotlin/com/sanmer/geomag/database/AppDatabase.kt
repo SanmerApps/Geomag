@@ -8,7 +8,7 @@ import androidx.room.migration.Migration
 import com.sanmer.geomag.database.dao.RecordDao
 import com.sanmer.geomag.database.entity.RecordEntity
 
-@Database(entities = [RecordEntity::class], version = 3)
+@Database(entities = [RecordEntity::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recordDao(): RecordDao
 
@@ -18,7 +18,8 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java, "geomag")
                 .addMigrations(
                     MIGRATION_1_2,
-                    MIGRATION_2_3
+                    MIGRATION_2_3,
+                    MIGRATION_3_4
                 )
                 .build()
         }
@@ -104,6 +105,31 @@ abstract class AppDatabase : RoomDatabase() {
 
             it.execSQL("DROP TABLE records")
             it.execSQL("ALTER TABLE records_new RENAME TO records")
+        }
+
+        private val MIGRATION_3_4 = Migration(3, 4) {
+            it.execSQL("DROP TABLE records")
+            it.execSQL("CREATE TABLE IF NOT EXISTS records (" +
+                    "model TEXT NOT NULL, " +
+                    "time TEXT NOT NULL, " +
+                    "altitude REAL NOT NULL, " +
+                    "latitude REAL NOT NULL, " +
+                    "longitude REAL NOT NULL, " +
+                    "declination REAL NOT NULL, " +
+                    "declinationSV REAL NOT NULL, " +
+                    "inclination REAL NOT NULL, " +
+                    "inclinationSV REAL NOT NULL, " +
+                    "horizontalIntensity REAL NOT NULL, " +
+                    "horizontalSV REAL NOT NULL, " +
+                    "northComponent REAL NOT NULL, " +
+                    "northSV REAL NOT NULL, " +
+                    "eastComponent REAL NOT NULL, " +
+                    "eastSV REAL NOT NULL, " +
+                    "verticalComponent REAL NOT NULL, " +
+                    "verticalSV REAL NOT NULL, " +
+                    "totalIntensity REAL NOT NULL, " +
+                    "totalSV REAL NOT NULL, " +
+                    "PRIMARY KEY(model, time, altitude, latitude, longitude))")
         }
     }
 }

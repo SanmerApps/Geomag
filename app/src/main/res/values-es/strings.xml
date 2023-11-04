@@ -3,7 +3,7 @@
     <string name="page_view_record">Ver registro</string>
     <string name="page_settings">Configuración</string>
     <string name="page_about">Acerca de</string>
-    <string name="overview_datetime">Fecha/Hora</string>
+    <string name="overview_time">Agora</string>
     <string name="overview_decimal">Decimal</string>
     <string name="overview_location">Ubicación</string>
     <string name="overview_altitude">Altitud</string>

@@ -13,32 +13,9 @@ class Position(
         altitude = location.altitude / 1000.0
     )
 
-    val latitudeWithUnit get() = "${latitude}º N"
-    val longitudeWithUnit get() = "${longitude}º W"
-    val altitudeWithUnit get() = "$altitude km"
-
-    override fun equals(other: Any?): Boolean {
-        return when (other) {
-            is Location -> {
-                altitude == other.altitude
-                && latitude == other.latitude
-                && longitude == other.longitude
-            }
-            is Position -> {
-                altitude == other.altitude
-                && latitude == other.latitude
-                && longitude == other.longitude
-            }
-            else -> false
-        }
-    }
-
-    override fun hashCode(): Int {
-        var result = altitude.hashCode()
-        result = 31 * result + latitude.hashCode()
-        result = 31 * result + longitude.hashCode()
-        return result
-    }
+    val latitudeWithUnit = "${latitude}º N"
+    val longitudeWithUnit = "${longitude}º W"
+    val altitudeWithUnit = "$altitude km"
 
     override fun toString(): String {
         return "${latitude}º N ${longitude}º W $altitude km"

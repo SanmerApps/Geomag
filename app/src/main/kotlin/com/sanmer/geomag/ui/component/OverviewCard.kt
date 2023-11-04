@@ -114,7 +114,7 @@ fun OverviewCard(
 @Composable
 fun ColumnScope.ValueItem(
     key: String,
-    value: String,
+    value: Any,
 ) = Column(
     modifier = Modifier.fillMaxWidth()
 ) {
@@ -125,7 +125,7 @@ fun ColumnScope.ValueItem(
     )
 
     Text(
-        text = value,
+        text = value.toString(),
         style = MaterialTheme.typography.bodyLarge
     )
 }

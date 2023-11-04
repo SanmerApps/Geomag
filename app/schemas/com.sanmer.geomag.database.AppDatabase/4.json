@@ -1,0 +1,146 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "7678badb9e186af6b5ddc145d6735298",
+    "entities": [
+      {
+        "tableName": "records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`model` TEXT NOT NULL, `time` TEXT NOT NULL, `altitude` REAL NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `declination` REAL NOT NULL, `declinationSV` REAL NOT NULL, `inclination` REAL NOT NULL, `inclinationSV` REAL NOT NULL, `horizontalIntensity` REAL NOT NULL, `horizontalSV` REAL NOT NULL, `northComponent` REAL NOT NULL, `northSV` REAL NOT NULL, `eastComponent` REAL NOT NULL, `eastSV` REAL NOT NULL, `verticalComponent` REAL NOT NULL, `verticalSV` REAL NOT NULL, `totalIntensity` REAL NOT NULL, `totalSV` REAL NOT NULL, PRIMARY KEY(`model`, `time`, `altitude`, `latitude`, `longitude`))",
+        "fields": [
+          {
+            "fieldPath": "key.model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.altitude",
+            "columnName": "altitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.declination",
+            "columnName": "declination",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.declinationSV",
+            "columnName": "declinationSV",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.inclination",
+            "columnName": "inclination",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.inclinationSV",
+            "columnName": "inclinationSV",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.horizontalIntensity",
+            "columnName": "horizontalIntensity",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.horizontalSV",
+            "columnName": "horizontalSV",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.northComponent",
+            "columnName": "northComponent",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.northSV",
+            "columnName": "northSV",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.eastComponent",
+            "columnName": "eastComponent",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.eastSV",
+            "columnName": "eastSV",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.verticalComponent",
+            "columnName": "verticalComponent",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.verticalSV",
+            "columnName": "verticalSV",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.totalIntensity",
+            "columnName": "totalIntensity",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.totalSV",
+            "columnName": "totalSV",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "model",
+            "time",
+            "altitude",
+            "latitude",
+            "longitude"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7678badb9e186af6b5ddc145d6735298')"
+    ]
+  }
+}

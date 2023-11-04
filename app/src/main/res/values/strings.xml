@@ -7,7 +7,7 @@
 
     <!-- Home -->
     <!-- Time -->
-    <string name="overview_datetime">Date/Time</string>
+    <string name="overview_time">Time</string>
     <string name="overview_decimal">Decimal</string>
     <!-- Location -->
     <string name="overview_location">Location</string>
