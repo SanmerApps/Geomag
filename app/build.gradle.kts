@@ -117,9 +117,7 @@ protobuf {
 }
 
 dependencies {
-    implementation(fileTree("src/main/golang/libs") {
-        include("*.jar", "*.aar")
-    })
+    implementation(fileTree("src/main/libs") { include("*.jar") })
 
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
