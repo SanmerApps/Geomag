@@ -5,11 +5,6 @@
     <!-- Page -->
     <string name="page_customize" translatable="false">@string/overview_customized</string>
 
-    <!-- Home -->
-    <!-- Time -->
-    <string name="overview_utc" translatable="false">UTC</string>
-
-    <!-- Settings -->
     <!-- About -->
     <string name="about_github" translatable="false">GitHub</string>
     <string name="about_weblate" translatable="false">Weblate</string>
