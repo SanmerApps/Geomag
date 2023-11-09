@@ -10,24 +10,24 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        register("androidApplication") {
-            id = "geomag.android.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
+        register("proApplication") {
+            id = "pro.application"
+            implementationClass = "ApplicationConventionPlugin"
         }
 
-        register("androidApplicationCompose") {
-            id = "geomag.android.application.compose"
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        register("proCompose") {
+            id = "pro.compose"
+            implementationClass = "ComposeConventionPlugin"
         }
 
-        register("androidHilt") {
-            id = "geomag.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+        register("proHilt") {
+            id = "pro.hilt"
+            implementationClass = "HiltConventionPlugin"
         }
 
-        register("androidRoom") {
-            id = "geomag.android.room"
-            implementationClass = "AndroidRoomConventionPlugin"
+        register("proRoom") {
+            id = "pro.room"
+            implementationClass = "RoomConventionPlugin"
         }
     }
 }
