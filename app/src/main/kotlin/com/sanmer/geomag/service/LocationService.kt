@@ -1,15 +1,18 @@
 package com.sanmer.geomag.service
 
+import android.Manifest
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.ServiceCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.flowWithLifecycle
@@ -22,10 +25,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class LocationService : LifecycleService() {
+    val context by lazy { this }
+
     override fun onCreate() {
         super.onCreate()
         isRunning = true
-        setForeground()
+        notifyStart()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -47,10 +52,10 @@ class LocationService : LifecycleService() {
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
-        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        notifyCancel()
     }
 
-    private fun setForeground() {
+    private fun notifyStart() {
         val self = Intent(this, LocationService::class.java).apply {
             action = STOP_SERVICE
         }
@@ -70,7 +75,23 @@ class LocationService : LifecycleService() {
             .setOngoing(true)
             .build()
 
-        startForeground(NotificationUtils.NOTIFICATION_ID_LOCATION, notification)
+        NotificationManagerCompat.from(this).apply {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
+            ) return
+
+            notify(NotificationUtils.NOTIFICATION_ID_LOCATION, notification)
+        }
+    }
+
+    private fun notifyCancel() {
+        NotificationManagerCompat.from(this).apply {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
+            ) return
+
+            cancel(NotificationUtils.NOTIFICATION_ID_LOCATION)
+        }
     }
 
     companion object {

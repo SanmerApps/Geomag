@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
 
     <application
         android:name=".App"
@@ -31,7 +29,6 @@
         </activity>
 
         <service android:name=".service.LocationService"
-            android:foregroundServiceType="location"
             android:enabled="true"
             android:exported="false"/>
 
