@@ -48,7 +48,6 @@ class ApplicationConventionPlugin : Plugin<Project> {
                         optIn("androidx.compose.foundation.layout.ExperimentalLayoutApi")
                         optIn("com.google.accompanist.permissions.ExperimentalPermissionsApi")
                         optIn("kotlin.ExperimentalStdlibApi")
-                        optIn("kotlinx.coroutines.FlowPreview")
                     }
                 }
             }
