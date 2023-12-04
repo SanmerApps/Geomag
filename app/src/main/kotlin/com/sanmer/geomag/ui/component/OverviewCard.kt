@@ -52,7 +52,7 @@ fun OverviewCard(
         verticalArrangement = Arrangement.Top
     ) {
         Row(
-            modifier = Modifier.padding(all = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 18.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             leadingIcon?.let {
