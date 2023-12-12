@@ -28,6 +28,19 @@ object GeomagExt {
         decimalYears = decimalYears
     ).let { MagneticFieldExt(it) }
 
+    fun single(
+        model: Models,
+        position: Position,
+        decimalYears: Double
+    ): MagneticFieldExt {
+        val func = when (model) {
+            Models.IGRF -> GeomagExt::igrf
+            Models.WMM -> GeomagExt::wmm
+        }
+
+        return func(position, decimalYears)
+    }
+
     enum class Models {
         IGRF,
         WMM

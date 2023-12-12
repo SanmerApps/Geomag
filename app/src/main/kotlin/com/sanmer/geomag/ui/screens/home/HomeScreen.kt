@@ -44,10 +44,11 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val userPreferences = LocalUserPreferences.current
-    val dataTime = viewModel.rememberDateTime()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     var showValue by rememberSaveable { mutableStateOf(false) }
+
+    viewModel.DateTimeObserver()
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -68,7 +69,7 @@ fun HomeScreen(
         ) {
             DateTimeItem(
                 isRunning = viewModel.isTimeRunning,
-                dateTime = dataTime,
+                dateTime = viewModel.dateTime,
                 toggleDateTime = viewModel::toggleDateTime
             )
 

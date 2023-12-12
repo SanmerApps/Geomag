@@ -35,6 +35,8 @@ class HomeViewModel @Inject constructor(
 ): ViewModel() {
     var isTimeRunning by mutableStateOf(true)
         private set
+    var dateTime by mutableStateOf(DateTime.now())
+        private set
 
     private val dateTimeFlow = flow {
         while (currentCoroutineContext().isActive) {
@@ -74,18 +76,12 @@ class HomeViewModel @Inject constructor(
             val userPreferences = userPreferencesRepository.data.first()
             val model = userPreferences.fieldModel
             val enableRecords = userPreferences.enableRecords
-            val dateTime = dateTimeFlow.first()
-
-            val calc = when (model) {
-                GeomagExt.Models.IGRF -> GeomagExt::igrf
-                GeomagExt.Models.WMM -> GeomagExt::wmm
-            }
 
             record = Record(
                 model = model,
                 time = dateTime,
                 position = position,
-                values = calc(position, dateTime.decimalOfUtc)
+                values = GeomagExt.single(model, position, dateTime.decimalOfUtc)
             )
 
             if (enableRecords) {
@@ -97,12 +93,12 @@ class HomeViewModel @Inject constructor(
     }
 
     @Composable
-    fun rememberDateTime(): DateTime {
-        val dataTime = dateTimeFlow.collectAsStateWithLifecycle(
+    fun DateTimeObserver() {
+        dateTimeFlow.collectAsStateWithLifecycle(
             initialValue = DateTime.now()
-        )
-
-        return dataTime.value
+        ).apply {
+            dateTime = value
+        }
     }
 
     fun setFieldModel(value: GeomagExt.Models) =
