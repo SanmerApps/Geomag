@@ -1,9 +1,9 @@
 package com.sanmer.geomag.app.utils
 
 import android.Manifest.permission
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import android.os.Looper
 import androidx.annotation.RequiresPermission
@@ -12,12 +12,10 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.location.LocationListenerCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.core.location.LocationRequestCompat
-import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -26,44 +24,41 @@ import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 
 object LocationManagerUtils {
-    private lateinit var permissionsState: MultiplePermissionsState
-
     var isReady by mutableStateOf(false)
         private set
     var isEnable by mutableStateOf(false)
         private set
 
-    private val bestProvider: String
-        get() = if (OsUtils.atLeastS) {
-            LocationManager.FUSED_PROVIDER
-        } else {
-            LocationManager.GPS_PROVIDER
-        }
+    private val Context.locationManager get() = checkNotNull(
+        ContextCompat.getSystemService(this, LocationManager::class.java)
+    )
 
-    private val Context.locationManager get() =
-        getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private fun Context.hasPermissions(): Boolean {
+        return (ContextCompat.checkSelfPermission(
+            this, permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    this, permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+                )
+    }
 
-    fun <T> isLocationEnabled(context: Context, callback: LocationManagerUtils.(Boolean) -> T): T {
+    fun <T> isLocationEnabled(context: Context, callback: LocationManagerUtils.() -> T): T {
         isEnable = LocationManagerCompat.isLocationEnabled(context.locationManager)
 
         @Suppress("UNUSED_EXPRESSION")
-        return callback(isEnable)
+        return callback()
     }
 
     fun init(context: Context) {
         isLocationEnabled(context) {
-            Timber.d("isLocationEnabled: $it")
+            Timber.d("isLocationEnabled: $isEnable")
         }
     }
 
     @Composable
-    fun PermissionsState(
-        onGranted: () -> Unit = {},
-        onDenied: () -> Unit = {},
-        onInit: () -> Unit = {}
-    ) {
-        val context = LocalContext.current
-        permissionsState = rememberMultiplePermissionsState(
+    fun PermissionsState() {
+        val permissionsState = rememberMultiplePermissionsState(
             listOf(
                 permission.ACCESS_FINE_LOCATION,
                 permission.ACCESS_COARSE_LOCATION,
@@ -75,39 +70,12 @@ object LocationManagerUtils {
                     permissionsState.revokedPermissions.size
 
         if (!allPermissionsRevoked) {
-            onGranted()
             isReady = true
-        } else if (permissionsState.shouldShowRationale) {
-            onDenied()
-        } else {
-            onInit()
         }
 
         SideEffect {
-            isLocationEnabled(context) {}
+            permissionsState.launchMultiplePermissionRequest()
         }
-    }
-
-    fun launchPermissionRequest() =
-        permissionsState.launchMultiplePermissionRequest()
-
-    fun getLastKnownLocation(
-        context: Context
-    ): Location? = isLocationEnabled(context) {
-        if (!isEnable) return@isLocationEnabled null
-
-        if (ActivityCompat.checkSelfPermission(
-                context, permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                context, permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return@isLocationEnabled null
-        }
-
-        Timber.d("LocationManagerUtils: getLastKnownLocation")
-        return@isLocationEnabled context.locationManager.getLastKnownLocation(bestProvider)
     }
 
     @RequiresPermission(anyOf = [permission.ACCESS_COARSE_LOCATION, permission.ACCESS_FINE_LOCATION])
@@ -118,7 +86,7 @@ object LocationManagerUtils {
     ) = isLocationEnabled(context) {
         if (!isEnable) return@isLocationEnabled
 
-        Timber.d("LocationManagerUtils: requestLocationUpdates")
+        Timber.d("requestLocationUpdates")
         val locationRequest = LocationRequestCompat.Builder(1)
             .setQuality(LocationRequestCompat.QUALITY_HIGH_ACCURACY)
             .setMinUpdateDistanceMeters(0f)
@@ -126,21 +94,16 @@ object LocationManagerUtils {
 
         LocationManagerCompat.requestLocationUpdates(
             context.locationManager,
-            bestProvider,
+            LocationManager.GPS_PROVIDER,
             locationRequest,
             listener,
             Looper.getMainLooper()
         )
     }
 
+    @SuppressLint("MissingPermission")
     fun locationUpdates(context: Context) = callbackFlow {
-        if (ActivityCompat.checkSelfPermission(
-                context, permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                context, permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (!context.hasPermissions()) {
             close()
         }
 
@@ -148,16 +111,18 @@ object LocationManagerUtils {
             trySend(it)
         }
 
-        try {
+        runCatching {
             requestLocationUpdates(context, listener)
-        } catch (e: Exception) {
-            Timber.e(e.message)
-            close(e)
+        }.onFailure {
+            Timber.e(it, "locationUpdates")
+            close(it)
         }
 
         awaitClose {
-            Timber.d("LocationManagerUtils: removeUpdates")
+            Timber.d("removeUpdates")
             LocationManagerCompat.removeUpdates(context.locationManager, listener)
         }
     }.flowOn(Dispatchers.Default)
+
+
 }

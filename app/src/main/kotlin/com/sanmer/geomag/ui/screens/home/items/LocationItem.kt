@@ -5,16 +5,9 @@ import android.content.Intent
 import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,21 +30,16 @@ fun LocationItem(
     label = stringResource(id = R.string.overview_location),
     trailingIcon = {
         val context = LocalContext.current
-        var show by remember { mutableStateOf(false) }
-        if (show) NoAccessDialog(
-            onClose = { show = false }
-        )
 
         IconButton(
             onClick = {
                 LocationManagerUtils.isLocationEnabled(context) {
                     if (!isEnable) {
-                        show = true
+                        context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                         return@isLocationEnabled
                     }
 
                     if (!isReady) {
-                        launchPermissionRequest()
                         return@isLocationEnabled
                     }
 
@@ -90,36 +78,3 @@ fun LocationItem(
         )
     }
 }
-
-@Composable
-private fun NoAccessDialog(
-    onClose: () -> Unit
-) = AlertDialog(
-    onDismissRequest = onClose,
-    title = {
-        Text(text = stringResource(id = R.string.overview_no_location_access))
-    },
-    text = {
-        Text(text = stringResource(id = R.string.overview_no_location_access_desc))
-    },
-    confirmButton = {
-        val context = LocalContext.current
-        TextButton(
-            onClick = {
-                Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
-                    context.startActivity(this)
-                }
-                onClose()
-            }
-        ) {
-            Text(text = stringResource(id = R.string.overview_turn_on_location))
-        }
-    },
-    dismissButton = {
-        TextButton(
-            onClick = onClose
-        ) {
-            Text(text = stringResource(id = R.string.dialog_close))
-        }
-    }
-)
