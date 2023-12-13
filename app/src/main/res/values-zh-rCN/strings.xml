@@ -39,7 +39,6 @@
     <string name="record_value_i">磁倾角</string>
 
     <!-- Settings-->
-    <!-- App -->
     <string name="settings_app_theme">主题</string>
     <string name="settings_app_theme_desc">更改主题配色和深色模式</string>
     <!-- App Theme -->
@@ -59,14 +58,7 @@
     <string name="dialog_delete">删除</string>
 
     <!-- Message -->
-    <string name="message_location_click">点按查看详情</string>
     <string name="message_loading">加载中…</string>
-
-    <!-- Action -->
-    <string name="action_stop">停止</string>
-
-    <!-- Notification -->
-    <string name="notification_name_location">定位服务</string>
 
     <!-- Other -->
     <string name="unknown_error">未知错误</string>

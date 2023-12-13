@@ -39,7 +39,6 @@
     <string name="record_value_i">Inclination</string>
 
     <!-- Settings-->
-    <!-- App -->
     <string name="settings_app_theme">App Theme</string>
     <string name="settings_app_theme_desc">Change color scheme and night mode</string>
     <!-- App Theme -->
@@ -59,14 +58,7 @@
     <string name="dialog_delete">Delete</string>
 
     <!-- Message -->
-    <string name="message_location_click">Click to view details</string>
     <string name="message_loading">Loading…</string>
-
-    <!-- Action -->
-    <string name="action_stop">Stop</string>
-
-    <!-- Notification -->
-    <string name="notification_name_location">Location Service</string>
 
     <!-- Other -->
     <string name="unknown_error">Unknown error</string>

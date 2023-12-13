@@ -33,10 +33,7 @@
     <string name="about_desc2">Hecho con ❤️ por %s</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_delete">Eliminar</string>
-    <string name="message_location_click">Haga clic para ver los detalles</string>
     <string name="message_loading">Cargando…</string>
-    <string name="action_stop">Detener</string>
-    <string name="notification_name_location">Servicio de Ubicación</string>
     <string name="unknown_error">Error desconocido</string>
     <string name="page_records">Registros</string>
     <string name="overview_latitude">Latitud</string>
