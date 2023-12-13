@@ -7,7 +7,6 @@
     <string name="overview_decimal">Decimal</string>
     <string name="overview_location">Ubicación</string>
     <string name="overview_altitude">Altitud</string>
-    <string name="overview_no_location_access">No hay acceso a la ubicación</string>
     <string name="overview_calculation">Cálculo</string>
     <string name="overview_single">Individual</string>
     <string name="overview_customized">Personalizados</string>
@@ -33,8 +32,6 @@
     <string name="about_app_version">Versión %1$s (%2$s)</string>
     <string name="about_desc2">Hecho con ❤️ por %s</string>
     <string name="dialog_cancel">Cancelar</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_close">Cerrar</string>
     <string name="dialog_delete">Eliminar</string>
     <string name="message_location_click">Haga clic para ver los detalles</string>
     <string name="message_loading">Cargando…</string>
@@ -44,8 +41,6 @@
     <string name="page_records">Registros</string>
     <string name="overview_latitude">Latitud</string>
     <string name="overview_longitude">Longitud</string>
-    <string name="overview_no_location_access_desc">La ubicación del dispositivo para todas las aplicaciones está desactivada, por lo que el servicio de ubicación no está disponible!</string>
-    <string name="overview_turn_on_location">Activar ubicación</string>
     <string name="records_dialog_delete_title">Eliminar los registros seleccionados</string>
     <string name="record_dialog_delete_desc">¿Está seguro de eliminar este registro\? La operación no se puede deshacer.</string>
     <string name="settings_app_theme_desc">Cambia la combinación de colores y el modo noche</string>

@@ -3,7 +3,6 @@
     <string name="overview_datetime">Datum/Uhrzeit</string>
     <string name="overview_decimal">Dezimal</string>
     <string name="record_value_i">Neigung</string>
-    <string name="dialog_ok">OK</string>
     <string name="record_value_y">Y Komponente</string>
     <string name="record_info_model">Modell</string>
     <string name="page_about">Über</string>
@@ -16,7 +15,6 @@
     <string name="app_theme_dark_theme_dark">Dunkel</string>
     <string name="dialog_delete">Löschen</string>
     <string name="page_records">Aufzeichnungen</string>
-    <string name="overview_turn_on_location">Aktiviere Position</string>
     <string name="overview_longitude">Längengrad</string>
     <string name="overview_customized">Angepasst</string>
     <string name="action_stop">Stop</string>
@@ -26,7 +24,6 @@
     <string name="unknown_error">Unbekannter Fehler</string>
     <string name="overview_location">Position</string>
     <string name="about_app_version">Version %1$s (%2$s)</string>
-    <string name="overview_no_location_access_desc">Geräte Postion ist für alle Apps deaktiviert, der Positions Service steht daher nicht zur Verfügung!</string>
     <string name="record_value_h">Horizontale Intensität</string>
     <string name="record_value_x">X Komponente</string>
     <string name="message_location_click">Klick um Details zu sehen</string>
@@ -40,7 +37,6 @@
     <string name="dialog_cancel">Abbrechen</string>
     <string name="record_dialog_delete_title">Lösche Auszeichnung</string>
     <string name="message_loading">Lade …</string>
-    <string name="dialog_close">Schließen</string>
     <string name="about_desc2">Made with ❤️ by %s</string>
     <string name="record_value_d">Deklination</string>
     <string name="records_dialog_delete_title">Lösche markierte Auszeichnungen</string>
@@ -48,6 +44,5 @@
     <string name="overview_single">Einmal</string>
     <string name="app_theme_dark_theme">Dunkels Thema</string>
     <string name="page_settings">Einstellungen</string>
-    <string name="overview_no_location_access">Kein Positions Zugriff</string>
     <string name="settings_app_theme_desc">Ändere das Farbthema und den Nachmodus</string>
 </resources>

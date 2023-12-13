@@ -14,9 +14,6 @@
     <string name="overview_latitude">纬度</string>
     <string name="overview_longitude">经度</string>
     <string name="overview_altitude">海拔</string>
-    <string name="overview_no_location_access">无法访问位置信息</string>
-    <string name="overview_no_location_access_desc">当前设备的位置信息服务已关闭，因此定位服务不可用！</string>
-    <string name="overview_turn_on_location">打开位置信息服务</string>
     <!-- Calculation -->
     <string name="overview_calculation">计算</string>
     <string name="overview_single">单次</string>
@@ -59,8 +56,6 @@
 
     <!-- Dialog-->
     <string name="dialog_cancel">取消</string>
-    <string name="dialog_ok">确定</string>
-    <string name="dialog_close">关闭</string>
     <string name="dialog_delete">删除</string>
 
     <!-- Message -->

@@ -14,9 +14,6 @@
     <string name="overview_latitude">Latitude</string>
     <string name="overview_longitude">Longitude</string>
     <string name="overview_altitude">Altitude</string>
-    <string name="overview_no_location_access">No location access</string>
-    <string name="overview_no_location_access_desc">Device location for all apps is turned off, so location service is unavailable!</string>
-    <string name="overview_turn_on_location">Turn on location</string>
     <!-- Calculation -->
     <string name="overview_calculation">Calculation</string>
     <string name="overview_single">Single</string>
@@ -59,8 +56,6 @@
 
     <!-- Dialog -->
     <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_close">Close</string>
     <string name="dialog_delete">Delete</string>
 
     <!-- Message -->
