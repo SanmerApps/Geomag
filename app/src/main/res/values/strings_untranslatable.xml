@@ -4,6 +4,7 @@
 
     <!-- Page -->
     <string name="page_customize" translatable="false">@string/overview_customized</string>
+    <string name="page_gnss" translatable="false">@string/settings_satellite_status</string>
 
     <!-- About -->
     <string name="about_github" translatable="false">GitHub</string>

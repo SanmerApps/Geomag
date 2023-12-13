@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.sanmer.geomag.R
 import com.sanmer.geomag.datastore.isDarkMode
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
+import com.sanmer.geomag.ui.component.SettingNormalItem
 import com.sanmer.geomag.ui.navigation.graphs.SettingsScreen
 import com.sanmer.geomag.ui.providable.LocalUserPreferences
 import com.sanmer.geomag.ui.screens.settings.items.AppThemeItem
@@ -55,7 +56,14 @@ fun SettingsScreen(
                 darkMode = userPreferences.darkMode,
                 isDarkMode = userPreferences.isDarkMode(),
                 onThemeColorChange = viewModel::setThemeColor,
-                onDarkModeChange =viewModel::setDarkTheme
+                onDarkModeChange = viewModel::setDarkTheme
+            )
+
+            SettingNormalItem(
+                icon = R.drawable.satellite,
+                title = stringResource(id = R.string.settings_satellite_status),
+                desc = stringResource(id = R.string.settings_satellite_status_desc),
+                onClick = { navController.navigateSingleTopTo(SettingsScreen.Gnss.route) }
             )
         }
     }

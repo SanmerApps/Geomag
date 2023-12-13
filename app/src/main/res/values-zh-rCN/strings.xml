@@ -41,6 +41,8 @@
     <!-- Settings-->
     <string name="settings_app_theme">主题</string>
     <string name="settings_app_theme_desc">更改主题配色和深色模式</string>
+    <string name="settings_satellite_status">卫星状态</string>
+    <string name="settings_satellite_status_desc">查看全球导航卫星系统 (GNSS) 的卫星状态</string>
     <!-- App Theme -->
     <string name="app_theme_palette">主题调色板</string>
     <string name="app_theme_dark_theme">深色主题</string>

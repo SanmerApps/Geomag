@@ -13,14 +13,17 @@ import com.sanmer.geomag.ui.animate.slideOutRightToLeft
 import com.sanmer.geomag.ui.navigation.MainScreen
 import com.sanmer.geomag.ui.screens.settings.SettingsScreen
 import com.sanmer.geomag.ui.screens.settings.about.AboutScreen
+import com.sanmer.geomag.ui.screens.settings.gnss.GnssStatusScreen
 
 enum class SettingsScreen(val route: String) {
     Home("Settings"),
-    About("About")
+    About("About"),
+    Gnss("Gnss")
 }
 
 private val subScreens = listOf(
-    SettingsScreen.About.route
+    SettingsScreen.About.route,
+    SettingsScreen.Gnss.route
 )
 
 fun NavGraphBuilder.settingsScreen(
@@ -57,6 +60,16 @@ fun NavGraphBuilder.settingsScreen(
         exitTransition = { slideOutLeftToRight() + fadeOut() }
     ) {
         AboutScreen(
+            navController = navController
+        )
+    }
+
+    composable(
+        route = SettingsScreen.Gnss.route,
+        enterTransition = { slideInRightToLeft() + fadeIn() },
+        exitTransition = { slideOutLeftToRight() + fadeOut() }
+    ) {
+        GnssStatusScreen(
             navController = navController
         )
     }

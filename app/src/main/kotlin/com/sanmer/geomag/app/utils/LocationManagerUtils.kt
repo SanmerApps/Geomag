@@ -5,14 +5,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.Handler
 import android.os.Looper
-import androidx.annotation.RequiresPermission
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
+import androidx.core.location.GnssStatusCompat
 import androidx.core.location.LocationListenerCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.core.location.LocationRequestCompat
@@ -78,32 +79,9 @@ object LocationManagerUtils {
         }
     }
 
-    @RequiresPermission(anyOf = [permission.ACCESS_COARSE_LOCATION, permission.ACCESS_FINE_LOCATION])
-    private fun requestLocationUpdates(
-        context: Context,
-        listener:
-        LocationListenerCompat
-    ) = isLocationEnabled(context) {
-        if (!isEnable) return@isLocationEnabled
-
-        Timber.d("requestLocationUpdates")
-        val locationRequest = LocationRequestCompat.Builder(1)
-            .setQuality(LocationRequestCompat.QUALITY_HIGH_ACCURACY)
-            .setMinUpdateDistanceMeters(0f)
-            .build()
-
-        LocationManagerCompat.requestLocationUpdates(
-            context.locationManager,
-            LocationManager.GPS_PROVIDER,
-            locationRequest,
-            listener,
-            Looper.getMainLooper()
-        )
-    }
-
     @SuppressLint("MissingPermission")
-    fun locationUpdates(context: Context) = callbackFlow {
-        if (!context.hasPermissions()) {
+    fun getLocationAsFlow(context: Context) = callbackFlow {
+        if (!(context.hasPermissions() && isEnable)) {
             close()
         }
 
@@ -111,8 +89,20 @@ object LocationManagerUtils {
             trySend(it)
         }
 
+        val locationRequest = LocationRequestCompat.Builder(1)
+            .setQuality(LocationRequestCompat.QUALITY_HIGH_ACCURACY)
+            .setMinUpdateDistanceMeters(0f)
+            .build()
+
         runCatching {
-            requestLocationUpdates(context, listener)
+            Timber.d("requestLocationUpdates")
+            LocationManagerCompat.requestLocationUpdates(
+                context.locationManager,
+                LocationManager.GPS_PROVIDER,
+                locationRequest,
+                listener,
+                Looper.getMainLooper()
+            )
         }.onFailure {
             Timber.e(it, "locationUpdates")
             close(it)
@@ -124,5 +114,33 @@ object LocationManagerUtils {
         }
     }.flowOn(Dispatchers.Default)
 
+    @SuppressLint("MissingPermission")
+    fun getGnssStatusAsFlow(context: Context) = callbackFlow {
+        if (!(context.hasPermissions() && isEnable)) {
+            close()
+        }
 
+        val callback = object : GnssStatusCompat.Callback() {
+            override fun onSatelliteStatusChanged(status: GnssStatusCompat) {
+                trySend(status)
+            }
+        }
+
+        runCatching {
+            Timber.d("registerGnssStatusCallback")
+            LocationManagerCompat.registerGnssStatusCallback(
+                context.locationManager,
+                callback,
+                Handler(Looper.getMainLooper())
+            )
+        }.onFailure {
+            Timber.e(it, "gnssStatusUpdates")
+            close(it)
+        }
+
+        awaitClose {
+            Timber.d("unregisterGnssStatusCallback")
+            LocationManagerCompat.unregisterGnssStatusCallback(context.locationManager, callback)
+        }
+    }
 }

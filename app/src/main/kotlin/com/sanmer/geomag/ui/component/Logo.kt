@@ -58,7 +58,8 @@ fun Logo(
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge.copy(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Bold
-    )
+    ),
+    single: Boolean = true
 ) = Surface(
     modifier = modifier,
     shape = shape,
@@ -70,10 +71,10 @@ fun Logo(
     ) {
         val label by remember(text) {
             derivedStateOf {
-                if (text.isNotEmpty()) {
-                    text.first().toString()
+                if (single) {
+                    (text.firstOrNull() ?: "").toString()
                 } else {
-                    "?"
+                    text
                 }
             }
         }
