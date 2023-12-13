@@ -14,6 +14,15 @@ class DateTime private constructor(
     minute: Int,
     second: Int
 ) {
+    constructor(dt: LocalDateTime) : this(
+        year = dt.year,
+        monthNumber = dt.monthNumber,
+        dayOfMonth = dt.dayOfMonth,
+        hour = dt.hour,
+        minute = dt.minute,
+        second = dt.second
+    )
+
     val local = LocalDateTime(year, monthNumber, dayOfMonth, hour, minute, second)
     val decimalOfLocal get() = GeomagExt.toDecimalYears(local)
     private val utc get() = local.toTimeZone(TimeZone.UTC)
@@ -25,15 +34,8 @@ class DateTime private constructor(
 
     companion object {
         fun now(): DateTime {
-            val t = LocalDateTime.now()
-            return DateTime(
-                t.year,
-                t.monthNumber,
-                t.dayOfMonth,
-                t.hour,
-                t.minute,
-                t.second
-            )
+            val dt = LocalDateTime.now()
+            return DateTime(dt)
         }
 
         fun parse(isoString: String): DateTime {
