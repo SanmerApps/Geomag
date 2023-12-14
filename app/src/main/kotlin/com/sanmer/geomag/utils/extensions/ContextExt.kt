@@ -9,20 +9,15 @@ import com.sanmer.geomag.BuildConfig
 import java.io.File
 
 val Context.jsonDir get() = cacheDir.resolve("json")
+    .apply {
+        if (!exists()) mkdirs()
+    }
 
-fun Context.deleteJson() {
-    jsonDir.listFiles().orEmpty()
-        .forEach {
-            if (it.extension == "json") {
-                it.delete()
-            }
-        }
-}
+fun Context.deleteJson() = jsonDir.deleteRecursively()
 
 fun Context.createJson(name: String) = jsonDir
     .resolve("${name}.json")
     .apply {
-        parentFile?.apply { if (!exists()) mkdirs() }
         createNewFile()
     }
 

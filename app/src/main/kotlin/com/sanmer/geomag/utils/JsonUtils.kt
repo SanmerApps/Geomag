@@ -12,32 +12,36 @@ import com.squareup.moshi.adapter
 import kotlinx.datetime.LocalDateTime
 
 object JsonUtils {
-    private val moshi = Moshi.Builder().build()
-    private val record = moshi.adapter<RecordJson>()
-    private val records = moshi.adapter<List<RecordJson>>()
+    private const val INDENT = "  "
+    private val moshi by lazy { Moshi.Builder().build() }
 
-    private fun Record.toJsonText(): String? {
-        return record.indent("    ").toJson(toJson())
-    }
+    private fun Record.toJsonText() =
+        moshi.adapter<RecordJson>()
+            .indent(INDENT)
+            .toJson(toJson())
 
-    private fun List<Record>.toJsonText(): String? {
-        val list = map { it.toJson() }
-        return records.indent("    ").toJson(list)
-    }
+    private fun List<Record>.toJsonText() =
+        moshi.adapter<List<RecordJson>>()
+            .indent(INDENT)
+            .toJson(
+                map { it.toJson() }
+            )
 
     fun shareJsonFile(context: Context, value: Record) {
+        val jsonText = value.toJsonText() ?: return
         val file = context.createJson(value.time.toString())
             .apply {
-                writeText(value.toJsonText()!!)
+                writeText(jsonText)
             }
 
         context.shareFile(file, "text/json")
     }
 
     fun shareJsonFile(context: Context, values: List<Record>) {
+        val jsonText = values.toJsonText() ?: return
         val file = context.createJson(LocalDateTime.now().toString())
             .apply {
-                writeText(values.toJsonText()!!)
+                writeText(jsonText)
             }
 
         context.shareFile(file, "text/json")
