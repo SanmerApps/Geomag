@@ -33,16 +33,9 @@ fun LocationItem(
 
         IconButton(
             onClick = {
-                LocationManagerUtils.isLocationEnabled(context) {
-                    if (!isEnable) {
-                        context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                        return@isLocationEnabled
-                    }
-
-                    if (!isReady) {
-                        return@isLocationEnabled
-                    }
-
+                if (!LocationManagerUtils.isEnable) {
+                    context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                } else if (LocationManagerUtils.isReady) {
                     toggleLocation(context)
                 }
             }

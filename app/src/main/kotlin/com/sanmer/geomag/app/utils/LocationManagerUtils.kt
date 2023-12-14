@@ -45,17 +45,9 @@ object LocationManagerUtils {
                 )
     }
 
-    fun <T> isLocationEnabled(context: Context, callback: LocationManagerUtils.() -> T): T {
-        isEnable = LocationManagerCompat.isLocationEnabled(context.locationManager)
-
-        @Suppress("UNUSED_EXPRESSION")
-        return callback()
-    }
-
     fun init(context: Context) {
-        isLocationEnabled(context) {
-            Timber.d("isLocationEnabled: $isEnable")
-        }
+        isEnable = LocationManagerCompat.isLocationEnabled(context.locationManager)
+        Timber.d("isLocationEnabled: $isEnable")
     }
 
     @Composable
@@ -65,18 +57,14 @@ object LocationManagerUtils {
                 permission.ACCESS_FINE_LOCATION,
                 permission.ACCESS_COARSE_LOCATION,
             )
-        )
-
-        val allPermissionsRevoked =
-            permissionsState.permissions.size ==
-                    permissionsState.revokedPermissions.size
-
-        if (!allPermissionsRevoked) {
-            isReady = true
+        ).apply {
+            isReady = allPermissionsGranted
         }
 
         SideEffect {
-            permissionsState.launchMultiplePermissionRequest()
+            if (!isReady) {
+                permissionsState.launchMultiplePermissionRequest()
+            }
         }
     }
 
