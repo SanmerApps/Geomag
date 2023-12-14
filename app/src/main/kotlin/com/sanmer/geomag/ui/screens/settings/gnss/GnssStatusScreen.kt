@@ -1,11 +1,8 @@
 package com.sanmer.geomag.ui.screens.settings.gnss
 
-import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -17,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
@@ -57,11 +53,6 @@ fun GnssStatusScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
-                isRunning = isRunning,
-                toggleService = when {
-                    isRunning -> LocationService::stop
-                    else -> LocationService::start
-                },
                 scrollBehavior = scrollBehavior,
                 navController = navController
             )
@@ -84,28 +75,10 @@ fun GnssStatusScreen(
 
 @Composable
 private fun TopBar(
-    isRunning: Boolean,
-    toggleService: (Context) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.page_gnss),
     scrollBehavior = scrollBehavior,
     navController = navController,
-    actions = {
-        val context = LocalContext.current
-
-        IconButton(
-            onClick = { toggleService(context) }
-        ) {
-            Icon(
-                painter = painterResource(id = if (isRunning) {
-                    R.drawable.player_stop
-                } else {
-                    R.drawable.player_play
-                }),
-                contentDescription = null
-            )
-        }
-    }
 )
