@@ -7,16 +7,17 @@ import com.sanmer.geomag.model.gnss.SbasType.Companion.code
 import com.sanmer.geomag.model.gnss.SbasType.Companion.toSbasType
 
 data class Satellite(
-    val id: Int,
+    val svid: Int,
     val type: Int,
     val cn0: Float,
     val elevation: Float,
-    val azimuth: Float
+    val azimuth: Float,
+    val carrierFrequency: Float,
 ) {
     val gnssType = type.toGnssType()
 
     val isSbas = gnssType == GnssType.SBAS
-    val sbasType = id.toSbasType()
+    val sbasType = svid.toSbasType()
 
     val code get() = if (isSbas) {
         sbasType.code
@@ -30,16 +31,12 @@ data class Satellite(
         gnssType.name
     }
 
-
-    override fun toString(): String {
-        return "ID: $id, C/N0: $cn0, Elev: ${elevation}º, Azim: ${azimuth}º"
-    }
-
     constructor(status: GnssStatusCompat, index: Int) : this(
-        id = status.getSvid(index),
+        svid = status.getSvid(index),
         type = status.getConstellationType(index),
         cn0 = status.getCn0DbHz(index),
         elevation = status.getElevationDegrees(index),
-        azimuth = status.getAzimuthDegrees(index)
+        azimuth = status.getAzimuthDegrees(index),
+        carrierFrequency = status.getCarrierFrequencyHz(index) / 1000000.00f
     )
 }

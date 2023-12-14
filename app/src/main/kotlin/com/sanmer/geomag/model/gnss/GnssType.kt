@@ -21,7 +21,8 @@ enum class GnssType {
                 QZSS -> "JP"
                 GALILEO -> "EU"
                 IRNSS -> "IN"
-                else -> "UNKNOWN"
+                SBAS -> ""
+                UNKNOWN -> "XX"
             }
         }
 

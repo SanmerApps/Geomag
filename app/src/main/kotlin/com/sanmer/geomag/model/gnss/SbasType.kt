@@ -20,7 +20,7 @@ enum class SbasType {
                 SDCM -> "RU"
                 BDSBAS -> "CN"
                 SOUTHPAN -> "AU"
-                UNKNOWN -> "UNKNOWN"
+                UNKNOWN -> "XX"
             }
         }
 

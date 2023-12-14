@@ -66,12 +66,17 @@ private fun SatelliteItem(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = satellite.name,
+            text = "${satellite.name} (${satellite.svid})",
             style = MaterialTheme.typography.bodyLarge
         )
 
         Text(
-            text = satellite.toString(),
+            text = "C/N0: ${satellite.cn0} dB-Hz, CF: ${satellite.carrierFrequency} MHz",
+            style = MaterialTheme.typography.bodyMedium
+        )
+
+        Text(
+            text = "Elev: ${satellite.elevation}º, Azim: ${satellite.azimuth}º",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.outline
         )
