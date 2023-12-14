@@ -1,11 +1,9 @@
 package com.sanmer.geomag.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -29,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
-import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.navigation.navigateToSettings
 import com.sanmer.geomag.ui.providable.LocalUserPreferences
 import com.sanmer.geomag.ui.screens.home.items.CalculationItem
@@ -115,19 +112,6 @@ private fun TopBar(
             text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.titleLarge
         )
-    },
-    navigationIcon = {
-        Box(
-            modifier = Modifier.padding(horizontal = 18.dp)
-        ) {
-            Logo(
-                icon = R.drawable.launcher_outline,
-                modifier = Modifier.size(32.dp),
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                containerColor = MaterialTheme.colorScheme.primary,
-                fraction = 0.65f
-            )
-        }
     },
     actions = {
         IconButton(
