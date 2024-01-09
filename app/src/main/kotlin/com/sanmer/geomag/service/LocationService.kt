@@ -14,9 +14,7 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sanmer.geomag.app.utils.LocationManagerUtils
-import com.sanmer.geomag.app.utils.OsUtils
 import com.sanmer.geomag.model.gnss.Satellite
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -27,17 +25,8 @@ class LocationService : LifecycleService() {
 
         LocationManagerUtils.getLocationAsFlow(this)
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .combine(
-                LocationManagerUtils.getAltitudeMeanSeaLevel(this)
-            ) { mLocation, mMslAltitudeMeters ->
-
-                mLocation.altitude = if (OsUtils.atLeastU && mLocation.hasMslAltitude()) {
-                    mLocation.mslAltitudeMeters
-                } else {
-                    mMslAltitudeMeters
-                }
-
-                location = mLocation
+            .onEach {
+                location = it
 
             }.launchIn(lifecycleScope)
 

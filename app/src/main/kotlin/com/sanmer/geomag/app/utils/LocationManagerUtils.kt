@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.location.OnNmeaMessageListener
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.runtime.Composable
@@ -136,44 +135,4 @@ object LocationManagerUtils {
         }
 
     }.flowOn(Dispatchers.Default)
-
-    @SuppressLint("MissingPermission")
-    fun getAltitudeMeanSeaLevel(context: Context) = callbackFlow {
-        if (!(context.hasPermissions() && isEnable)) {
-            close()
-        }
-
-        val locationManager = context.locationManager
-        val listener = OnNmeaMessageListener { message, _ ->
-            if (NMEA_KEYS.any { message.startsWith(it) }) {
-                val mslAltitudeMeters = message.split(",")
-                    .getOrNull(MSL_ALTITUDE_INDEX)
-                    ?.toDoubleOrNull()
-
-                if (mslAltitudeMeters != null) {
-                    trySend(mslAltitudeMeters)
-                }
-            }
-        }
-
-        runCatching {
-            Timber.d("addNmeaListener")
-            locationManager.addNmeaListener(
-                listener,
-                Handler(Looper.getMainLooper())
-            )
-        }.onFailure {
-            Timber.e(it, "getNmeaAsFlow")
-            close(it)
-        }
-
-        awaitClose {
-            Timber.d("removeNmeaListener")
-            locationManager.removeNmeaListener(listener)
-        }
-
-    }.flowOn(Dispatchers.Default)
-
-    private const val MSL_ALTITUDE_INDEX = 9
-    private val NMEA_KEYS = listOf("\$GPGGA", "\$GNGNS", "\$GNGGA")
 }
