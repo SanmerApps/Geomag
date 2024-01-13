@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.pro.compose)
     alias(libs.plugins.pro.hilt)
     alias(libs.plugins.pro.room)
-    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     alias(libs.plugins.protobuf)
 }
@@ -140,7 +139,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.datastore.core)
-    implementation(libs.androidx.documentfile)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.service)
@@ -149,9 +147,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
     implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.timber)
 
     implementation(libs.square.moshi)
     ksp(libs.square.moshi.kotlin)
-
-    implementation(libs.timber)
 }
