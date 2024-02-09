@@ -4,7 +4,6 @@
 Geomag (short for `Geomagnetic`) is an Android app that calculates geomagnetic field models.
 
 ## Core
-- [libgeomag-jni](https://github.com/SanmerDev/libgeomag-jni)
 - [libgeomag](https://github.com/SanmerDev/libgeomag)
 
 ## Supported Versions
