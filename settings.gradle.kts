@@ -6,7 +6,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io")
     }
 }
 
@@ -21,3 +20,4 @@ pluginManagement {
 
 rootProject.name = "Geomag"
 include(":app")
+include(":native")

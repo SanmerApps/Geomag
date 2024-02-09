@@ -68,6 +68,7 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 
 # Plugins defined by this project
 pro-application = { id = "pro.application", version = "unspecified" }
+pro-library = { id = "pro.library", version = "unspecified" }
 pro-compose = { id = "pro.compose", version = "unspecified" }
 pro-hilt = { id = "pro.hilt", version = "unspecified" }
 pro-room = { id = "pro.room", version = "unspecified" }

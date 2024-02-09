@@ -81,12 +81,6 @@ android {
         }
     }
 
-    sourceSets {
-        getByName("main") {
-            jniLibs.srcDir("src/main/libs")
-        }
-    }
-
     splits {
         abi {
             reset()
@@ -130,7 +124,7 @@ androidComponents {
 }
 
 dependencies {
-    implementation(fileTree("src/main/libs") { include("*.jar") })
+    implementation(projects.native)
 
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
