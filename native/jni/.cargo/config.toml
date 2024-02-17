@@ -1,0 +1,9 @@
+[build]
+target = ["aarch64-linux-android", "x86_64-linux-android"]
+
+# For Android, minSdk = 29
+[target.aarch64-linux-android]
+linker = "aarch64-linux-android29-clang"
+
+[target.x86_64-linux-android]
+linker = "x86_64-linux-android29-clang"

@@ -1,0 +1,13 @@
+[package]
+name = "geomag-jni"
+version = "0.1.2"
+license = "Apache-2.0"
+edition = "2021"
+
+[dependencies]
+geomag = { git = "https://github.com/SanmerDev/libgeomag.git" }
+jni = "0.21.1"
+
+[lib]
+name = "geomag_jni"
+crate_type = ["cdylib"]
