@@ -16,22 +16,45 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 }
 
-val compileRust = task<Exec>("compileRust") {
-    commandLine(listOf("cargo", "build", "--all-targets", "--release"))
-    workingDir(file("jni"))
+@Suppress("UnstableApiUsage")
+val compileRust = task("compileRust") {
+    val libname = "geomag-jni"
+
+    val scrDir = file("jni")
+    val targetDir = scrDir.resolve("target")
+
+    val output = providers.exec {
+        commandLine(listOf("cargo", "build", "--release", "--verbose"))
+        workingDir(scrDir)
+    }.standardError.asBytes.get()
+
+    targetDir.resolve("cargo.log").apply {
+        writeBytes(output)
+    }
+
+    val libs = fileTree(targetDir) {
+        include("*/*/libjni.so")
+    }.files
+
+    libs.forEach {
+        val path = it.canonicalPath
+        val target = when {
+            path.contains("aarch64-linux-android") -> "arm64-v8a"
+            path.contains("x86_64-linux-android") -> "x86_64"
+            else -> ""
+        }
+
+        val outDir = File("src/main/libs", target)
+        copy {
+            from(it)
+            rename("jni", libname)
+            into(outDir)
+        }
+    }
 }
 
-task<Copy>("mergeReleaseJniLib") {
-    dependsOn(compileRust)
-    destinationDir = file("src/main/libs")
-
-    listOf(
-        "aarch64-linux-android" to "arm64-v8a",
-        "x86_64-linux-android" to "x86_64"
-    ).forEach { (raw, target) ->
-        from(file("jni/target/${raw}/release")) {
-            include("libgeomag_jni.so")
-            rename("libgeomag_jni.so", "${target}/libgeomag-jni.so")
-        }
+tasks.whenTaskAdded {
+    if (name == "javaPreCompileDebug" || name == "javaPreCompileRelease") {
+        dependsOn(compileRust)
     }
 }

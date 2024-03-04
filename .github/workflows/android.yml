@@ -41,6 +41,25 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
+
+      - name: Set up Android NDK
+        env:
+          ANDROID_NDK_VERSION: 26.2.11394342
+        run: |
+          sdkmanager --install "ndk;${{ env.ANDROID_NDK_VERSION }}"
+          ANDROID_NDK_HOME="${ANDROID_HOME}/ndk/${{ env.ANDROID_NDK_VERSION }}"
+          ANDROID_NDK_TARGET=`ls ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/`
+          ANDROID_NDK_BIN="${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${ANDROID_NDK_TARGET}/bin"
+          echo "$ANDROID_NDK_BIN" >> $GITHUB_PATH
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,x86_64-linux-android
+
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
