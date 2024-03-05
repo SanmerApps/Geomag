@@ -19,13 +19,14 @@ dependencies {
 @Suppress("UnstableApiUsage")
 val compileRust = task("compileRust") {
     val libname = "geomag-jni"
+    val raw = "jni"
 
-    val scrDir = file("jni")
-    val targetDir = scrDir.resolve("target")
+    val jniDir = file("jni")
+    val targetDir = jniDir.resolve("target")
 
     val output = providers.exec {
         commandLine(listOf("cargo", "build", "--release", "--verbose"))
-        workingDir(scrDir)
+        workingDir(jniDir)
     }.standardError.asBytes.get()
 
     targetDir.resolve("cargo.log").apply {
@@ -33,21 +34,21 @@ val compileRust = task("compileRust") {
     }
 
     val libs = fileTree(targetDir) {
-        include("*/*/libjni.so")
+        include("*/*/lib${raw}.so")
     }.files
 
-    libs.forEach {
-        val path = it.canonicalPath
+    libs.forEach { file ->
+        val path = file.canonicalPath
         val target = when {
             path.contains("aarch64-linux-android") -> "arm64-v8a"
             path.contains("x86_64-linux-android") -> "x86_64"
-            else -> ""
+            else -> return@forEach
         }
 
         val outDir = File("src/main/libs", target)
         copy {
-            from(it)
-            rename("jni", libname)
+            from(file)
+            rename(raw, libname)
             into(outDir)
         }
     }
