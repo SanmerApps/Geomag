@@ -8,7 +8,7 @@ import androidx.room.migration.Migration
 import com.sanmer.geomag.database.dao.RecordDao
 import com.sanmer.geomag.database.entity.RecordEntity
 
-@Database(entities = [RecordEntity::class], version = 4)
+@Database(entities = [RecordEntity::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recordDao(): RecordDao
 
@@ -19,13 +19,15 @@ abstract class AppDatabase : RoomDatabase() {
                 .addMigrations(
                     MIGRATION_1_2,
                     MIGRATION_2_3,
-                    MIGRATION_3_4
+                    MIGRATION_3_4,
+                    MIGRATION_4_5
                 )
                 .build()
         }
 
         private val MIGRATION_1_2 = Migration(1, 2) {
-            it.execSQL("CREATE TABLE IF NOT EXISTS records_new (" +
+            it.execSQL("DROP TABLE records")
+            it.execSQL("CREATE TABLE IF NOT EXISTS records (" +
                     "id REAL NOT NULL, " +
                     "model TEXT NOT NULL, " +
                     "time TEXT NOT NULL, " +
@@ -47,27 +49,11 @@ abstract class AppDatabase : RoomDatabase() {
                     "totalIntensity REAL NOT NULL, " +
                     "totalSV REAL NOT NULL, " +
                     "PRIMARY KEY(id))")
-
-            it.execSQL("INSERT INTO records_new (" +
-                    "id, model, time, altitude, latitude, longitude, " +
-                    "declination, declinationSV, inclination, inclinationSV, " +
-                    "horizontalIntensity, horizontalSV, northComponent, northSV, " +
-                    "eastComponent, eastSV, verticalComponent, verticalSV, " +
-                    "totalIntensity, totalSV) " +
-                    "SELECT " +
-                    "id, model, time, altitude, latitude, longitude, " +
-                    "declination, declination_sv, inclination, inclination_sv, " +
-                    "horizontal_intensity, horizontal_sv, north_component, north_sv, " +
-                    "east_component, east_sv, vertical_component, vertical_sv, " +
-                    "total_intensity, total_sv " +
-                    "FROM records")
-
-            it.execSQL("DROP TABLE records")
-            it.execSQL("ALTER TABLE records_new RENAME TO records")
         }
 
         private val MIGRATION_2_3 = Migration(2, 3) {
-            it.execSQL("CREATE TABLE IF NOT EXISTS records_new (" +
+            it.execSQL("DROP TABLE records")
+            it.execSQL("CREATE TABLE IF NOT EXISTS records (" +
                     "model TEXT NOT NULL, " +
                     "time TEXT NOT NULL, " +
                     "altitude REAL NOT NULL, " +
@@ -88,23 +74,6 @@ abstract class AppDatabase : RoomDatabase() {
                     "totalIntensity REAL NOT NULL, " +
                     "totalSV REAL NOT NULL, " +
                     "PRIMARY KEY(model, time, altitude, latitude, longitude))")
-
-            it.execSQL("INSERT INTO records_new (" +
-                    "model, time, altitude, latitude, longitude, " +
-                    "declination, declinationSV, inclination, inclinationSV, " +
-                    "horizontalIntensity, horizontalSV, northComponent, northSV, " +
-                    "eastComponent, eastSV, verticalComponent, verticalSV, " +
-                    "totalIntensity, totalSV) " +
-                    "SELECT " +
-                    "model, time, altitude, latitude, longitude, " +
-                    "declination, declinationSV, inclination, inclinationSV, " +
-                    "horizontalIntensity, horizontalSV, northComponent, northSV, " +
-                    "eastComponent, eastSV, verticalComponent, verticalSV, " +
-                    "totalIntensity, totalSV " +
-                    "FROM records")
-
-            it.execSQL("DROP TABLE records")
-            it.execSQL("ALTER TABLE records_new RENAME TO records")
         }
 
         private val MIGRATION_3_4 = Migration(3, 4) {
@@ -129,6 +98,31 @@ abstract class AppDatabase : RoomDatabase() {
                     "verticalSV REAL NOT NULL, " +
                     "totalIntensity REAL NOT NULL, " +
                     "totalSV REAL NOT NULL, " +
+                    "PRIMARY KEY(model, time, altitude, latitude, longitude))")
+        }
+
+        private val MIGRATION_4_5 = Migration(4, 5) {
+            it.execSQL("DROP TABLE records")
+            it.execSQL("CREATE TABLE IF NOT EXISTS records (" +
+                    "model TEXT NOT NULL, " +
+                    "time TEXT NOT NULL, " +
+                    "altitude REAL NOT NULL, " +
+                    "latitude REAL NOT NULL, " +
+                    "longitude REAL NOT NULL, " +
+                    "x REAL NOT NULL, " +
+                    "xDot REAL NOT NULL, " +
+                    "y REAL NOT NULL, " +
+                    "yDot REAL NOT NULL, " +
+                    "z REAL NOT NULL, " +
+                    "zDot REAL NOT NULL, " +
+                    "h REAL NOT NULL, " +
+                    "hDot REAL NOT NULL, " +
+                    "f REAL NOT NULL, " +
+                    "fDot REAL NOT NULL, " +
+                    "d REAL NOT NULL, " +
+                    "dDot REAL NOT NULL, " +
+                    "i REAL NOT NULL, " +
+                    "iDot REAL NOT NULL, " +
                     "PRIMARY KEY(model, time, altitude, latitude, longitude))")
         }
     }

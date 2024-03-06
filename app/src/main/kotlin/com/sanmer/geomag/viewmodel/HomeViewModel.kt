@@ -10,9 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.GeomagExt
-import com.sanmer.geomag.model.data.DateTime
-import com.sanmer.geomag.model.data.Position
-import com.sanmer.geomag.model.data.Record
+import com.sanmer.geomag.model.origin.DateTime
+import com.sanmer.geomag.model.origin.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.repository.UserPreferencesRepository
 import com.sanmer.geomag.service.LocationService
@@ -48,9 +47,7 @@ class HomeViewModel @Inject constructor(
     }.flowOn(Dispatchers.Default)
 
     val isLocationRunning get() = LocationService.isRunning
-    val position by derivedStateOf {
-        Position(LocationService.location)
-    }
+    val location by derivedStateOf { LocationService.location }
 
     var record by mutableStateOf(Record.empty())
         private set
@@ -80,8 +77,8 @@ class HomeViewModel @Inject constructor(
             record = Record(
                 model = model,
                 time = dateTime,
-                position = position,
-                values = GeomagExt.single(model, position, dateTime.decimalOfUtc)
+                location = location,
+                values = GeomagExt.single(model, location, dateTime.decimalOfUtc)
             )
 
             if (enableRecords) {

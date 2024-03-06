@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
-import com.sanmer.geomag.model.data.MagneticFieldExt
+import dev.sanmer.geomag.MagneticField
 
 @Composable
 fun MagneticFieldItem(
-    value: MagneticFieldExt,
+    value: MagneticField,
     modifier: Modifier = Modifier
 ) = OutlinedCard(
     modifier = modifier,
@@ -31,44 +31,44 @@ fun MagneticFieldItem(
     ) {
         ValueItem(
             key = stringResource(id = R.string.record_value_f),
-            value1 = "${value.totalIntensity} nT",
-            value2 = "${value.totalSV} nT/yr"
+            value1 = "${value.f} nT",
+            value2 = "${value.fDot} nT/yr"
         )
 
         ValueItem(
             key = stringResource(id = R.string.record_value_h),
-            value1 = "${value.horizontalIntensity} nT",
-            value2 = "${value.horizontalSV} nT/yr"
+            value1 = "${value.h} nT",
+            value2 = "${value.hDot} nT/yr"
         )
 
         ValueItem(
             key = stringResource(id = R.string.record_value_x),
-            value1 = "${value.northComponent} nT",
-            value2 = "${value.northSV} nT/yr"
+            value1 = "${value.x} nT",
+            value2 = "${value.xDot} nT/yr"
         )
 
         ValueItem(
             key = stringResource(id = R.string.record_value_y),
-            value1 = "${value.eastComponent} nT",
-            value2 = "${value.eastSV} nT/yr"
+            value1 = "${value.y} nT",
+            value2 = "${value.yDot} nT/yr"
         )
 
         ValueItem(
             key = stringResource(id = R.string.record_value_z),
-            value1 = "${value.verticalComponent} nT",
-            value2 = "${value.verticalSV} nT/yr"
+            value1 = "${value.z} nT",
+            value2 = "${value.zDot} nT/yr"
         )
 
         ValueItem(
             key = stringResource(id = R.string.record_value_d),
-            value1 = "${value.declination} rad",
-            value2 = "${value.declinationSV} rad/yr"
+            value1 = "${value.d} rad",
+            value2 = "${value.dDot} rad/yr"
         )
 
         ValueItem(
             key = stringResource(id = R.string.record_value_i),
-            value1 = "${value.inclination} rad",
-            value2 = "${value.inclinationSV} rad/yr"
+            value1 = "${value.i} rad",
+            value2 = "${value.iDot} rad/yr"
         )
     }
 }

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
-import com.sanmer.geomag.model.data.Record
+import com.sanmer.geomag.model.origin.Record
 
 @Composable
 fun RecordInfoItem(
@@ -34,20 +34,22 @@ fun RecordInfoItem(
             value = record.model.name
         )
 
-        ValueItem(
-            key = stringResource(id = R.string.overview_latitude),
-            value = record.position.latitudeWithUnit
-        )
+        with(record.location) {
+            ValueItem(
+                key = stringResource(id = R.string.overview_latitude),
+                value = "${latitude}º N"
+            )
 
-        ValueItem(
-            key = stringResource(id = R.string.overview_longitude),
-            value = record.position.longitudeWithUnit
-        )
+            ValueItem(
+                key = stringResource(id = R.string.overview_longitude),
+                value = "${longitude}º W"
+            )
 
-        ValueItem(
-            key = stringResource(id = R.string.overview_altitude),
-            value = record.position.altitudeWithUnit
-        )
+            ValueItem(
+                key = stringResource(id = R.string.overview_altitude),
+                value = "$altitude m"
+            )
+        }
 
         ValueItem(
             key = stringResource(id = R.string.overview_datetime),

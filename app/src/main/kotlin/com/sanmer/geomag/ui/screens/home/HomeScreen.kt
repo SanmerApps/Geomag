@@ -72,7 +72,7 @@ fun HomeScreen(
 
             LocationItem(
                 isRunning = viewModel.isLocationRunning,
-                position = viewModel.position,
+                location = viewModel.location,
                 toggleLocation = viewModel::toggleLocation
             )
 

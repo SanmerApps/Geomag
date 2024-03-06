@@ -2,6 +2,7 @@ package com.sanmer.geomag.ui.screens.home.items
 
 import android.content.Context
 import android.content.Intent
+import android.location.Location
 import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
 import com.sanmer.geomag.app.utils.LocationManagerUtils
-import com.sanmer.geomag.model.data.Position
 import com.sanmer.geomag.ui.component.OutlineColumn
 import com.sanmer.geomag.ui.component.OverviewCard
 import com.sanmer.geomag.ui.component.ValueItem
@@ -22,7 +22,7 @@ import com.sanmer.geomag.ui.component.ValueItem
 @Composable
 fun LocationItem(
     isRunning: Boolean,
-    position: Position,
+    location: Location,
     toggleLocation: (Context) -> Unit
 ) = OverviewCard(
     expanded = isRunning,
@@ -55,19 +55,21 @@ fun LocationItem(
         verticalArrangement = Arrangement.spacedBy(6.dp),
         contentPadding = PaddingValues(all = 12.dp)
     ) {
-        ValueItem(
-            key = stringResource(id = R.string.overview_latitude),
-            value = position.latitudeWithUnit
-        )
+        with(location) {
+            ValueItem(
+                key = stringResource(id = R.string.overview_latitude),
+                value = "${latitude}º N"
+            )
 
-        ValueItem(
-            key = stringResource(id = R.string.overview_longitude),
-            value = position.longitudeWithUnit
-        )
+            ValueItem(
+                key = stringResource(id = R.string.overview_longitude),
+                value = "${longitude}º W"
+            )
 
-        ValueItem(
-            key = stringResource(id = R.string.overview_altitude),
-            value = position.altitudeWithUnit
-        )
+            ValueItem(
+                key = stringResource(id = R.string.overview_altitude),
+                value = "$altitude m"
+            )
+        }
     }
 }

@@ -1,0 +1,146 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 5,
+    "identityHash": "3b345455dad5236626f153423a11993d",
+    "entities": [
+      {
+        "tableName": "records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`model` TEXT NOT NULL, `time` TEXT NOT NULL, `altitude` REAL NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `x` REAL NOT NULL, `xDot` REAL NOT NULL, `y` REAL NOT NULL, `yDot` REAL NOT NULL, `z` REAL NOT NULL, `zDot` REAL NOT NULL, `h` REAL NOT NULL, `hDot` REAL NOT NULL, `f` REAL NOT NULL, `fDot` REAL NOT NULL, `d` REAL NOT NULL, `dDot` REAL NOT NULL, `i` REAL NOT NULL, `iDot` REAL NOT NULL, PRIMARY KEY(`model`, `time`, `altitude`, `latitude`, `longitude`))",
+        "fields": [
+          {
+            "fieldPath": "key.model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.altitude",
+            "columnName": "altitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key.longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.x",
+            "columnName": "x",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.xDot",
+            "columnName": "xDot",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.y",
+            "columnName": "y",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.yDot",
+            "columnName": "yDot",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.z",
+            "columnName": "z",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.zDot",
+            "columnName": "zDot",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.h",
+            "columnName": "h",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.hDot",
+            "columnName": "hDot",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.f",
+            "columnName": "f",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.fDot",
+            "columnName": "fDot",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.d",
+            "columnName": "d",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.dDot",
+            "columnName": "dDot",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.i",
+            "columnName": "i",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "values.iDot",
+            "columnName": "iDot",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "model",
+            "time",
+            "altitude",
+            "latitude",
+            "longitude"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3b345455dad5236626f153423a11993d')"
+    ]
+  }
+}

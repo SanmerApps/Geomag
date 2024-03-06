@@ -9,7 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sanmer.geomag.database.entity.RecordKey
-import com.sanmer.geomag.model.data.Record
+import com.sanmer.geomag.model.origin.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.ui.navigation.graphs.RecordsScreen
 import com.sanmer.geomag.utils.JsonUtils

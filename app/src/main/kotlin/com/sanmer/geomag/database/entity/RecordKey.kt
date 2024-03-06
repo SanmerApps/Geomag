@@ -1,7 +1,7 @@
 package com.sanmer.geomag.database.entity
 
 import androidx.room.Entity
-import com.sanmer.geomag.model.data.Record
+import com.sanmer.geomag.model.origin.Record
 
 @Entity(tableName = "key")
 data class RecordKey(
@@ -11,12 +11,12 @@ data class RecordKey(
     val latitude: Double,
     val longitude: Double
 ) {
-    constructor(record: Record) : this(
-        model = record.model.name,
-        time = record.time.toString(),
-        altitude = record.position.altitude,
-        latitude = record.position.latitude,
-        longitude = record.position.longitude
+    constructor(r: Record) : this(
+        model = r.model.name,
+        time = r.time.toString(),
+        altitude = r.location.altitude,
+        latitude = r.location.latitude,
+        longitude = r.location.longitude
     )
 
     override fun toString(): String {

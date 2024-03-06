@@ -27,7 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
-import com.sanmer.geomag.model.data.Record
+import com.sanmer.geomag.model.origin.Record
 import com.sanmer.geomag.ui.component.Logo
 import com.sanmer.geomag.ui.component.scrollbar.VerticalFastScrollbar
 import com.sanmer.geomag.ui.utils.navigateSingleTopTo
@@ -128,10 +128,12 @@ private fun RecordItem(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Text(
-            text = record.position.toString(),
-            style = MaterialTheme.typography.bodyLarge
-        )
+        with(record.location) {
+            Text(
+                text = "${latitude}º N ${longitude}º W $altitude m",
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
 
         Text(
             text = record.time.toString(),

@@ -1,9 +1,8 @@
 package com.sanmer.geomag.utils
 
 import android.content.Context
-import com.sanmer.geomag.model.data.Record
 import com.sanmer.geomag.model.json.RecordJson
-import com.sanmer.geomag.model.json.toJson
+import com.sanmer.geomag.model.origin.Record
 import com.sanmer.geomag.utils.extensions.createJson
 import com.sanmer.geomag.utils.extensions.now
 import com.sanmer.geomag.utils.extensions.shareFile
@@ -18,13 +17,13 @@ object JsonUtils {
     private fun Record.toJsonText() =
         moshi.adapter<RecordJson>()
             .indent(INDENT)
-            .toJson(toJson())
+            .toJson(RecordJson(this))
 
     private fun List<Record>.toJsonText() =
         moshi.adapter<List<RecordJson>>()
             .indent(INDENT)
             .toJson(
-                map { it.toJson() }
+                map { RecordJson(it) }
             )
 
     fun shareJsonFile(context: Context, value: Record) {

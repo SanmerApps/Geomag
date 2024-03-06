@@ -1,10 +1,9 @@
 package com.sanmer.geomag.repository
 
 import com.sanmer.geomag.database.dao.RecordDao
+import com.sanmer.geomag.database.entity.RecordEntity
 import com.sanmer.geomag.database.entity.RecordKey
-import com.sanmer.geomag.database.entity.toEntity
-import com.sanmer.geomag.database.entity.toRecord
-import com.sanmer.geomag.model.data.Record
+import com.sanmer.geomag.model.origin.Record
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -30,19 +29,19 @@ class LocalRepository @Inject constructor(
     }
 
     suspend fun insert(value: Record) = withContext(Dispatchers.IO) {
-        recordDao.insert(value.toEntity())
+        recordDao.insert(RecordEntity(value))
     }
 
     suspend fun insert(list: List<Record>) = withContext(Dispatchers.IO) {
-        recordDao.insert(list.map { it.toEntity() })
+        recordDao.insert(list.map { RecordEntity(it) })
     }
 
     suspend fun delete(value: Record) = withContext(Dispatchers.IO) {
-        recordDao.delete(value.toEntity())
+        recordDao.delete(RecordEntity(value))
     }
 
     suspend fun delete(list: List<Record>) = withContext(Dispatchers.IO) {
-        recordDao.delete(list.map { it.toEntity() })
+        recordDao.delete(list.map { RecordEntity(it) })
     }
 
     suspend fun deleteAll() = withContext(Dispatchers.IO) {

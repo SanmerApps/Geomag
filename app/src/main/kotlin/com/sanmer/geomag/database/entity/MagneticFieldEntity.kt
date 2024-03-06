@@ -1,10 +1,10 @@
-package com.sanmer.geomag.model.json
+package com.sanmer.geomag.database.entity
 
-import com.squareup.moshi.JsonClass
+import androidx.room.Entity
 import dev.sanmer.geomag.MagneticField
 
-@JsonClass(generateAdapter = true)
-data class MagneticFieldJson(
+@Entity(tableName = "values")
+data class MagneticFieldEntity(
     val x: Double,
     val xDot: Double,
     val y: Double,
@@ -28,5 +28,15 @@ data class MagneticFieldJson(
         f = m.f, fDot = m.fDot,
         d = m.d, dDot = m.dDot,
         i = m.i, iDot = m.iDot
+    )
+
+    fun toMF() = MagneticField(
+        x = x, xDot = xDot,
+        y = y, yDot = yDot,
+        z = z, zDot = zDot,
+        h = h, hDot = hDot,
+        f = f, fDot = fDot,
+        d = d, dDot = dDot,
+        i = i, iDot = iDot
     )
 }

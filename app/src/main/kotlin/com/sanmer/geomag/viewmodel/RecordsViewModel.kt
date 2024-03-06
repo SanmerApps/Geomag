@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sanmer.geomag.model.data.Record
+import com.sanmer.geomag.model.origin.Record
 import com.sanmer.geomag.repository.LocalRepository
 import com.sanmer.geomag.utils.JsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,8 +43,6 @@ class RecordsViewModel @Inject constructor(
         localRepository.getAllAsFlow()
             .onStart { isLoading = true }
             .onEach { list ->
-                Timber.d("record list, size = ${list.size}")
-
                 valuesFlow.value = list.sortedBy { it.time.local }
 
                 if (isLoading) isLoading = false
