@@ -1,4 +1,6 @@
-use geomag::{DateTime, GeodeticLocation, Geomag, MagneticField, IGRF, WMM};
+use geomag::model::{IGRF, WMM};
+use geomag::num::Unit;
+use geomag::{DateTime, GeodeticLocation, Geomag, MagneticField};
 use jni::errors::Result;
 use jni::objects::{JClass, JObject, JValue};
 use jni::sys::{jdouble, jint};
@@ -38,10 +40,10 @@ fn build_mf_object<'local>(env: &mut JNIEnv<'local>, m: &MagneticField) -> Resul
     set_double_field!(env, &obj, "hDot", m.h_dot)?;
     set_double_field!(env, &obj, "f", m.f)?;
     set_double_field!(env, &obj, "fDot", m.f_dot)?;
-    set_double_field!(env, &obj, "d", m.d)?;
-    set_double_field!(env, &obj, "dDot", m.d_dot)?;
-    set_double_field!(env, &obj, "i", m.i)?;
-    set_double_field!(env, &obj, "iDot", m.i_dot)?;
+    set_double_field!(env, &obj, "d", m.d.v())?;
+    set_double_field!(env, &obj, "dDot", m.d_dot.v())?;
+    set_double_field!(env, &obj, "i", m.i.v())?;
+    set_double_field!(env, &obj, "iDot", m.i_dot.v())?;
 
     Ok(obj)
 }
@@ -94,7 +96,7 @@ pub unsafe extern "system" fn Java_dev_sanmer_geomag_Geomag_wmm<'local>(
     altitude: jdouble,
     decimal: jdouble,
 ) -> JObject<'local> {
-    let l = GeodeticLocation::new(longitude, latitude, altitude);
+    let l = GeodeticLocation::new(longitude.deg(), latitude.deg(), altitude);
     let wmm = WMM::new(decimal);
 
     match wmm {
@@ -112,7 +114,7 @@ pub unsafe extern "system" fn Java_dev_sanmer_geomag_Geomag_igrf<'local>(
     altitude: jdouble,
     decimal: jdouble,
 ) -> JObject<'local> {
-    let l = GeodeticLocation::new(longitude, latitude, altitude);
+    let l = GeodeticLocation::new(longitude.deg(), latitude.deg(), altitude);
     let igrf = IGRF::new(decimal);
 
     match igrf {
