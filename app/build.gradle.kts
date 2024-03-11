@@ -74,6 +74,8 @@ android {
         "**/*.java"
     )
 
+    dependenciesInfo.includeInApk = false
+
     applicationVariants.configureEach {
         outputs.configureEach {
             (this as? ApkVariantOutputImpl)?.outputFileName =
