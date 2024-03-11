@@ -1,5 +1,5 @@
 use geomag::model::{IGRF, WMM};
-use geomag::num::Unit;
+use geomag::num::Angle;
 use geomag::{DateTime, GeodeticLocation, Geomag, MagneticField};
 use jni::errors::Result;
 use jni::objects::{JClass, JObject, JValue};
@@ -40,10 +40,10 @@ fn build_mf_object<'local>(env: &mut JNIEnv<'local>, m: &MagneticField) -> Resul
     set_double_field!(env, &obj, "hDot", m.h_dot)?;
     set_double_field!(env, &obj, "f", m.f)?;
     set_double_field!(env, &obj, "fDot", m.f_dot)?;
-    set_double_field!(env, &obj, "d", m.d.v())?;
-    set_double_field!(env, &obj, "dDot", m.d_dot.v())?;
-    set_double_field!(env, &obj, "i", m.i.v())?;
-    set_double_field!(env, &obj, "iDot", m.i_dot.v())?;
+    set_double_field!(env, &obj, "d", m.d.f())?;
+    set_double_field!(env, &obj, "dDot", m.d_dot.f())?;
+    set_double_field!(env, &obj, "i", m.i.f())?;
+    set_double_field!(env, &obj, "iDot", m.i_dot.f())?;
 
     Ok(obj)
 }

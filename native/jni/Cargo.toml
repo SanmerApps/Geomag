@@ -5,7 +5,7 @@ license = "Apache-2.0"
 edition = "2021"
 
 [dependencies]
-geomag = { git = "https://github.com/SanmerDev/libgeomag.git" }
+geomag = { git = "https://github.com/SanmerDev/libgeomag.git", rev = "c877e3e4cfc23e563a19d300939d5e527fe89172" }
 jni = "0.21.1"
 
 [lib]
