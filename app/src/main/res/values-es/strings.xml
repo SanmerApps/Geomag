@@ -42,4 +42,6 @@
     <string name="record_dialog_delete_desc">¿Está seguro de eliminar este registro\? La operación no se puede deshacer.</string>
     <string name="settings_app_theme_desc">Cambia la combinación de colores y el modo noche</string>
     <string name="about_desc1">Proporcionar el cálculo de modelos de campo geomagnético y el registro de datos.</string>
+    <string name="settings_satellite_status">Estado del satélite</string>
+    <string name="settings_satellite_status_desc">Ver el estado de los satélites del Sistema Mundial de Navegación por Satélite (GNSS)</string>
 </resources>
