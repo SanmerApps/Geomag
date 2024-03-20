@@ -22,7 +22,7 @@ android {
         versionName = "${baseVersionName}${verNameSuffix}.${commitId}"
         versionCode = commitCount
 
-        resourceConfigurations += arrayOf("en", "es", "zh-rCN")
+        resourceConfigurations += arrayOf("en", "de", "es", "zh-rCN")
 
         ndk {
             abiFilters += arrayOf("arm64-v8a", "x86_64")
