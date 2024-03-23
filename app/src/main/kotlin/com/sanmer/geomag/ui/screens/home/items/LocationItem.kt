@@ -1,6 +1,5 @@
 package com.sanmer.geomag.ui.screens.home.items
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -14,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.sanmer.geomag.R
 import com.sanmer.geomag.app.utils.LocationManagerUtils
 import com.sanmer.geomag.ui.component.OutlineColumn
@@ -32,21 +30,12 @@ fun LocationItem(
     label = stringResource(id = R.string.overview_location),
     trailingIcon = {
         val context = LocalContext.current
-        val permissionsState = rememberMultiplePermissionsState(
-            listOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-            )
-        )
 
         IconButton(
             onClick = {
                 when {
                     !LocationManagerUtils.isEnabled(context) -> {
                         context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                    }
-                    !permissionsState.allPermissionsGranted -> {
-                        permissionsState.launchMultiplePermissionRequest()
                     }
                     else -> {
                         toggleLocation(context)

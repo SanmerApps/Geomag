@@ -1,5 +1,6 @@
 package com.sanmer.geomag.service
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -13,10 +14,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.sanmer.geomag.app.PermissionCompat
 import com.sanmer.geomag.app.utils.LocationManagerUtils
 import com.sanmer.geomag.model.gnss.Satellite
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 class LocationService : LifecycleService() {
     override fun onCreate() {
@@ -65,8 +68,19 @@ class LocationService : LifecycleService() {
         }
 
         fun start(context: Context) {
-            val intent = Intent(context, LocationService::class.java)
-            context.startService(intent)
+            val permissions = listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+
+            PermissionCompat.requestPermissions(context, permissions) { state ->
+                if (state.allGranted) {
+                    val intent = Intent(context, LocationService::class.java)
+                    context.startService(intent)
+                } else {
+                    Timber.w("permissions: $state")
+                }
+            }
         }
 
         fun stop(context: Context) {
