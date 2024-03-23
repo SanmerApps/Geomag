@@ -7,17 +7,11 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Handler
 import android.os.Looper
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.core.location.GnssStatusCompat
 import androidx.core.location.LocationListenerCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.core.location.LocationRequestCompat
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -25,11 +19,6 @@ import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 
 object LocationManagerUtils {
-    var isReady by mutableStateOf(false)
-        private set
-    var isEnable by mutableStateOf(false)
-        private set
-
     private val Context.locationManager get() = checkNotNull(
         ContextCompat.getSystemService(this, LocationManager::class.java)
     )
@@ -44,32 +33,12 @@ object LocationManagerUtils {
                 )
     }
 
-    fun init(context: Context) {
-        isEnable = LocationManagerCompat.isLocationEnabled(context.locationManager)
-        Timber.d("isLocationEnabled: $isEnable")
-    }
-
-    @Composable
-    fun PermissionsState() {
-        val permissionsState = rememberMultiplePermissionsState(
-            listOf(
-                permission.ACCESS_FINE_LOCATION,
-                permission.ACCESS_COARSE_LOCATION,
-            )
-        ).apply {
-            isReady = allPermissionsGranted
-        }
-
-        SideEffect {
-            if (!isReady) {
-                permissionsState.launchMultiplePermissionRequest()
-            }
-        }
-    }
+    fun isEnabled(context: Context) =
+        LocationManagerCompat.isLocationEnabled(context.locationManager)
 
     @SuppressLint("MissingPermission")
     fun getLocationAsFlow(context: Context) = callbackFlow {
-        if (!(context.hasPermissions() && isEnable)) {
+        if (!(context.hasPermissions() && isEnabled(context))) {
             close()
         }
 
@@ -106,7 +75,7 @@ object LocationManagerUtils {
 
     @SuppressLint("MissingPermission")
     fun getGnssStatusAsFlow(context: Context) = callbackFlow {
-        if (!(context.hasPermissions() && isEnable)) {
+        if (!(context.hasPermissions() && isEnabled(context))) {
             close()
         }
 

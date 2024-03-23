@@ -1,5 +1,6 @@
 package com.sanmer.geomag.ui.screens.settings.gnss
 
+import android.Manifest
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -16,6 +17,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.sanmer.geomag.R
 import com.sanmer.geomag.service.LocationService
 import com.sanmer.geomag.ui.component.Loading
@@ -33,9 +35,25 @@ fun GnssStatusScreen(
         derivedStateOf { LocationService.isRunning }
     }
 
-    DisposableEffect(true) {
-        if (!isRunning) {
-            LocationService.start(context)
+    val list by remember(LocationService.gnssStatusOrNull) {
+        derivedStateOf { LocationService.getSatelliteList() }
+    }
+
+    val permissionsState = rememberMultiplePermissionsState(
+        listOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        )
+    )
+
+    DisposableEffect(permissionsState.allPermissionsGranted) {
+        when {
+            !permissionsState.allPermissionsGranted -> {
+                permissionsState.launchMultiplePermissionRequest()
+            }
+            !isRunning -> {
+                LocationService.start(context)
+            }
         }
 
         onDispose {
@@ -43,10 +61,6 @@ fun GnssStatusScreen(
                 LocationService.stop(context)
             }
         }
-    }
-
-    val list by remember(LocationService.gnssStatusOrNull) {
-        derivedStateOf { LocationService.getSatelliteList() }
     }
 
     Scaffold(
