@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
+import androidx.annotation.RequiresPermission
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,26 +15,30 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.sanmer.geomag.app.PermissionCompat
-import com.sanmer.geomag.app.utils.LocationManagerUtils
+import com.sanmer.geomag.compat.LocationManagerCompat
+import com.sanmer.geomag.compat.PermissionCompat
 import com.sanmer.geomag.model.gnss.Satellite
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class LocationService : LifecycleService() {
+    @RequiresPermission(anyOf = [
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ])
     override fun onCreate() {
         super.onCreate()
         isRunning = true
 
-        LocationManagerUtils.getLocationAsFlow(this)
+        LocationManagerCompat.getLocationAsFlow(this)
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach {
                 location = it
 
             }.launchIn(lifecycleScope)
 
-        LocationManagerUtils.getGnssStatusAsFlow(this)
+        LocationManagerCompat.getGnssStatusAsFlow(this)
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach {
                 gnssStatusOrNull = it

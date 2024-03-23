@@ -1,9 +1,9 @@
-package com.sanmer.geomag.app.utils
+package com.sanmer.geomag.compat
 
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 
-object OsUtils {
+object BuildCompat {
     @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     val atLeastU get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 

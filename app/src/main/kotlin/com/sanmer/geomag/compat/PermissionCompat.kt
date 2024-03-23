@@ -1,4 +1,4 @@
-package com.sanmer.geomag.app
+package com.sanmer.geomag.compat
 
 import android.app.Activity
 import android.content.Context

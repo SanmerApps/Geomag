@@ -3,7 +3,7 @@ package com.sanmer.geomag.datastore
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import com.sanmer.geomag.GeomagExt
-import com.sanmer.geomag.app.utils.OsUtils
+import com.sanmer.geomag.compat.BuildCompat
 import com.sanmer.geomag.ui.theme.Colors
 
 data class UserPreferencesExt(
@@ -15,7 +15,7 @@ data class UserPreferencesExt(
     companion object {
         fun default() = UserPreferencesExt(
             darkMode = DarkMode.FOLLOW_SYSTEM,
-            themeColor = if (OsUtils.atLeastS) Colors.Dynamic.id else Colors.Pourville.id,
+            themeColor = if (BuildCompat.atLeastS) Colors.Dynamic.id else Colors.Pourville.id,
             fieldModel = GeomagExt.Models.IGRF,
             enableRecords = true
         )

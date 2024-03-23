@@ -1,12 +1,11 @@
-package com.sanmer.geomag.app.utils
+package com.sanmer.geomag.compat
 
-import android.Manifest.permission
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.core.location.GnssStatusCompat
 import androidx.core.location.LocationListenerCompat
@@ -18,27 +17,20 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 
-object LocationManagerUtils {
+object LocationManagerCompat {
     private val Context.locationManager get() = checkNotNull(
         ContextCompat.getSystemService(this, LocationManager::class.java)
     )
 
-    private fun Context.hasPermissions(): Boolean {
-        return (ContextCompat.checkSelfPermission(
-            this, permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(
-                    this, permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-                )
-    }
-
     fun isEnabled(context: Context) =
         LocationManagerCompat.isLocationEnabled(context.locationManager)
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = [
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ])
     fun getLocationAsFlow(context: Context) = callbackFlow {
-        if (!(context.hasPermissions() && isEnabled(context))) {
+        if (!isEnabled(context)) {
             close()
         }
 
@@ -73,9 +65,12 @@ object LocationManagerUtils {
 
     }.flowOn(Dispatchers.Default)
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = [
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ])
     fun getGnssStatusAsFlow(context: Context) = callbackFlow {
-        if (!(context.hasPermissions() && isEnabled(context))) {
+        if (!isEnabled(context)) {
             close()
         }
 

@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sanmer.geomag.R
-import com.sanmer.geomag.app.utils.LocationManagerUtils
+import com.sanmer.geomag.compat.LocationManagerCompat
 import com.sanmer.geomag.ui.component.OutlineColumn
 import com.sanmer.geomag.ui.component.OverviewCard
 import com.sanmer.geomag.ui.component.ValueItem
@@ -34,7 +34,7 @@ fun LocationItem(
         IconButton(
             onClick = {
                 when {
-                    !LocationManagerUtils.isEnabled(context) -> {
+                    !LocationManagerCompat.isEnabled(context) -> {
                         context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                     }
                     else -> {
