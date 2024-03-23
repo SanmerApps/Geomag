@@ -32,7 +32,8 @@ import com.sanmer.geomag.R
 import com.sanmer.geomag.ui.component.DropdownMenu
 import com.sanmer.geomag.ui.component.OverviewButton
 import com.sanmer.geomag.ui.component.OverviewCard
-import com.sanmer.geomag.ui.navigation.navigateToCalculate
+import com.sanmer.geomag.ui.navigation.graphs.HomeScreen
+import com.sanmer.geomag.ui.utils.navigateSingleTopTo
 
 @Composable
 fun CalculationItem(
@@ -62,7 +63,7 @@ fun CalculationItem(
         )
 
         OverviewButton(
-            onClick = { navController.navigateToCalculate() },
+            onClick = { navController.navigateSingleTopTo(HomeScreen.Customize.route) },
             icon = R.drawable.variable_plus,
             text = stringResource(id = R.string.overview_customized),
             enabled = BuildConfig.DEBUG

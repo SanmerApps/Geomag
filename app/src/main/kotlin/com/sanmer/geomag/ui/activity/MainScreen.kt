@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.sanmer.geomag.ui.navigation.MainScreen
-import com.sanmer.geomag.ui.navigation.graphs.customizeScreen
 import com.sanmer.geomag.ui.navigation.graphs.homeScreen
 import com.sanmer.geomag.ui.navigation.graphs.recordsScreen
 import com.sanmer.geomag.ui.navigation.graphs.settingsScreen
@@ -26,9 +25,6 @@ fun MainScreen() {
             startDestination = MainScreen.Home.route
         ) {
             homeScreen(
-                navController = navController
-            )
-            customizeScreen(
                 navController = navController
             )
             recordsScreen(
