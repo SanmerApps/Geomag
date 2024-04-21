@@ -2,13 +2,19 @@ package com.sanmer.geomag.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -19,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -27,12 +34,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
+import com.sanmer.geomag.model.origin.Record
+import com.sanmer.geomag.ui.component.NavigationBarsSpacer
 import com.sanmer.geomag.ui.navigation.navigateToSettings
 import com.sanmer.geomag.ui.providable.LocalUserPreferences
 import com.sanmer.geomag.ui.screens.home.items.CalculationItem
 import com.sanmer.geomag.ui.screens.home.items.DateTimeItem
 import com.sanmer.geomag.ui.screens.home.items.LocationItem
 import com.sanmer.geomag.ui.screens.home.items.RecordsItem
+import com.sanmer.geomag.ui.screens.records.view.items.MagneticFieldItem
+import com.sanmer.geomag.ui.utils.expandedShape
 import com.sanmer.geomag.viewmodel.HomeViewModel
 
 @Composable
@@ -93,7 +104,7 @@ fun HomeScreen(
             )
 
             if (showValue) {
-                RecordBottomSheet(
+                MagneticFieldBottomSheet(
                     record = viewModel.record,
                     onClose = { showValue = false }
                 )
@@ -125,3 +136,32 @@ private fun TopBar(
     },
     scrollBehavior = scrollBehavior
 )
+
+@Composable
+private fun MagneticFieldBottomSheet(
+    record: Record,
+    onClose: () -> Unit
+) = ModalBottomSheet(
+    onDismissRequest = onClose,
+    shape = BottomSheetDefaults.expandedShape(15.dp),
+    windowInsets = WindowInsets(0)
+) {
+    Text(
+        text = stringResource(id = R.string.overview_mf),
+        style = MaterialTheme.typography.headlineSmall,
+        modifier = Modifier.align(Alignment.CenterHorizontally)
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+    ) {
+        MagneticFieldItem(value = record.values)
+
+        NavigationBarsSpacer(modifier = Modifier.height(16.dp))
+    }
+}
