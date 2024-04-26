@@ -55,6 +55,7 @@ jobs:
           ANDROID_NDK_TARGET=`ls ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/`
           ANDROID_NDK_BIN="${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${ANDROID_NDK_TARGET}/bin"
           echo "$ANDROID_NDK_BIN" >> $GITHUB_PATH
+          
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
         with:
