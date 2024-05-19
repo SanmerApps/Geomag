@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var userPreferencesRepository: UserPreferencesRepository
+    @Inject lateinit var userPreferencesRepository: UserPreferencesRepository
 
     private var isLoading by mutableStateOf(true)
 

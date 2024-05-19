@@ -98,9 +98,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setFieldModel(value: Compat.Models) =
-        userPreferencesRepository.setFieldModel(value)
+    fun setFieldModel(value: Compat.Models) {
+        viewModelScope.launch {
+            userPreferencesRepository.setFieldModel(value)
+        }
+    }
 
-    fun setEnableRecords(value: Boolean) =
-        userPreferencesRepository.setEnableRecords(value)
+    fun setEnableRecords(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setEnableRecords(value)
+        }
+    }
 }

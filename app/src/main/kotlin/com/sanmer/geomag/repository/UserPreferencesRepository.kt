@@ -3,32 +3,20 @@ package com.sanmer.geomag.repository
 import com.sanmer.geomag.Compat
 import com.sanmer.geomag.datastore.DarkMode
 import com.sanmer.geomag.datastore.UserPreferencesDataSource
-import com.sanmer.geomag.di.ApplicationScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserPreferencesRepository @Inject constructor(
-    private val userPreferencesDataSource: UserPreferencesDataSource,
-    @ApplicationScope private val applicationScope: CoroutineScope
+    private val userPreferencesDataSource: UserPreferencesDataSource
 ) {
     val data get() = userPreferencesDataSource.data
 
-    fun setDarkTheme(value: DarkMode) = applicationScope.launch {
-        userPreferencesDataSource.setDarkTheme(value)
-    }
+    suspend fun setDarkTheme(value: DarkMode) = userPreferencesDataSource.setDarkTheme(value)
 
-    fun setThemeColor(value: Int) = applicationScope.launch {
-        userPreferencesDataSource.setThemeColor(value)
-    }
+    suspend fun setThemeColor(value: Int) = userPreferencesDataSource.setThemeColor(value)
 
-    fun setFieldModel(value: Compat.Models) = applicationScope.launch {
-        userPreferencesDataSource.setFieldModel(value.name)
-    }
+    suspend fun setFieldModel(value: Compat.Models) = userPreferencesDataSource.setFieldModel(value.name)
 
-    fun setEnableRecords(value: Boolean) = applicationScope.launch {
-        userPreferencesDataSource.setEnableRecords(value)
-    }
+    suspend fun setEnableRecords(value: Boolean) = userPreferencesDataSource.setEnableRecords(value)
 }
