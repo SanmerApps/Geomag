@@ -1,6 +1,7 @@
 package com.sanmer.geomag.datastore
 
 import androidx.datastore.core.DataStore
+import com.sanmer.geomag.datastore.UserPreferencesCompat.Companion.new
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -9,7 +10,7 @@ import javax.inject.Inject
 class UserPreferencesDataSource @Inject constructor(
     private val userPreferences: DataStore<UserPreferences>
 ) {
-    val data get() = userPreferences.data.map { it.toExt() }
+    val data get() = userPreferences.data.map { UserPreferencesCompat(it) }
 
     suspend fun setDarkTheme(value: DarkMode) = withContext(Dispatchers.IO) {
         userPreferences.updateData {

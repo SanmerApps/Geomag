@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sanmer.geomag.datastore.isDarkMode
 import com.sanmer.geomag.repository.UserPreferencesRepository
 import com.sanmer.geomag.ui.providable.LocalUserPreferences
 import com.sanmer.geomag.ui.theme.AppTheme

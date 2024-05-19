@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sanmer.geomag.R
-import com.sanmer.geomag.datastore.isDarkMode
 import com.sanmer.geomag.ui.component.NavigateUpTopBar
 import com.sanmer.geomag.ui.component.SettingNormalItem
 import com.sanmer.geomag.ui.navigation.graphs.SettingsScreen
