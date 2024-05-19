@@ -4,7 +4,7 @@ import android.location.Location
 import dev.sanmer.geomag.Geomag
 import kotlinx.datetime.LocalDateTime
 
-object GeomagExt {
+object Compat {
     fun toDecimalYears(date: LocalDateTime) = Geomag.toDecimalYears(date)
 
     fun single(

@@ -1,6 +1,6 @@
 package com.sanmer.geomag.model.origin
 
-import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.Compat
 import com.sanmer.geomag.utils.extensions.now
 import com.sanmer.geomag.utils.extensions.toTimeZone
 import kotlinx.datetime.LocalDateTime
@@ -24,9 +24,9 @@ class DateTime private constructor(
     )
 
     val local = LocalDateTime(year, monthNumber, dayOfMonth, hour, minute, second)
-    val decimalOfLocal get() = GeomagExt.toDecimalYears(local)
+    val decimalOfLocal get() = Compat.toDecimalYears(local)
     private val utc get() = local.toTimeZone(TimeZone.UTC)
-    val decimalOfUtc get() = GeomagExt.toDecimalYears(utc)
+    val decimalOfUtc get() = Compat.toDecimalYears(utc)
 
     override fun toString(): String {
         return local.toString()

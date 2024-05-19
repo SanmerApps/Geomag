@@ -4,7 +4,7 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.room.Embedded
 import androidx.room.Entity
-import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.Compat
 import com.sanmer.geomag.model.origin.DateTime
 import com.sanmer.geomag.model.origin.Record
 
@@ -22,7 +22,7 @@ data class RecordEntity(
     )
 
     fun toRecord() = Record(
-        model = GeomagExt.Models.valueOf(key.model),
+        model = Compat.Models.valueOf(key.model),
         time = DateTime.parse(key.time),
         location = Location(LocationManager.GPS_PROVIDER).apply {
             latitude = key.latitude

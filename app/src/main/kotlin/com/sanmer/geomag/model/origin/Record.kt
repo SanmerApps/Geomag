@@ -2,18 +2,18 @@ package com.sanmer.geomag.model.origin
 
 import android.location.Location
 import android.location.LocationManager
-import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.Compat
 import dev.sanmer.geomag.MagneticField
 
 data class Record(
-    val model: GeomagExt.Models,
+    val model: Compat.Models,
     val time: DateTime,
     val location: Location,
     val values: MagneticField
 ) {
     companion object {
         fun empty() = Record(
-            model = GeomagExt.Models.IGRF,
+            model = Compat.Models.IGRF,
             time = DateTime.now(),
             location = Location(LocationManager.GPS_PROVIDER),
             values = MagneticField(

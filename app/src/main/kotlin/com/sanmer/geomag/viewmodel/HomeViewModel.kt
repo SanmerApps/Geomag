@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.Compat
 import com.sanmer.geomag.model.origin.DateTime
 import com.sanmer.geomag.model.origin.Record
 import com.sanmer.geomag.repository.LocalRepository
@@ -78,7 +78,7 @@ class HomeViewModel @Inject constructor(
                 model = model,
                 time = dateTime,
                 location = location,
-                values = GeomagExt.single(model, location, dateTime.decimalOfUtc)
+                values = Compat.single(model, location, dateTime.decimalOfUtc)
             )
 
             if (enableRecords) {
@@ -98,7 +98,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setFieldModel(value: GeomagExt.Models) =
+    fun setFieldModel(value: Compat.Models) =
         userPreferencesRepository.setFieldModel(value)
 
     fun setEnableRecords(value: Boolean) =

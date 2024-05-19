@@ -1,6 +1,6 @@
 package com.sanmer.geomag.repository
 
-import com.sanmer.geomag.GeomagExt
+import com.sanmer.geomag.Compat
 import com.sanmer.geomag.datastore.DarkMode
 import com.sanmer.geomag.datastore.UserPreferencesDataSource
 import com.sanmer.geomag.di.ApplicationScope
@@ -24,7 +24,7 @@ class UserPreferencesRepository @Inject constructor(
         userPreferencesDataSource.setThemeColor(value)
     }
 
-    fun setFieldModel(value: GeomagExt.Models) = applicationScope.launch {
+    fun setFieldModel(value: Compat.Models) = applicationScope.launch {
         userPreferencesDataSource.setFieldModel(value.name)
     }
 
