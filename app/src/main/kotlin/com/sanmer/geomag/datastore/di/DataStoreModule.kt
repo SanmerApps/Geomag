@@ -6,13 +6,11 @@ import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
 import com.sanmer.geomag.datastore.UserPreferences
 import com.sanmer.geomag.datastore.UserPreferencesSerializer
-import com.sanmer.geomag.di.ApplicationScope
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 @Module
@@ -23,12 +21,10 @@ object DataStoreModule {
     @Singleton
     fun providesUserPreferencesDataStore(
         @ApplicationContext context: Context,
-        userPreferencesSerializer: UserPreferencesSerializer,
-        @ApplicationScope applicationScope: CoroutineScope
+        userPreferencesSerializer: UserPreferencesSerializer
     ): DataStore<UserPreferences> =
         DataStoreFactory.create(
-            serializer = userPreferencesSerializer,
-            scope = applicationScope,
+            serializer = userPreferencesSerializer
         ) {
             context.dataStoreFile("user_preferences.pb")
         }
